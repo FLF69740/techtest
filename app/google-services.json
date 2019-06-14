@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "809916259172",
+    "firebase_url": "https://epfd-beta.firebaseio.com",
+    "project_id": "epfd-beta",
+    "storage_bucket": "epfd-beta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809916259172:android:b0ef50d37ca6ea06",
+        "android_client_info": {
+          "package_name": "com.example.csandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809916259172-o0ohjmfbp05em1cm98agre6u1ujhshvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.csandroid",
+            "certificate_hash": "91a9126d31fdb01af2a8a3289357bea9e996c9ad"
+          }
+        },
+        {
+          "client_id": "809916259172-ps4ivsrjpgt7qe0jvlst8f4iutv8v7r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQit_DlirgClew--bZVza4pUQ8YKvT6G4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809916259172-ps4ivsrjpgt7qe0jvlst8f4iutv8v7r1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
