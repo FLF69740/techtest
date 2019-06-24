@@ -1,4 +1,4 @@
-package com.example.csandroid;
+package com.epfd.csandroid;
 
 import org.junit.Test;
 

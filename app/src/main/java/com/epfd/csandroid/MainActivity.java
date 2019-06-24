@@ -1,4 +1,4 @@
-package com.example.csandroid;
+package com.epfd.csandroid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
