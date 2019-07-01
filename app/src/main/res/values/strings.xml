@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">csandroid</string>
+    <string name="ecole_privee">Ecole Privée</string>
+    <string name="francois_dolto">Françoise DOLTO</string>
+    <string name="saint_quentin_fallavier">Saint - Quentin - Fallavier</string>
+    <string name="connexion_btn">CONNEXION</string>
 </resources>
