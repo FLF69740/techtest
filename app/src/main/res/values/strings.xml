@@ -1,7 +1,16 @@
 <resources>
-    <string name="app_name">csandroid</string>
+    <string name="app_name">Ecole privée Françoise DOLTO SQF</string>
     <string name="ecole_privee">Ecole Privée</string>
     <string name="francois_dolto">Françoise DOLTO</string>
     <string name="saint_quentin_fallavier">Saint - Quentin - Fallavier</string>
+
+    <!-- AUTH -->
     <string name="connexion_btn">CONNEXION</string>
+    <string name="connection_succeed">Connexion réussie</string>
+    <string name="error_authentication_canceled">Connexion annulée</string>
+    <string name="error_no_internet">Connexion serveur impossible</string>
+    <string name="error_unknown_error">Erreur</string>
+
+
+
 </resources>
