@@ -14,6 +14,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.epfd.csandroid.base.BaseActivity;
+import com.epfd.csandroid.formulary.FormularyActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -55,6 +56,9 @@ public class MainActivity extends BaseActivity {
         animationDrawable.start();
         this.playAnimation();
     }
+
+    @Override
+    public Boolean isAChildActivity() {return null;}
 
     /**
      *  ANIMATION
@@ -136,6 +140,15 @@ public class MainActivity extends BaseActivity {
     private List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
 
     @OnClick(R.id.main_connexion_btn) public void onClickLogin(){
+        if (this.isCurrentUserLogged()){
+            startActivity(new Intent(this, FormularyActivity.class));
+        }else {
+            this.startSignIn();
+        }
+    }
+
+    //Launch sign in Activity
+    private void startSignIn(){
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -154,7 +167,7 @@ public class MainActivity extends BaseActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) { // SUCCESS
-                showSnackBar(this.mCoordinatorLayout, getString(R.string.connection_succeed));
+                startActivity(new Intent(this, FormularyActivity.class));
             } else { // ERRORS
                 if (response == null) {
                     showSnackBar(this.mCoordinatorLayout, getString(R.string.error_authentication_canceled));

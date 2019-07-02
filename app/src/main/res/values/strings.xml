@@ -5,12 +5,18 @@
     <string name="saint_quentin_fallavier">Saint - Quentin - Fallavier</string>
 
     <!-- AUTH -->
-    <string name="connexion_btn">CONNEXION</string>
+    <string name="connexion_btn">ENTRER</string>
     <string name="connection_succeed">Connexion réussie</string>
     <string name="error_authentication_canceled">Connexion annulée</string>
     <string name="error_no_internet">Connexion serveur impossible</string>
     <string name="error_unknown_error">Erreur</string>
 
+    <!-- GESTION COMPTE -->
+    <string name="compte_deconnexion">DECONNEXION</string>
+    <string name="compte_delete">DELETE</string>
+    <string name="popup_message_confirmation_delete_account">Souhaitez vous supprimer votre compte</string>
+    <string name="popup_message_choice_yes">OUI</string>
+    <string name="popup_message_choice_no">NON</string>
 
 
 </resources>

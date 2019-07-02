@@ -10,10 +10,12 @@
         android:roundIcon="@drawable/ic_logo_pos2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.epfd.csandroid.MainActivity">
+        <activity android:name=".formulary.FormularyActivity"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
