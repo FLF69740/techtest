@@ -1,0 +1,9 @@
+<resources>
+    <!-- Title splashScreen -->
+    <dimen name="size_title_ecole_privee">20sp</dimen>
+    <dimen name="size_title_francoise_dolto">34sp</dimen>
+    <dimen name="size_title_saint_quentin_fallavier">24sp</dimen>
+
+    <!-- text size-->
+    <dimen name="text_size_title">16sp</dimen>
+</resources>

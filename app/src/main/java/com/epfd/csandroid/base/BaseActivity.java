@@ -6,7 +6,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.epfd.csandroid.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -15,6 +17,8 @@ import butterknife.ButterKnife;
 import static com.epfd.csandroid.utils.Utils.INFORMATION_LOG;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
 
     protected void configureToolbar(){
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         if (isAChildActivity() != null) {
             if (isAChildActivity()) {
                 ActionBar actionBar = getSupportActionBar();
