@@ -4,6 +4,10 @@
     <string name="francois_dolto">Françoise DOLTO</string>
     <string name="saint_quentin_fallavier">Saint - Quentin - Fallavier</string>
 
+    <!-- Used in NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <!-- AUTH -->
     <string name="connexion_btn">ENTRER</string>
     <string name="connection_succeed">Connexion réussie</string>
@@ -17,6 +21,8 @@
     <string name="popup_message_confirmation_delete_account">Souhaitez vous supprimer votre compte</string>
     <string name="popup_message_choice_yes">OUI</string>
     <string name="popup_message_choice_no">NON</string>
+
+
 
 
 </resources>

@@ -1,8 +1,10 @@
 package com.epfd.csandroid.formulary;
 
 import android.content.DialogInterface;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.epfd.csandroid.R;
@@ -35,7 +37,7 @@ public class FormularyActivity extends BaseActivity {
 
     @Override
     public Boolean isAChildActivity() {
-        return null;
+        return false;
     }
 
 
@@ -49,14 +51,9 @@ public class FormularyActivity extends BaseActivity {
     @OnClick(R.id.formulary_deconnexion) public void onClickSignOutButton() { this.signOutUserFromFirebase(); }
 
     @OnClick(R.id.formulary_delete) public void onClickDeleteButton() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this, R.style.AlertDialogTheme)
                 .setMessage(R.string.popup_message_confirmation_delete_account)
-                .setPositiveButton(R.string.popup_message_choice_yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteUserFromFirebase();
-                    }
-                })
+                .setPositiveButton(R.string.popup_message_choice_yes, (dialogInterface, i) -> deleteUserFromFirebase())
                 .setNegativeButton(R.string.popup_message_choice_no, null)
                 .show();
     }
@@ -79,21 +76,19 @@ public class FormularyActivity extends BaseActivity {
 
     //Create OnCompleteListener called after tasks ended
     private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
-        return new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                switch (origin){
-                    case SIGN_OUT_TASK:
-                        finish();
-                        break;
-                    case DELETE_USER_TASK:
-                        finish();
-                        break;
-                    default:
-                        break;
-                }
+        return aVoid -> {
+            switch (origin){
+                case SIGN_OUT_TASK:
+                    finish();
+                    break;
+                case DELETE_USER_TASK:
+                    finish();
+                    break;
+                default:
+                    break;
             }
         };
     }
+
 
 }
