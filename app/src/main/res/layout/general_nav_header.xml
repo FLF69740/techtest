@@ -18,7 +18,7 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/nav_header_photo_frame"
         android:padding="10dp"
-        android:src="@drawable/ic_man_logo"
+        android:src="@drawable/ic_logo_pos2"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         android:gravity="center"
         android:fontFamily="@font/roboto_bold"
         android:textSize="@dimen/text_size_title"
-        android:text="NAME"
+        android:text="@string/NAME"
         app:layout_constraintBottom_toTopOf="@id/nav_header_username"
         app:layout_constraintTop_toBottomOf="@id/nav_header_photo" />
 
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="EMAIL"
+        android:text="@string/EMAIL"
         android:fontFamily="@font/roboto_light"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"

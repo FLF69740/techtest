@@ -7,6 +7,23 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/EPFD_Button</item>
+        <item name="android:editTextStyle">@style/EditTextFont</item>
+        <item name="android:textViewStyle">@style/TextViewFont</item>
+    </style>
+
+    <!-- EDIT TEXT -->
+    <style name="EditTextFont" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
+    </style>
+
+    <!-- TEXTVIEW -->
+    <style name="TextViewFont" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+    <style name="TextTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
     </style>
 
     <!-- BUTTON -->

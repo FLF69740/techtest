@@ -11,14 +11,20 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import com.epfd.csandroid.api.PasswordHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
+import com.epfd.csandroid.formulary.PasswordActivity;
+import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,17 +45,19 @@ public class MainActivity extends BaseActivity {
     private PropertyValuesHolder mPurcentGuideLineValues, mPurcentBottomGuideLineValues, mPurcentLeftGuideLineValues;
     private int mAnimationAlpha = 0;
 
+    private String mInternalCodeRegistration;
+
     private static final String DIMENSION = "DIMENSION";
     private static final String BOTTOM_DIMENSION = "BOTTOM_DIMENSION";
     private static final String LEFT_DIMENSION = "LEFT_DIMENSION";
     private static final int RC_SIGN_IN = 123;
 
-
     @Override
     public int getFragmentLayout() {return R.layout.activity_main;}
 
     @Override
-    public void start() {
+    public void start(@Nullable Bundle savedInstanceState) {
+        mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
         ImageView imageView = findViewById(R.id.logo_animation);
         imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
         AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) imageView.getBackground();
@@ -141,7 +149,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.main_connexion_btn) public void onClickLogin(){
         if (this.isCurrentUserLogged()){
-            startActivity(new Intent(this, FormularyActivity.class));
+            codeVerification();
         }else {
             this.startSignIn();
         }
@@ -167,7 +175,7 @@ public class MainActivity extends BaseActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) { // SUCCESS
-                startActivity(new Intent(this, FormularyActivity.class));
+                this.codeVerification();
             } else { // ERRORS
                 if (response == null) {
                     showSnackBar(this.mCoordinatorLayout, getString(R.string.error_authentication_canceled));
@@ -179,6 +187,32 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
+    public static final String BUNDLE_USERNAME = "BUNDLE_USERNAME";
+    public static final String BUNDLE_USERMAIL = "BUNDLE_USERMAIL";
+    public static final String BUNDLE_PASSWORD = "BUNDLE_PASSWORD";
+
+    //APEL Code verification
+    private void codeVerification(){
+        if (this.getCurrentUser() != null){
+            PasswordHelper.getCode().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String backEndCode = documentSnapshot.getString(Utils.NAME_DATA_CODE);
+                    if (backEndCode != null && !mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
+                        Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
+                        intent.putExtra(BUNDLE_USERNAME, getCurrentUser().getDisplayName());
+                        intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
+                        intent.putExtra(BUNDLE_PASSWORD, backEndCode);
+                        startActivity(intent);
+                    } else if (backEndCode != null && mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
+                        startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
+                    }
+                }
+            });
+        }
+    }
+
 
     /**
      *  UI

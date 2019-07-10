@@ -9,7 +9,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- AUTH -->
-    <string name="connexion_btn">ENTRER</string>
+    <string name="connexion_btn">SE CONNECTER</string>
     <string name="connection_succeed">Connexion réussie</string>
     <string name="error_authentication_canceled">Connexion annulée</string>
     <string name="error_no_internet">Connexion serveur impossible</string>
@@ -22,7 +22,19 @@
     <string name="popup_message_choice_yes">OUI</string>
     <string name="popup_message_choice_no">NON</string>
 
+    <!-- PASSWORD UI -->
+    <string name="password_bienvenue">BIENVENUE !</string>
+    <string name="password_intro">Vous souhaitez vous inscrire avec les identifiants suivants :</string>
+    <string name="password_activity_request">Veuillez entrer le code fourni par l\'APEL</string>
+    <string name="password_ps1">(vous pourrez les modifier dans le formulaire d\'inscription)</string>
+    <string name="password_mot_de_passe">Mot de passe</string>
+    <string name="password_wrong_proposition">Code erroné, veuillez réessayer. Le code se trouve sur le document de l\'APEL. Si le problème persiste, contactez l\'APEL dans notre rubrique contact.</string>
 
 
+    <!-- DEFAULT STRING -->
+    <string name="NAME">NOM</string>
+    <string name="EMAIL">EMAIL</string>
+    <string name="OK">OK</string>
+    <string name="RETOUR">RETOUR</string>
 
 </resources>

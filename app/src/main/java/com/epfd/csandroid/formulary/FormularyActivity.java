@@ -1,10 +1,12 @@
 package com.epfd.csandroid.formulary;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.epfd.csandroid.R;
@@ -19,8 +21,7 @@ public class FormularyActivity extends BaseActivity {
 
     @BindView(R.id.formulary_information) TextView mTextViewInformation;
 
-    private static final int SIGN_OUT_TASK = 10;
-    private static final int DELETE_USER_TASK = 20;
+
 
     @Override
     public int getFragmentLayout() {
@@ -28,7 +29,7 @@ public class FormularyActivity extends BaseActivity {
     }
 
     @Override
-    public void start() {
+    public void start(@Nullable Bundle savedInstanceState) {
         if (this.getCurrentUser() != null){
             String info = "name : " + getCurrentUser().getDisplayName() + "\nmail : " + getCurrentUser().getEmail();
             mTextViewInformation.setText(info);
@@ -58,37 +59,11 @@ public class FormularyActivity extends BaseActivity {
                 .show();
     }
 
-    //create http request Sign Out
-    private void signOutUserFromFirebase(){
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
-    }
 
-    //create http request Delete
-    private void deleteUserFromFirebase(){
-        if (this.getCurrentUser() != null) {
-            AuthUI.getInstance()
-                    .delete(this)
-                    .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK));
-        }
-    }
 
-    //Create OnCompleteListener called after tasks ended
-    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
-        return aVoid -> {
-            switch (origin){
-                case SIGN_OUT_TASK:
-                    finish();
-                    break;
-                case DELETE_USER_TASK:
-                    finish();
-                    break;
-                default:
-                    break;
-            }
-        };
-    }
+
+
+
 
 
 }
