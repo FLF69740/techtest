@@ -12,8 +12,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import com.epfd.csandroid.api.PasswordHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
@@ -39,6 +42,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_horizontal_guide) Guideline mGuideLineHorizontal;
     @BindView(R.id.main_vertical_left_guide) Guideline mGuidelineLeftVertical;
     @BindView(R.id.main_connexion_btn) Button mMainConnexionBtn;
+    @BindView(R.id.main_progressBar) ProgressBar mProgressBar;
 
     private PropertyValuesHolder mAlphaValues = PropertyValuesHolder.ofInt("ALPHA", 0, 100);
     private PropertyValuesHolder mWaitValues = PropertyValuesHolder.ofInt("WAIT", 3000, 1);
@@ -57,6 +61,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
+        mProgressBar.setVisibility(View.INVISIBLE);
         mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
         ImageView imageView = findViewById(R.id.logo_animation);
         imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
@@ -175,6 +180,7 @@ public class MainActivity extends BaseActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) { // SUCCESS
+                this.mProgressBar.setVisibility(View.VISIBLE);
                 this.codeVerification();
             } else { // ERRORS
                 if (response == null) {
