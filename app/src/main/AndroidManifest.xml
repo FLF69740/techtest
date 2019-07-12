@@ -10,7 +10,8 @@
         android:roundIcon="@drawable/ic_logo_pos2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".formulary.PasswordActivity"></activity>
+        <activity android:name=".firstpage.FirstPageActivity"></activity>
+        <activity android:name=".formulary.PasswordActivity" />
         <activity android:name=".formulary.FormularyActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -7,6 +7,13 @@
     <!-- Used in NavigationDrawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    
+    <!-- FORMULARY -->
+    <string name="formulary_class">CLASSE</string>
+    <string name="formulary_introduction">Renseigner l\'identité de votre/vos enfant(s).</string>
+    <string name="formulary_add_kid">+ : ajouter le profil d\'un enfant</string>
+    <string name="formulary_valider">VALIDER</string>
+    <string name="formulary_snackbar_incomplet">Formulaire incomplet, vérifiez pour chaque enfant :\n\n     * genre : garçon ou fille\n     * nom\n     * prénom\n     * classe</string>
 
     <!-- AUTH -->
     <string name="connexion_btn">SE CONNECTER</string>
@@ -33,6 +40,7 @@
 
     <!-- DEFAULT STRING -->
     <string name="NAME">NOM</string>
+    <string name="FORNAME">PRENOM</string>
     <string name="EMAIL">EMAIL</string>
     <string name="OK">OK</string>
     <string name="RETOUR">RETOUR</string>

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.api.PasswordHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
@@ -25,15 +26,17 @@ import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.epfd.csandroid.utils.Utils.BUNDLE_PASSWORD;
+import static com.epfd.csandroid.utils.Utils.BUNDLE_USERMAIL;
+import static com.epfd.csandroid.utils.Utils.BUNDLE_USERNAME;
 
 public class MainActivity extends BaseActivity {
 
@@ -50,6 +53,7 @@ public class MainActivity extends BaseActivity {
     private int mAnimationAlpha = 0;
 
     private String mInternalCodeRegistration;
+    private boolean isFormularySold;
 
     private static final String DIMENSION = "DIMENSION";
     private static final String BOTTOM_DIMENSION = "BOTTOM_DIMENSION";
@@ -63,6 +67,7 @@ public class MainActivity extends BaseActivity {
     public void start(@Nullable Bundle savedInstanceState) {
         mProgressBar.setVisibility(View.INVISIBLE);
         mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
+        isFormularySold = getSharedPreferences(Utils.SHARED_FORMULARY_SOLD, MODE_PRIVATE).getBoolean(Utils.BUNDLE_KEY_FORMULARY, false);
         ImageView imageView = findViewById(R.id.logo_animation);
         imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
         AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) imageView.getBackground();
@@ -194,27 +199,23 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public static final String BUNDLE_USERNAME = "BUNDLE_USERNAME";
-    public static final String BUNDLE_USERMAIL = "BUNDLE_USERMAIL";
-    public static final String BUNDLE_PASSWORD = "BUNDLE_PASSWORD";
-
     //APEL Code verification
     private void codeVerification(){
         if (this.getCurrentUser() != null){
-            PasswordHelper.getCode().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    String backEndCode = documentSnapshot.getString(Utils.NAME_DATA_CODE);
-                    if (backEndCode != null && !mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
-                        Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
-                        intent.putExtra(BUNDLE_USERNAME, getCurrentUser().getDisplayName());
-                        intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
-                        intent.putExtra(BUNDLE_PASSWORD, backEndCode);
-                        startActivity(intent);
-                    } else if (backEndCode != null && mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
-                        startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
-                    }
+            PasswordHelper.getCode().addOnSuccessListener(documentSnapshot -> {
+                String backEndCode = documentSnapshot.getString(Utils.NAME_DATA_CODE);
+                if (backEndCode != null && !mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
+                    Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
+                    intent.putExtra(BUNDLE_USERNAME, getCurrentUser().getDisplayName());
+                    intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
+                    intent.putExtra(BUNDLE_PASSWORD, backEndCode);
+                    startActivity(intent);
+                } else if (backEndCode != null && mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase()) && !isFormularySold){
+                    startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
+                } else if (backEndCode != null && mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase()) && isFormularySold){
+                    startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
                 }
+                finish();
             });
         }
     }

@@ -11,16 +11,18 @@ public class User {
     @Nullable private String mUrlPicture;
     private String mStringKidNameList;
     private String mStringClasseNameList;
+    private String mStringGenderList;
 
     public User() {
     }
 
-    public User(String uid, String username, @Nullable String urlPicture, String stringKidNameList, String stringClasseNameList) {
+    public User(String uid, String username, @Nullable String urlPicture, String stringKidNameList, String stringClasseNameList, String stringGenderList) {
         mUid = uid;
         mUsername = username;
         mUrlPicture = urlPicture;
         mStringKidNameList = stringKidNameList;
         mStringClasseNameList = stringClasseNameList;
+        mStringGenderList = stringGenderList;
     }
 
     public String getUid() {
@@ -62,5 +64,13 @@ public class User {
 
     public void setStringClasseNameList(String stringClasseNameList) {
         mStringClasseNameList = stringClasseNameList;
+    }
+
+    public String getStringGenderList() {
+        return mStringGenderList;
+    }
+
+    public void setStringGenderList(String stringGenderList) {
+        mStringGenderList = stringGenderList;
     }
 }

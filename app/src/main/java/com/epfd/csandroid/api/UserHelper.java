@@ -11,6 +11,7 @@ public class UserHelper {
     private static final String COLLECTION_NAME = "users";
     private static final String KID_LIST = "kid";
     private static final String CLASSE_LIST = "classe";
+    private static final String GENDER_LIST = "gender";
 
     // --- COLLECTION REFERENCE ---
 
@@ -20,8 +21,8 @@ public class UserHelper {
 
     // --- CREATE ---
 
-    public static Task<Void> createUser(String uid, String username, String urlPicture, String stringKidNameList, String stringClasseNameList) {
-        User userToCreate = new User(uid, username, urlPicture, stringKidNameList, stringClasseNameList);
+    public static Task<Void> createUser(String uid, String username, String urlPicture, String stringKidNameList, String stringClasseroomsList, String stringGenderList) {
+        User userToCreate = new User(uid, username, urlPicture, stringKidNameList, stringClasseroomsList, stringGenderList);
         return UserHelper.getUsersCollection().document(uid).set(userToCreate);
     }
 
@@ -42,7 +43,11 @@ public class UserHelper {
     }
 
     public static Task<Void> updateClasseList(String uid, String stringClasseNameList) {
-        return UserHelper.getUsersCollection().document(uid).update(KID_LIST, stringClasseNameList);
+        return UserHelper.getUsersCollection().document(uid).update(CLASSE_LIST, stringClasseNameList);
+    }
+
+    public static Task<Void> updateGenderList(String uid, String stringGenderList) {
+        return UserHelper.getUsersCollection().document(uid).update(GENDER_LIST, stringGenderList);
     }
 
     // --- DELETE ---

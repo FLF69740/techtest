@@ -113,6 +113,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     private static final int SIGN_OUT_TASK = 10;
     private static final int DELETE_USER_TASK = 20;
+    private static final int UPDATE_USER = 30;
 
     //create http request Sign Out
     protected void signOutUserFromFirebase(){
@@ -132,6 +133,17 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         startActivity(new Intent(this, MainActivity.class));
     }
 
+
+    /*
+    @OnClick(R.id.formulary_valider) public void onClickDeleteButton() {
+        new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                .setMessage(R.string.popup_message_confirmation_delete_account)
+                .setPositiveButton(R.string.popup_message_choice_yes, (dialogInterface, i) -> deleteUserFromFirebase())
+                .setNegativeButton(R.string.popup_message_choice_no, null)
+                .show();
+    }
+*/
+
     //Create OnCompleteListener called after tasks ended
     private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
         return aVoid -> {
@@ -140,6 +152,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                     finish();
                     break;
                 case DELETE_USER_TASK:
+                    finish();
+                    break;
+                case UPDATE_USER:
                     finish();
                     break;
                 default:
