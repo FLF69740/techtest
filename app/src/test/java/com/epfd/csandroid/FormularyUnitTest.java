@@ -14,15 +14,15 @@ import static org.junit.Assert.*;
 public class FormularyUnitTest {
 
     private Kid getAlexi(){
-        return new Kid("DOE","Alexi","CP", Utils.BOY);
+        return new Kid("Doe","alexi","CP", Utils.BOY);
     }
 
     private Kid getSophie(){
-        return new Kid("DOE","Sophie","Cm1", Utils.GIRL);
+        return new Kid("dOe","SOPHIE","Cm1", Utils.GIRL);
     }
 
     private Kid getJohn(){
-        return new Kid("SNOW","John","cm2", Utils.BOY);
+        return new Kid("snow","John","cm2", Utils.BOY);
     }
 
     private List<Kid> getKids(){

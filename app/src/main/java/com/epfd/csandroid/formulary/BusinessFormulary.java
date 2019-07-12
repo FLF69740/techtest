@@ -12,7 +12,7 @@ public class BusinessFormulary {
         for (Kid kid : kids){
             result.append(prefix);
             prefix = ",";
-            result.append(kid.getPrenom()).append(" ").append(kid.getNom());
+            result.append(kid.getPrenom().substring(0,1).toUpperCase()).append(kid.getPrenom().substring(1).toLowerCase()).append(" ").append(kid.getNom().toUpperCase());
         }
         return result.toString();
     }
