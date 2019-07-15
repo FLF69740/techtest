@@ -16,12 +16,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
+import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.api.PasswordHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.formulary.PasswordActivity;
+import com.epfd.csandroid.models.User;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -53,7 +54,6 @@ public class MainActivity extends BaseActivity {
     private int mAnimationAlpha = 0;
 
     private String mInternalCodeRegistration;
-    private boolean isFormularySold;
 
     private static final String DIMENSION = "DIMENSION";
     private static final String BOTTOM_DIMENSION = "BOTTOM_DIMENSION";
@@ -67,7 +67,6 @@ public class MainActivity extends BaseActivity {
     public void start(@Nullable Bundle savedInstanceState) {
         mProgressBar.setVisibility(View.INVISIBLE);
         mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
-        isFormularySold = getSharedPreferences(Utils.SHARED_FORMULARY_SOLD, MODE_PRIVATE).getBoolean(Utils.BUNDLE_KEY_FORMULARY, false);
         ImageView imageView = findViewById(R.id.logo_animation);
         imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
         AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) imageView.getBackground();
@@ -199,7 +198,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    //APEL Code verification
+    //APEL Code verification : 1/ Formulary verification -> OK : 2/ User databse verification
     private void codeVerification(){
         if (this.getCurrentUser() != null){
             PasswordHelper.getCode().addOnSuccessListener(documentSnapshot -> {
@@ -210,10 +209,14 @@ public class MainActivity extends BaseActivity {
                     intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
                     intent.putExtra(BUNDLE_PASSWORD, backEndCode);
                     startActivity(intent);
-                } else if (backEndCode != null && mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase()) && !isFormularySold){
-                    startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
-                } else if (backEndCode != null && mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase()) && isFormularySold){
-                    startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
+                } else {
+                    UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
+                        if (documentSnapshot1.toObject(User.class) != null) {
+                            startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
+                        } else {
+                            startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
+                        }
+                    });
                 }
                 finish();
             });
