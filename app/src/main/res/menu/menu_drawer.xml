@@ -4,5 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/general_drawer_formulary"
+            android:icon="@drawable/ic_folder_shared_black_24dp"
+            android:title="@string/formulary_formulary"/>
+        <item
+            android:id="@+id/general_drawer_deconnexion"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="@string/connexion_deconnexion"/>
+        <item
+            android:id="@+id/general_drawer_delete"
+            android:icon="@drawable/ic_delete_black_24dp"
+            android:title="@string/compte_delete"/>
+
+    </group>
+
 
 </menu>

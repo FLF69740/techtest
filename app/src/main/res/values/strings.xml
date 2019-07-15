@@ -9,6 +9,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     
     <!-- FORMULARY -->
+    <string name="formulary_formulary">Formulaire</string>
     <string name="formulary_class">CLASSE</string>
     <string name="formulary_introduction">Renseigner l\'identité de votre/vos enfant(s).</string>
     <string name="formulary_add_kid">+ : ajouter le profil d\'un enfant</string>
@@ -16,6 +17,7 @@
     <string name="formulary_snackbar_incomplet">Formulaire incomplet, vérifiez pour chaque enfant :\n\n     * genre : garçon ou fille\n     * nom\n     * prénom\n     * classe</string>
 
     <!-- AUTH -->
+    <string name="connexion_deconnexion">Deconnexion</string>
     <string name="connexion_btn">SE CONNECTER</string>
     <string name="connection_succeed">Connexion réussie</string>
     <string name="error_authentication_canceled">Connexion annulée</string>

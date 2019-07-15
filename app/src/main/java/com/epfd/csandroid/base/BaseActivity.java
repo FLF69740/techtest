@@ -1,22 +1,28 @@
 package com.epfd.csandroid.base;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.MainActivity;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.api.UserHelper;
+import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,19 +31,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import butterknife.ButterKnife;
 
+import static com.epfd.csandroid.utils.Utils.EMPTY_PREFERENCES_LOG_CODE;
+
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     protected Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
 
+    private static final int SIGN_OUT_TASK = 10;
+    private static final int DELETE_USER_TASK = 20;
+    private static final int UPDATE_USER = 30;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        //TEMP
+        mPreferencesCode = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE);
+
         super.onCreate(savedInstanceState);
         this.setContentView(getFragmentLayout());
         ButterKnife.bind(this);
         configureToolbar();
         start(savedInstanceState);
     }
+
+    //TEMP
+    private SharedPreferences mPreferencesCode;
 
     public abstract int getFragmentLayout();
     public abstract void start(@Nullable Bundle savedInstanceState);
@@ -93,13 +112,35 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         NavigationView mNavigationView = findViewById(R.id.general_nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         View viewHeader = mNavigationView.getHeaderView(0);
-     //   mNavUserName = viewHeader.findViewById(R.id.nav_userName);
-     //   mNavUserPhoto = viewHeader.findViewById(R.id.nav_userPhoto);
+        TextView navUserName = viewHeader.findViewById(R.id.nav_header_username);
+        navUserName.setText(getCurrentUser().getDisplayName());
+        TextView navUserMail = viewHeader.findViewById(R.id.nav_header_user_email);
+        navUserMail.setText(getCurrentUser().getEmail());
+        ImageView navUserPhoto = viewHeader.findViewById(R.id.nav_header_photo);
+        if (getCurrentUser().getPhotoUrl() != null) Glide.with(this)
+                .load(this.getCurrentUser().getPhotoUrl())
+                .apply(RequestOptions.centerCropTransform())
+                .into(navUserPhoto);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        switch (item.getItemId()){
+            case R.id.general_drawer_formulary :
+                Toast.makeText(this, "FORMULAIRE", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.general_drawer_deconnexion :
+                signOutUserFromFirebase();
+                finish();
+                break;
+            case R.id.general_drawer_delete :
+                this.onClickDeleteButton();
+                break;
+        }
+
+        this.mDrawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
     /**
@@ -111,10 +152,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
 
-    private static final int SIGN_OUT_TASK = 10;
-    private static final int DELETE_USER_TASK = 20;
-    private static final int UPDATE_USER = 30;
-
     //create http request Sign Out
     protected void signOutUserFromFirebase(){
         AuthUI.getInstance()
@@ -123,9 +160,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         startActivity(new Intent(this, MainActivity.class));
     }
 
+    //TEMP
     //create http request Delete
     protected void deleteUserFromFirebase(){
+        mPreferencesCode.edit().putString(Utils.BUNDLE_KEY_ACTIVE_USER, EMPTY_PREFERENCES_LOG_CODE).apply();
         if (this.getCurrentUser() != null) {
+            UserHelper.deleteUser(getCurrentUser().getUid()).addOnFailureListener(this.onFailureListener());
             AuthUI.getInstance()
                     .delete(this)
                     .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK));
@@ -134,15 +174,15 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     }
 
 
-    /*
-    @OnClick(R.id.formulary_valider) public void onClickDeleteButton() {
+
+    protected void onClickDeleteButton() {
         new AlertDialog.Builder(this, R.style.AlertDialogTheme)
                 .setMessage(R.string.popup_message_confirmation_delete_account)
                 .setPositiveButton(R.string.popup_message_choice_yes, (dialogInterface, i) -> deleteUserFromFirebase())
                 .setNegativeButton(R.string.popup_message_choice_no, null)
                 .show();
     }
-*/
+
 
     //Create OnCompleteListener called after tasks ended
     private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
