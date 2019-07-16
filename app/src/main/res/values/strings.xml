@@ -7,6 +7,11 @@
     <!-- Used in NavigationDrawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- NOTIFICATION -->
+    <string name="notification_text_parameter">Notification Francoise Dolto</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="notification_title">"Vous avez reçu une notification"</string>
     
     <!-- FORMULARY -->
     <string name="formulary_formulary">Formulaire</string>
