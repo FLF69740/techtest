@@ -58,8 +58,7 @@
         android:id="@+id/formulary_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/formulary_deconnexion"
+        app:layout_constraintBottom_toTopOf="@+id/formulary_bottomNavigationView"
         app:layout_constraintTop_toTopOf="@+id/formulary_vertical_guide1" />
 
     <ImageView
@@ -77,27 +76,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/formulary_deconnexion"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/formulary_bottomNavigationView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/compte_deconnexion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/formulary_valider"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/formulary_valider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/formulary_valider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/formulary_deconnexion" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorAccent"
+        app:itemIconTint="@color/colorWhite"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/menu_bottom_nav_formulary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

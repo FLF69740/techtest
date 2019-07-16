@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.MainActivity;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.UserHelper;
+import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -127,7 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.general_drawer_formulary :
-                Toast.makeText(this, "FORMULAIRE", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, FormularyActivity.class));
                 break;
             case R.id.general_drawer_deconnexion :
                 signOutUserFromFirebase();
@@ -158,6 +159,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 .signOut(this)
                 .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     //TEMP
@@ -171,6 +173,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                     .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK));
         }
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
 

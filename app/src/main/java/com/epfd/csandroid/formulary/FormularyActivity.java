@@ -15,9 +15,12 @@ import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.formulary.recyclerview.FormularyAdapter;
 import com.epfd.csandroid.models.Kid;
+import com.epfd.csandroid.models.User;
 import com.epfd.csandroid.utils.Utils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -26,6 +29,7 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
     @BindView(R.id.formulary_information) TextView mTextViewInformation;
     @BindView(R.id.formulary_recyclerview) RecyclerView mRecyclerView;
     @BindView(R.id.formulary_coordinatorLayout) CoordinatorLayout mCoordinatorLayout;
+    @BindView(R.id.formulary_bottomNavigationView) BottomNavigationView mBottomNavigationView;
 
     private FormularyAdapter mAdapter;
     private ArrayList<Kid> mKidList;
@@ -42,21 +46,40 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
     public void start(@Nullable Bundle savedInstanceState) {
         if (this.getCurrentUser() != null){
 
+            mBottomNavigationView.setOnNavigationItemSelectedListener(item -> bottomNavigationViewAction(item.getItemId()));
+
             if (savedInstanceState != null){
                 mKidList = savedInstanceState.getParcelableArrayList(BUNDLE_KEY_KID_LIST);
+                this.configureRecyclerView(mKidList);
             }else {
-                mKidList = new ArrayList<>();
-                mKidList.add(new Kid("", "", "", Utils.EMPTY));
+                UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
+                    if (documentSnapshot1.toObject(User.class) != null) {
+                        User user = documentSnapshot1.toObject(User.class);
+                        mKidList = new ArrayList<>();
+                        if (user != null) {
+                            for (int i = 0; i < BusinessFormulary.getStringListToKids(user.getStringKidNameList()).size(); i++) {
+                                String completeName = BusinessFormulary.getStringListToKids(user.getStringKidNameList()).get(i);
+                                String classroom = BusinessFormulary.getStringListToKids(user.getStringClasseNameList()).get(i);
+                                String gender = BusinessFormulary.getStringListToKids(user.getStringGenderList()).get(i);
+                                mKidList.add(new Kid(BusinessFormulary.getStringNameFromKid(completeName), BusinessFormulary.getStringFornameFromKid(completeName), classroom, gender));
+                            }
+                        }
+                        this.configureRecyclerView(mKidList);
+                    } else {
+                        mKidList = new ArrayList<>();
+                        mKidList.add(new Kid("", "", "", Utils.EMPTY));
+                        this.configureRecyclerView(mKidList);
+                    }
+                });
             }
-
-            mAdapter = new FormularyAdapter(mKidList, this);
-            this.mRecyclerView.setAdapter(mAdapter);
-            this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-
         }
+    }
+
+    //configure RecyclerView
+    private void configureRecyclerView(List<Kid> kidList){
+        mAdapter = new FormularyAdapter(kidList, this);
+        this.mRecyclerView.setAdapter(mAdapter);
+        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -79,9 +102,22 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
         mAdapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.formulary_deconnexion) public void onClickSignOutButton() { this.signOutUserFromFirebase(); }
+    private Boolean bottomNavigationViewAction(Integer integer){
+        switch (integer){
+            case R.id.formulary_deconnexion :
+                this.signOutUserFromFirebase();
+                break;
+            case R.id.formulary_back :
+                onBackPressed();
+                break;
+            case R.id.formulary_validation :
+                this.onClickValiderButton();
+                break;
+        }
+        return true;
+    }
 
-    @OnClick(R.id.formulary_valider) public void onClickValiderButton(){
+    private void onClickValiderButton(){
         boolean kidListVerification = true;
         for (Kid kid : mKidList){
             if (kid.getPrenom().equals("") || kid.getNom().equals("") || kid.getClasse().equals("") || kid.getGenre().equals(Utils.EMPTY)){

@@ -1,7 +1,5 @@
 package com.epfd.csandroid.models;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 public class User {
@@ -10,18 +8,18 @@ public class User {
     private String mUsername;
     @Nullable private String mUrlPicture;
     private String mStringKidNameList;
-    private String mStringClasseNameList;
+    private String mStringClasseRoomList;
     private String mStringGenderList;
 
     public User() {
     }
 
-    public User(String uid, String username, @Nullable String urlPicture, String stringKidNameList, String stringClasseNameList, String stringGenderList) {
+    public User(String uid, String username, @Nullable String urlPicture, String stringKidNameList, String stringClassRoomList, String stringGenderList) {
         mUid = uid;
         mUsername = username;
         mUrlPicture = urlPicture;
         mStringKidNameList = stringKidNameList;
-        mStringClasseNameList = stringClasseNameList;
+        mStringClasseRoomList = stringClassRoomList;
         mStringGenderList = stringGenderList;
     }
 
@@ -59,11 +57,11 @@ public class User {
     }
 
     public String getStringClasseNameList() {
-        return mStringClasseNameList;
+        return mStringClasseRoomList;
     }
 
     public void setStringClasseNameList(String stringClasseNameList) {
-        mStringClasseNameList = stringClasseNameList;
+        mStringClasseRoomList = stringClasseNameList;
     }
 
     public String getStringGenderList() {

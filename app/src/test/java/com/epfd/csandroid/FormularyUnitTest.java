@@ -33,6 +33,10 @@ public class FormularyUnitTest {
         return kids;
     }
 
+    private String stringNameKid(){
+        return "John-Henry DE FONTENAY";
+    }
+
     @Test
     public void testIfKidNamesAreOkForDataBase(){
         List<Kid> kids = getKids();
@@ -50,5 +54,16 @@ public class FormularyUnitTest {
         List<Kid> kids = getKids();
         assertEquals("BOY,GIRL,BOY", BusinessFormulary.getKidGenderList(kids));
     }
+
+    @Test
+    public void testIfKidNameAreSplitted(){
+        assertEquals("DE FONTENAY", BusinessFormulary.getStringNameFromKid(stringNameKid()));
+    }
+
+    @Test
+    public void testIfKidFornameAreSplitted(){
+        assertEquals("John-Henry", BusinessFormulary.getStringFornameFromKid(stringNameKid()));
+    }
+
 
 }
