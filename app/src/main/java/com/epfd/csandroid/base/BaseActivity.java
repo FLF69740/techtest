@@ -23,6 +23,7 @@ import com.epfd.csandroid.MainActivity;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.formulary.FormularyActivity;
+import com.epfd.csandroid.formulary.PrivacyPolicyActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -136,6 +137,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 break;
             case R.id.general_drawer_delete :
                 this.onClickDeleteButton();
+                break;
+            case R.id.general_drawer_policy:
+                startActivity(new Intent(this, PrivacyPolicyActivity.class));
                 break;
         }
 
