@@ -1,24 +1,15 @@
 package com.epfd.csandroid.presentation;
 
-
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.epfd.csandroid.R;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class PresentationPageOneFragment extends Fragment {
 
     public static final String BUNDLE_LIST_STRING = "BUNDLE_LIST_STRING";
