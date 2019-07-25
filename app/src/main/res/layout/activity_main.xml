@@ -103,6 +103,32 @@
             app:layout_constraintTop_toBottomOf="@+id/main_text_saint_quentin_fallavier" />
 
         <Button
+            android:id="@+id/main_contact_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/connexion_contact_btn"
+            android:theme="@style/EPFD_Third_Button"
+            android:alpha="0"
+            app:layout_constraintBottom_toTopOf="@+id/main_presentation_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/main_presentation_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/connexion_presentation_btn"
+            android:theme="@style/EPFD_Second_Button"
+            android:alpha="0"
+            app:layout_constraintBottom_toTopOf="@+id/main_connexion_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
             android:id="@+id/main_connexion_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -111,6 +137,7 @@
             android:layout_marginBottom="16dp"
             android:alpha="0"
             android:text="@string/connexion_btn"
+            android:theme="@style/EPFD_Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

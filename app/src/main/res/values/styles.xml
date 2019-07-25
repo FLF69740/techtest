@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:buttonStyle">@style/EPFD_Button</item>
         <item name="android:editTextStyle">@style/EditTextFont</item>
         <item name="android:textViewStyle">@style/TextViewFont</item>
     </style>
@@ -20,6 +19,12 @@
     <!-- TEXTVIEW -->
     <style name="TextViewFont" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TextViewPresentationLand" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_size_presentation_land</item>
     </style>
 
     <style name="TextTitle" parent="Widget.AppCompat.TextView">
@@ -36,6 +41,16 @@
     <style name="EPFD_Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="colorButtonNormal">@color/colorAccent</item>
+    </style>
+
+    <style name="EPFD_Second_Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="colorButtonNormal">@color/colorSecondAccentDark</item>
+    </style>
+
+    <style name="EPFD_Third_Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="colorButtonNormal">@color/colorThirdAccent</item>
     </style>
 
     <!-- STYLE SIGN-IN ACTIVITY -->

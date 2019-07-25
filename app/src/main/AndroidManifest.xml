@@ -10,7 +10,15 @@
         android:roundIcon="@drawable/ic_logo_pos2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".formulary.PrivacyPolicyActivity"></activity>
+        <activity android:name=".presentation.PresentationActivity"
+            android:label="@string/connexion_presentation_btn"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity android:name=".formulary.PrivacyPolicyActivity" />
         <activity android:name=".firstpage.FirstPageActivity" />
         <activity android:name=".formulary.PasswordActivity" />
         <activity android:name=".formulary.FormularyActivity" />

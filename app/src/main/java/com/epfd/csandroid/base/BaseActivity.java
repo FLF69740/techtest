@@ -74,7 +74,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         if (isAChildActivity() != null) {
             if (isAChildActivity()) {
                 ActionBar actionBar = getSupportActionBar();
-                assert actionBar != null;
                 actionBar.setDisplayHomeAsUpEnabled(true);
             } else {
                 this.configureDrawerLayout();

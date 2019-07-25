@@ -23,6 +23,7 @@ import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.formulary.PasswordActivity;
 import com.epfd.csandroid.models.User;
+import com.epfd.csandroid.presentation.PresentationActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -46,6 +47,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_horizontal_guide) Guideline mGuideLineHorizontal;
     @BindView(R.id.main_vertical_left_guide) Guideline mGuidelineLeftVertical;
     @BindView(R.id.main_connexion_btn) Button mMainConnexionBtn;
+    @BindView(R.id.main_presentation_btn) Button mMainPresentationBtn;
+    @BindView(R.id.main_contact_btn) Button mMainContactBtn;
     @BindView(R.id.main_progressBar) ProgressBar mProgressBar;
 
     private PropertyValuesHolder mAlphaValues = PropertyValuesHolder.ofInt("ALPHA", 0, 100);
@@ -146,15 +149,19 @@ public class MainActivity extends BaseActivity {
         animator.addUpdateListener(animation -> {
             mAnimationAlpha = (int) animation.getAnimatedValue();
             mMainConnexionBtn.setAlpha((float)mAnimationAlpha /100);
+            mMainPresentationBtn.setAlpha((float)mAnimationAlpha /100);
+            mMainContactBtn.setAlpha((float)mAnimationAlpha /100);
         });
         return animator;
     }
 
     /**
-     *  CONNEXION AUTH
+     *  BUTTON ACTION
      */
 
-    private List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
+    @OnClick(R.id.main_presentation_btn) public void onClickPresentation(){
+        startActivity(new Intent(this, PresentationActivity.class));
+    }
 
     @OnClick(R.id.main_connexion_btn) public void onClickLogin(){
         if (this.isCurrentUserLogged()){
@@ -163,6 +170,12 @@ public class MainActivity extends BaseActivity {
             this.startSignIn();
         }
     }
+
+    /**
+     *  CONNEXION AUTH
+     */
+
+    private List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
 
     //Launch sign in Activity
     private void startSignIn(){
