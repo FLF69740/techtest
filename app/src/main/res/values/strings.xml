@@ -46,6 +46,16 @@
     <string name="password_mot_de_passe">Mot de passe</string>
     <string name="password_wrong_proposition">Code erroné, veuillez réessayer. Le code se trouve sur le document de l\'APEL. Si le problème persiste, contactez l\'APEL dans notre rubrique contact.</string>
 
+    <!-- CONTACT SECTION -->
+    <string name="contact_destinataire">DESTINATAIRE :</string>
+    <string name="contact_email">Adresse messagerie :</string>
+    <string name="contact_email_save">Garder en mémoire votre adresse email</string>
+    <string name="contact_titre">TITRE :</string>
+    <string name="contact_message">MESSAGE</string>
+    <string name="contact_APEL">APEL</string>
+    <string name="contact_ECOLE">ECOLE</string>
+    <string name="contact_DEVELOPPEUR">DEVELOPPEUR (version test)</string>
+    
     <!-- PRESENTATION SECTION -->
     <string name="presentation_line_empty">LINE EMPTY</string>
 

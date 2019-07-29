@@ -20,6 +20,7 @@ import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.api.PasswordHelper;
 import com.epfd.csandroid.base.BaseActivity;
+import com.epfd.csandroid.formulary.ContactActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.formulary.PasswordActivity;
 import com.epfd.csandroid.models.User;
@@ -158,6 +159,10 @@ public class MainActivity extends BaseActivity {
     /**
      *  BUTTON ACTION
      */
+
+    @OnClick(R.id.main_contact_btn) public void onClickContact(){
+        startActivity(new Intent(this, ContactActivity.class));
+    }
 
     @OnClick(R.id.main_presentation_btn) public void onClickPresentation(){
         startActivity(new Intent(this, PresentationActivity.class));
