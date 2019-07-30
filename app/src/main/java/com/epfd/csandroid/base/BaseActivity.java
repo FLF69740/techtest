@@ -3,6 +3,7 @@ package com.epfd.csandroid.base;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.MainActivity;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.administrator.classroomsedition.ClassroomsEditionActivity;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.formulary.PrivacyPolicyActivity;
@@ -33,6 +35,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import butterknife.ButterKnife;
 
+import static com.epfd.csandroid.utils.Utils.APEL;
+import static com.epfd.csandroid.utils.Utils.DEV;
 import static com.epfd.csandroid.utils.Utils.EMPTY_PREFERENCES_LOG_CODE;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -110,9 +114,17 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     //Configure NavigationView
     private void configureNavigationView(){
-        NavigationView mNavigationView = findViewById(R.id.general_nav_view);
-        mNavigationView.setNavigationItemSelectedListener(this);
-        View viewHeader = mNavigationView.getHeaderView(0);
+        NavigationView navigationView = findViewById(R.id.general_nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View viewHeader = navigationView.getHeaderView(0);
+        if (getCurrentUser() != null && getCurrentUser().getEmail() != null && !getCurrentUser().getEmail().equals(DEV)) {
+            Menu navMenu = navigationView.getMenu();
+            navMenu.findItem(R.id.genaral_drawer_admin_section).setVisible(false);
+        }else {
+            Menu navMenu = navigationView.getMenu();
+            navMenu.findItem(R.id.general_drawer_delete).setVisible(false);
+        }
+
         TextView navUserName = viewHeader.findViewById(R.id.nav_header_username);
         navUserName.setText(getCurrentUser().getDisplayName());
         TextView navUserMail = viewHeader.findViewById(R.id.nav_header_user_email);
@@ -127,6 +139,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+            case R.id.classromms_edition :
+                startActivity(new Intent(this, ClassroomsEditionActivity.class));
+                break;
             case R.id.general_drawer_formulary :
                 startActivity(new Intent(this, FormularyActivity.class));
                 break;

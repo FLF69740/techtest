@@ -20,9 +20,20 @@
         <item
             android:id="@+id/general_drawer_policy"
             android:icon="@drawable/ic_reply_white_24dp"
-            android:title="POLICY"/>
-
+            android:title="@string/navigation_drawer_policy"/>
     </group>
 
+    <item
+        android:id="@+id/genaral_drawer_admin_section"
+        android:title="@string/navigation_drawer_administrator">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/classromms_edition"
+                    android:icon="@drawable/ic_group_black_24dp"
+                    android:title="@string/navigation_drawer_classrooms"/>
+            </group>
+        </menu>
+    </item>
 
 </menu>

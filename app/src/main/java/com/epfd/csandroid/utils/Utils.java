@@ -2,10 +2,16 @@ package com.epfd.csandroid.utils;
 
 public class Utils {
 
+    public static final String APEL = "apel.dolto.sqf@gmail.com";
+    public static final String SCHOOL = "ecole.f.dolto@free.fr";
+    public static final String DEV = "slayer171.flf@gmail.com";
+
     public static final String INFORMATION_LOG = "INFORMATION_LOG";
     public static final String EMPTY_PREFERENCES_LOG_CODE = "EMPTY_PREFERENCES_LOG_CODE";
     public static final String EMPTY = "EMPTY";
     public static final String NAME_DATA_CODE = "code";
+
+    public static final String NAME_DATA_CLASSROOMS = "name";
 
     public static final String BUNDLE_USERNAME = "BUNDLE_USERNAME";
     public static final String BUNDLE_USERMAIL = "BUNDLE_USERMAIL";

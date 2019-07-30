@@ -11,6 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".administrator.classroomsedition.ClassroomsEditionActivity"
+            android:label="@string/classrooms_edition_label"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".formulary.ContactActivity"
             android:label="@string/connexion_contact_btn"
             android:parentActivityName=".MainActivity"

@@ -1,5 +1,6 @@
 package com.epfd.csandroid.formulary;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.epfd.csandroid.utils.Utils.APEL;
+import static com.epfd.csandroid.utils.Utils.DEV;
+import static com.epfd.csandroid.utils.Utils.SCHOOL;
+
 public class ContactActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.contact_ecole_btn) TextView mContactSchoolBtn;
@@ -22,9 +27,6 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.contact_message_body) EditText mMessageBody;
 
     private static final String BUNDLE_KEY_TAG = "BUNDLE_KEY_TAG";
-    private static final String APEL = "apel.dolto.sqf@gmail.com";
-    private static final String SCHOOL = "ecole.f.dolto@free.fr";
-    private static final String DEV = "slayer171.flf@gmail.com";
 
     private String mRecipientTag;
 
@@ -55,7 +57,7 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(BUNDLE_KEY_TAG, mRecipientTag);
     }

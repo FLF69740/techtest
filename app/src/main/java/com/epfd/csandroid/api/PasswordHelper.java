@@ -10,7 +10,7 @@ public class PasswordHelper {
     private static final String COLLECTION_NAME = "apelcode";
     private static final String DOCUMENT_NAME = "root1";
 
-    public static CollectionReference getCodeCollection(){
+    private static CollectionReference getCodeCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 

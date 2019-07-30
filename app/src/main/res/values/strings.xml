@@ -7,6 +7,16 @@
     <!-- Used in NavigationDrawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_administrator">ADMINISTRATEUR</string>
+    <string name="navigation_drawer_classrooms">Classes</string>
+    <string name="navigation_drawer_policy">Policy</string>
+
+    <!-- ADMINISTARTOR SECTION -->
+
+    <!-- CLASSROOMS EDITION -->
+    <string name="classrooms_edition_label">EDITION DES CLASSES</string>
+    <string name="classrooms_edition_creation_title">Création d\'une classe :</string>
+    <string name="classrooms_edition_classroom_item_title">CLASSE</string>
 
     <!-- NOTIFICATION -->
     <string name="notification_text_parameter">Notification Francoise Dolto</string>
@@ -33,7 +43,7 @@
 
     <!-- GESTION COMPTE -->
     <string name="compte_deconnexion">DECONNEXION</string>
-    <string name="compte_delete">DELETE</string>
+    <string name="compte_delete">Supprimer compte</string>
     <string name="popup_message_confirmation_delete_account">Souhaitez vous supprimer votre compte</string>
     <string name="popup_message_choice_yes">OUI</string>
     <string name="popup_message_choice_no">NON</string>
@@ -55,7 +65,7 @@
     <string name="contact_APEL">APEL</string>
     <string name="contact_ECOLE">ECOLE</string>
     <string name="contact_DEVELOPPEUR">DEVELOPPEUR (version test)</string>
-    
+
     <!-- PRESENTATION SECTION -->
     <string name="presentation_line_empty">LINE EMPTY</string>
 
