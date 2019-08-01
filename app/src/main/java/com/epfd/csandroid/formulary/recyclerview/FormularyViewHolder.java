@@ -3,53 +3,36 @@ package com.epfd.csandroid.formulary.recyclerview;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-
+import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.models.Kid;
 import com.epfd.csandroid.utils.Utils;
-
 import java.lang.ref.WeakReference;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FormularyViewHolder extends RecyclerView.ViewHolder {
 
-    private View mItemView;
     private WeakReference<FormularyAdapter.Listener> callbackWeakRef;
 
     @BindView(R.id.formulary_recycler_name) EditText mName;
     @BindView(R.id.formulary_recycler_forname) EditText mForname;
-    @BindView(R.id.formulary_recycler_classe) EditText mClasse;
+    @BindView(R.id.formulary_recycler_classe) Spinner mClasseSpinner;
     @BindView(R.id.formulary_recycler_delete) ImageView mImageViewDelete;
     @BindView(R.id.formulary_recycler_item_man_logo) ImageView mBoyLogo;
     @BindView(R.id.formulary_recycler_item_woman_logo) ImageView mGirlLogo;
 
     public FormularyViewHolder(@NonNull View itemView) {
         super(itemView);
-        mItemView = itemView;
-        ButterKnife.bind(this, mItemView);
+        ButterKnife.bind(this, itemView);
     }
 
     public void updateWithAdapterInformation(Kid kid, int position, FormularyAdapter.Listener callback){
-
-        mName.setText(kid.getNom());
-        mForname.setText(kid.getPrenom());
-        mClasse.setText(kid.getClasse());
-
-        if (position == 0){
-            mImageViewDelete.setVisibility(View.INVISIBLE);
-        }
-
-        switch (kid.getGenre()){
-            case Utils.BOY : mBoyLogo.setAlpha(1.0f); break;
-            case Utils.GIRL : mGirlLogo.setAlpha(1.0f); break;
-        }
 
         mName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,15 +56,14 @@ public class FormularyViewHolder extends RecyclerView.ViewHolder {
             public void afterTextChanged(Editable s) {}
         });
 
-        mClasse.addTextChangedListener(new TextWatcher() {
+        mClasseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                updateClassroom(position, s.toString());
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                String item = parent.getItemAtPosition(pos).toString();
+                updateClassroom(position, item);
             }
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         mImageViewDelete.setOnClickListener(v -> onClickDeleteBtn());

@@ -10,6 +10,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.api.ClassroomsHelper;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
@@ -17,9 +18,13 @@ import com.epfd.csandroid.formulary.recyclerview.FormularyAdapter;
 import com.epfd.csandroid.models.Kid;
 import com.epfd.csandroid.models.User;
 import com.epfd.csandroid.utils.Utils;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,6 +38,7 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
 
     private FormularyAdapter mAdapter;
     private ArrayList<Kid> mKidList;
+    private List<String> mClassroomsList;
 
     private static final String BUNDLE_KEY_KID_LIST = "BUNDLE_KEY_KID_LIST";
 
@@ -50,7 +56,8 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
 
             if (savedInstanceState != null){
                 mKidList = savedInstanceState.getParcelableArrayList(BUNDLE_KEY_KID_LIST);
-                this.configureRecyclerView(mKidList);
+             //   this.configureRecyclerView(mKidList);
+                this.preconfigRecyclerView(mKidList);
             }else {
                 UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
                     if (documentSnapshot1.toObject(User.class) != null) {
@@ -64,20 +71,37 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
                                 mKidList.add(new Kid(BusinessFormulary.getStringNameFromKid(completeName), BusinessFormulary.getStringFornameFromKid(completeName), classroom, gender));
                             }
                         }
-                        this.configureRecyclerView(mKidList);
+                    //    this.configureRecyclerView(mKidList);
+                        this.preconfigRecyclerView(mKidList);
                     } else {
                         mKidList = new ArrayList<>();
                         mKidList.add(new Kid("", "", "", Utils.EMPTY));
-                        this.configureRecyclerView(mKidList);
+                    //    this.configureRecyclerView(mKidList);
+                        this.preconfigRecyclerView(mKidList);
                     }
                 });
             }
         }
     }
 
+    private void preconfigRecyclerView(List<Kid> kidList){
+        ClassroomsHelper.getClassrooms().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                mClassroomsList = Arrays.asList(documentSnapshot.getString(Utils.NAME_DATA_CLASSROOMS).split(","));
+                configureRecyclerView(kidList, mClassroomsList);
+            }
+        });
+    }
+
     //configure RecyclerView
-    private void configureRecyclerView(List<Kid> kidList){
-        mAdapter = new FormularyAdapter(kidList, this);
+    private void configureRecyclerView(List<Kid> kidList, List<String> myList){
+
+    /*    List<String> myList = new ArrayList<>();
+        myList.add("AAA");
+        myList.add("BBB");
+        myList.add("CCC");*/
+        mAdapter = new FormularyAdapter(this, kidList, myList, this);
         this.mRecyclerView.setAdapter(mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

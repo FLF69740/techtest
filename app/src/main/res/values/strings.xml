@@ -29,6 +29,7 @@
     <string name="formulary_introduction">Renseigner l\'identité de votre/vos enfant(s).</string>
     <string name="formulary_add_kid">+ : ajouter le profil d\'un enfant</string>
     <string name="formulary_valider">VALIDER</string>
+    <string name="formulary_classroom_default_btn">CHOISIR</string>
     <string name="formulary_snackbar_incomplet">Formulaire incomplet, vérifiez pour chaque enfant :\n\n     * genre : garçon ou fille\n     * nom\n     * prénom\n     * classe</string>
 
     <!-- AUTH -->
