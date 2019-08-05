@@ -1,5 +1,7 @@
 package com.epfd.csandroid.utils;
 
+import org.joda.time.DateTime;
+
 public class Utils {
 
     public static final String APEL = "apel.dolto.sqf@gmail.com";
@@ -10,6 +12,9 @@ public class Utils {
     public static final String EMPTY_PREFERENCES_LOG_CODE = "EMPTY_PREFERENCES_LOG_CODE";
     public static final String EMPTY = "EMPTY";
     public static final String NAME_DATA_CODE = "code";
+
+    public static final String NAME_DATA_CAKE_DATE = "dateListString";
+    public static final String NAME_DATA_CAKE_CLASSROOMS = "classroomsListString";
 
     public static final String NAME_DATA_CLASSROOMS = "name";
 
@@ -25,4 +30,22 @@ public class Utils {
 
     public static final String BOY = "BOY";
     public static final String GIRL = "GIRL";
+
+    // GET ACTUAL SCHOOL YEAR
+    public static String getSchoolYear(DateTime dateTime){
+        String result;
+        DateTime secondDate = dateTime;
+
+        if (dateTime.getMonthOfYear() < 7){
+            secondDate = secondDate.year().setCopy(secondDate.getYear()-1);
+            result = String.valueOf(secondDate.getYear()) + dateTime.getYear();
+        } else {
+            secondDate = secondDate.year().setCopy(secondDate.getYear()+1);
+            result = String.valueOf(dateTime.getYear()) + secondDate.getYear();
+        }
+
+        return result;
+    }
+
+
 }

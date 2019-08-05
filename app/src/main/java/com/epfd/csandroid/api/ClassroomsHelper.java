@@ -1,6 +1,7 @@
 package com.epfd.csandroid.api;
 
 import com.epfd.csandroid.models.Classroom;
+import com.epfd.csandroid.utils.Utils;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,35 +23,21 @@ public class ClassroomsHelper {
 
     public static Task<Void> createClassroom(String name) {
         Classroom classroomToCreate = new Classroom(name);
-        return ClassroomsHelper.getClassroomsCollection().document(getSchoolYear(DateTime.now())).set(classroomToCreate);
+        return ClassroomsHelper.getClassroomsCollection().document(Utils.getSchoolYear(DateTime.now())).set(classroomToCreate);
     }
 
     // --- GET ---
 
     public static Task<DocumentSnapshot> getClassrooms(){
-        return ClassroomsHelper.getClassroomsCollection().document(getSchoolYear(DateTime.now())).get();
+        return ClassroomsHelper.getClassroomsCollection().document(Utils.getSchoolYear(DateTime.now())).get();
     }
 
     // --- UPDATE ---
 
     public static Task<Void> updateClassrooms(String name) {
-        return ClassroomsHelper.getClassroomsCollection().document(getSchoolYear(DateTime.now())).update(NAME_DATA_CLASSROOMS, name);
+        return ClassroomsHelper.getClassroomsCollection().document(Utils.getSchoolYear(DateTime.now())).update(NAME_DATA_CLASSROOMS, name);
     }
 
 
-    // GET ACTUAL DOCUMENT NAME
-    public static String getSchoolYear(DateTime dateTime){
-        String result;
-        DateTime secondDate = dateTime;
 
-        if (dateTime.getMonthOfYear() < 7){
-            secondDate = secondDate.year().setCopy(secondDate.getYear()-1);
-            result = String.valueOf(secondDate.getYear()) + dateTime.getYear();
-        } else {
-            secondDate = secondDate.year().setCopy(secondDate.getYear()+1);
-            result = String.valueOf(dateTime.getYear()) + secondDate.getYear();
-        }
-
-        return result;
-    }
 }

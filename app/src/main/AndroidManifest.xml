@@ -10,6 +10,13 @@
         android:roundIcon="@drawable/ic_logo_pos2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".administrator.cakefridayedition.CakeFridayActivity"
+            android:label="@string/cake_edition_label"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".administrator.classroomsedition.ClassroomsEditionActivity"
             android:label="@string/classrooms_edition_label"

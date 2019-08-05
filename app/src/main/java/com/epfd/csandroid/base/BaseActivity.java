@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.MainActivity;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.administrator.cakefridayedition.CakeFridayActivity;
 import com.epfd.csandroid.administrator.classroomsedition.ClassroomsEditionActivity;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.formulary.FormularyActivity;
@@ -35,7 +36,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import butterknife.ButterKnife;
 
-import static com.epfd.csandroid.utils.Utils.APEL;
 import static com.epfd.csandroid.utils.Utils.DEV;
 import static com.epfd.csandroid.utils.Utils.EMPTY_PREFERENCES_LOG_CODE;
 
@@ -139,6 +139,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+            case R.id.cake_friday_edition :
+                startActivity(new Intent(this, CakeFridayActivity.class));
+                break;
             case R.id.classromms_edition :
                 startActivity(new Intent(this, ClassroomsEditionActivity.class));
                 break;

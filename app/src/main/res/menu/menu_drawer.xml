@@ -32,6 +32,10 @@
                     android:id="@+id/classromms_edition"
                     android:icon="@drawable/ic_group_black_24dp"
                     android:title="@string/navigation_drawer_classrooms"/>
+                <item
+                    android:id="@+id/cake_friday_edition"
+                    android:icon="@drawable/ic_cake_black_24dp"
+                    android:title="@string/navigation_drawer_cake_friday"/>
             </group>
         </menu>
     </item>

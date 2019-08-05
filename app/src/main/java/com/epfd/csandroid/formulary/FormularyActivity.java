@@ -96,11 +96,6 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
 
     //configure RecyclerView
     private void configureRecyclerView(List<Kid> kidList, List<String> myList){
-
-    /*    List<String> myList = new ArrayList<>();
-        myList.add("AAA");
-        myList.add("BBB");
-        myList.add("CCC");*/
         mAdapter = new FormularyAdapter(this, kidList, myList, this);
         this.mRecyclerView.setAdapter(mAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

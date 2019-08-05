@@ -8,15 +8,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_administrator">ADMINISTRATEUR</string>
-    <string name="navigation_drawer_classrooms">Classes</string>
+    <string name="navigation_drawer_classrooms">Création classes</string>
     <string name="navigation_drawer_policy">Policy</string>
-
-    <!-- ADMINISTARTOR SECTION -->
-
-    <!-- CLASSROOMS EDITION -->
-    <string name="classrooms_edition_label">EDITION DES CLASSES</string>
-    <string name="classrooms_edition_creation_title">Création d\'une classe :</string>
-    <string name="classrooms_edition_classroom_item_title">CLASSE</string>
+    <string name="navigation_drawer_cake_friday">Planning des goûters</string>
 
     <!-- NOTIFICATION -->
     <string name="notification_text_parameter">Notification Francoise Dolto</string>
@@ -139,5 +133,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- ADMINISTARTOR SECTION -->
+
+    <!-- CLASSROOMS EDITION -->
+    <string name="classrooms_edition_label">EDITION DES CLASSES</string>
+    <string name="classrooms_edition_creation_title">Création d\'une classe :</string>
+    <string name="classrooms_edition_classroom_item_title">CLASSE</string>
+
+    <!-- CAKE FRIDAY -->
+    <string name="cake_edition_label">Calendrier des goûters du vendredi</string>
 
 </resources>
