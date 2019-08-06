@@ -118,7 +118,6 @@ public class ClassroomsEditionActivity extends BaseActivity {
         return new ArrayList<>(Arrays.asList(myList.split(",")));
     }
 
-
     static class LogoAnimationHandler extends Handler{
 
         private WeakReference<ClassroomsEditionActivity> mWeakReference;
