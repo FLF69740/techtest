@@ -13,6 +13,9 @@ public class Utils {
     public static final String EMPTY = "EMPTY";
     public static final String NAME_DATA_CODE = "code";
 
+    public static final String CONSOLE_NOTIF_TITLE = "TITRE";
+    public static final String CONSOLE_NOTIF_BODY = "MESSAGE";
+
     public static final String NAME_DATA_CAKE_DATE = "dateListString";
     public static final String NAME_DATA_CAKE_CLASSROOMS = "classroomsListString";
 

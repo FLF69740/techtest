@@ -88,7 +88,7 @@ public class CakeClassroomFragment extends Fragment {
 
     @OnClick(R.id.cake_classroom_fragment_floating_btn)
     public void clickOnCakeFloatingBtn(){
-        new DatePickerDialog(getContext(), dateInsertion, mCalendarDateCake.getYear(), mCalendarDateCake.getMonthOfYear(), mCalendarDateCake.getDayOfMonth()).show();
+        new DatePickerDialog(getContext(), dateInsertion, mCalendarDateCake.getYear(), mCalendarDateCake.getMonthOfYear()-1, mCalendarDateCake.getDayOfMonth()).show();
     }
 
     /**

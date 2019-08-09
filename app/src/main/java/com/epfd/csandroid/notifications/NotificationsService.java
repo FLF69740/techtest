@@ -1,5 +1,6 @@
 package com.epfd.csandroid.notifications;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,9 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Build;
+import android.widget.Toast;
+
 import androidx.core.app.NotificationCompat;
 import com.epfd.csandroid.MainActivity;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.utils.Utils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -23,16 +27,19 @@ public class NotificationsService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             // 1 - Get message sent by Firebase
             String message = remoteMessage.getNotification().getBody();
+            String title = remoteMessage.getNotification().getTitle();
             //2 - Show message in console
-            sendVisualNotification(message);
+            sendVisualNotification(message, title);
         }
     }
 
-    private void sendVisualNotification(String messageBody) {
+    private void sendVisualNotification(String messageBody, String title) {
 
         // 1 - Create an Intent that will be shown when user will click on the Notification
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_NO_CREATE);
+        Intent intent = new Intent(this, NotificationWindowActivity.class);
+        intent.putExtra(Utils.CONSOLE_NOTIF_TITLE, title);
+        intent.putExtra(Utils.CONSOLE_NOTIF_BODY, messageBody);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // 2 - Create a Style for the Notification
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -52,6 +59,7 @@ public class NotificationsService extends FirebaseMessagingService {
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setContentIntent(pendingIntent)
                         .setStyle(inboxStyle);
+
 
         // 5 - Add the Notification to the Notification Manager and show it.
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

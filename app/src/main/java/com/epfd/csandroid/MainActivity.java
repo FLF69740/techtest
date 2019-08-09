@@ -12,10 +12,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.api.PasswordHelper;
@@ -24,12 +27,14 @@ import com.epfd.csandroid.formulary.ContactActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.formulary.PasswordActivity;
 import com.epfd.csandroid.models.User;
+import com.epfd.csandroid.notifications.NotificationWindowActivity;
 import com.epfd.csandroid.presentation.PresentationActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -69,6 +74,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_BODY) != null && getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_TITLE) != null) {
+            if (!getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_BODY).equals("") && !getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_TITLE).equals("")) {
+                Intent intent = new Intent(this, NotificationWindowActivity.class);
+                intent.putExtra(Utils.CONSOLE_NOTIF_BODY, getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_BODY));
+                intent.putExtra(Utils.CONSOLE_NOTIF_TITLE, getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_TITLE));
+                startActivity(intent);
+                finish();
+            }
+        }
         mProgressBar.setVisibility(View.INVISIBLE);
         mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
         ImageView imageView = findViewById(R.id.logo_animation);
@@ -203,6 +217,9 @@ public class MainActivity extends BaseActivity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) { // SUCCESS
                 this.mProgressBar.setVisibility(View.VISIBLE);
+
+                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> Log.i(Utils.INFORMATION_LOG, "Code : " + task.getResult().getToken()));
+
                 this.codeVerification();
             } else { // ERRORS
                 if (response == null) {
