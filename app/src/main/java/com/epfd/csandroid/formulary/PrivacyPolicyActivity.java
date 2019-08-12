@@ -1,21 +1,26 @@
 package com.epfd.csandroid.formulary;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.webkit.WebView;
 
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.base.BaseActivity;
 
-public class PrivacyPolicyActivity extends AppCompatActivity {
+public class PrivacyPolicyActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_privacy_policy);
+    public int getFragmentLayout() {
+        return R.layout.activity_privacy_policy;
+    }
 
-        WebView webView = findViewById(R.id.policy_webview);
-        webView.loadUrl("https://epfdprivacypolicy.blogspot.com/");
+    @Override
+    public void start(@Nullable Bundle savedInstanceState) {}
 
+    @Override
+    public Boolean isAChildActivity() {
+        return true;
     }
 }

@@ -46,7 +46,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".formulary.PrivacyPolicyActivity" />
+        <activity
+            android:name=".formulary.PrivacyPolicyActivity"
+            android:label="@string/navigation_drawer_policy"
+            android:parentActivityName=".firstpage.FirstPageActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".firstpage.FirstPageActivity" />
+        </activity>
         <activity android:name=".firstpage.FirstPageActivity" />
         <activity android:name=".formulary.PasswordActivity" />
         <activity android:name=".formulary.FormularyActivity" />
