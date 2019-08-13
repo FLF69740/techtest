@@ -1,6 +1,9 @@
 package com.epfd.csandroid.utils;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 
 public class Utils {
 
@@ -48,6 +51,26 @@ public class Utils {
         }
 
         return result;
+    }
+
+    // GET DAY - 3
+    public static String getDayLessThree(DateTime dateTime, String dateString){
+        if (dateTime == null && dateString != null){
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+            dateTime = fmt.parseDateTime(dateString);
+        }
+        dateTime = dateTime.minusDays(3);
+        return dateTime.toString("dd/MM/yyyy");
+    }
+
+    // GET DAY - X
+    public static String getDayLessXDays(DateTime dateTime, String dateString, int nbDays){
+        if (dateTime == null && dateString != null){
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+            dateTime = fmt.parseDateTime(dateString);
+        }
+        dateTime = dateTime.minusDays(nbDays);
+        return dateTime.toString("dd/MM/yyyy");
     }
 
 

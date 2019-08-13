@@ -12,9 +12,18 @@ import org.joda.time.DateTime;
 public class CakeHelper {
 
     private static final String COLLECTION_NAME = "cakefriday";
+    private static final String eventName = "CAKE FRIDAY";
 
     private static CollectionReference getCakeEventCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+    }
+
+    public static String getEventName() {
+        return eventName;
+    }
+
+    public static String getCollectionName() {
+        return COLLECTION_NAME;
     }
 
     // --- CREATE ---

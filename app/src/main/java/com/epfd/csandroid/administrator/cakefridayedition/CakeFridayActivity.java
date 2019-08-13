@@ -3,9 +3,12 @@ package com.epfd.csandroid.administrator.cakefridayedition;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.CakeHelper;
 import com.epfd.csandroid.api.ClassroomsHelper;
+import com.epfd.csandroid.api.NewsHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.google.android.material.tabs.TabLayout;
@@ -90,6 +93,15 @@ public class CakeFridayActivity extends BaseActivity implements CakeClassroomFra
         }
         CakeHelper.updateCakeEventClassrooms(mClassroomListSaved);
         CakeHelper.updateCakeEventDate(mDateListSaved);
+        String dateChange = date.replace("/", "");
+        String body;
+        if (!classroom.equals("ALL")){
+            body = getString(R.string.cake_edition_notification_body_part_one) + " " + classroom + " " + getString(R.string.cake_edition_notification_body_part_two);
+        }else {
+            body = getString(R.string.cake_edition_notification_body_part_one_bis) + " " + getString(R.string.cake_edition_notification_body_part_two);
+        }
+        NewsHelper.createNews(CakeHelper.getEventName(), date, true, Utils.getDayLessThree(null, date), getResources().getResourceEntryName(R.drawable.ic_cake_friday_photo),
+                body, CakeHelper.getCollectionName(), dateChange);
     }
 
     @Override
@@ -100,5 +112,7 @@ public class CakeFridayActivity extends BaseActivity implements CakeClassroomFra
         mDateListSaved = BusinessCakeFriday.deleteCakeDateForFirebase(dateTemp, BusinessCakeFriday.getCakePositionToDelete(classroomTemp, dateTemp, classroom, date));
         CakeHelper.updateCakeEventClassrooms(mClassroomListSaved);
         CakeHelper.updateCakeEventDate(mDateListSaved);
+        date = date.replace("/","");
+        NewsHelper.deleteNews(CakeHelper.getCollectionName() + date);
     }
 }

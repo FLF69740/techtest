@@ -24,4 +24,32 @@ public class DateUnitTest {
         }
     }
 
+    @Test
+    public void testIfPublicationDateIsCorrectAtDayLessThreeWithStringFormat(){
+        assertEquals("19/03/1975", Utils.getDayLessThree(null, "22/03/1975"));
+    }
+
+    @Test
+    public void testIfPublicationDateIsCorrectAtDayLessThreeWithDateTimeFormat(){
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.dayOfMonth().setCopy(22);
+        dateTime = dateTime.monthOfYear().setCopy(3);
+        dateTime = dateTime.year().setCopy(1975);
+        assertEquals("19/03/1975", Utils.getDayLessThree(dateTime, null));
+    }
+
+    @Test
+    public void testIfPublicationDateIsCorrectAtDayLessXWithStringFormat(){
+        assertEquals("12/03/1975", Utils.getDayLessXDays(null, "22/03/1975", 10));
+    }
+
+    @Test
+    public void testIfPublicationDateIsCorrectAtDayLessXWithDateTimeFormat(){
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.dayOfMonth().setCopy(22);
+        dateTime = dateTime.monthOfYear().setCopy(3);
+        dateTime = dateTime.year().setCopy(1975);
+        assertEquals("12/03/1975", Utils.getDayLessXDays(dateTime, null, 10));
+    }
+
 }
