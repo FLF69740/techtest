@@ -18,7 +18,7 @@ public class NewsHelper {
 
     // --- COLLECTION REFERENCE ---
 
-    private static CollectionReference getNewsCollection(){
+    public static CollectionReference getNewsCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 

@@ -9,6 +9,8 @@ public class News {
     private String mPhoto;
     private String mBody;
 
+    public News() {}
+
     public News(String title, String date, Boolean notification, String publication, String photo, String body) {
         mTitle = title;
         mDate = date;
