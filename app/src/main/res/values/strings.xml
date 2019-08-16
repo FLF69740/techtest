@@ -11,6 +11,10 @@
     <string name="navigation_drawer_classrooms">Création classes</string>
     <string name="navigation_drawer_policy">Privacy Policy</string>
     <string name="navigation_drawer_cake_friday">Planning des goûters</string>
+    <string name="navigation_drawer_news_creator">Création News</string>
+
+    <!-- NEWS CREATOR -->
+    <string name="news_creator_label">NEWS EDITEUR</string>
 
     <!-- NOTIFICATION -->
     <string name="notification_text_parameter">Notification Francoise Dolto</string>

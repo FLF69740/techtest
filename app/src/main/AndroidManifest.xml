@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.epfd.csandroid">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".App"
@@ -14,8 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".formulary.NewsCreatorActivity"
+            android:label="@string/news_creator_label"
+            android:parentActivityName=".firstpage.FirstPageActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".firstpage.FirstPageActivity" />
+        </activity>
+        <activity
             android:name=".notifications.NotificationWindowActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
             android:name=".administrator.cakefridayedition.CakeFridayActivity"
             android:label="@string/cake_edition_label"
@@ -73,8 +81,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name=".utils.MyAlarmReceiver"
-            android:exported="true"/>
+
+        <receiver
+            android:name=".utils.MyAlarmReceiver"
+            android:exported="true" />
     </application>
 
 </manifest>

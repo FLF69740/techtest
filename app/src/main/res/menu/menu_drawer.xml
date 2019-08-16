@@ -36,6 +36,10 @@
                     android:id="@+id/cake_friday_edition"
                     android:icon="@drawable/ic_cake_black_24dp"
                     android:title="@string/navigation_drawer_cake_friday"/>
+                <item
+                    android:id="@+id/news_creator_edition"
+                    android:icon="@drawable/ic_access_alarm_black_24dp"
+                    android:title="@string/navigation_drawer_news_creator"/>
             </group>
         </menu>
     </item>

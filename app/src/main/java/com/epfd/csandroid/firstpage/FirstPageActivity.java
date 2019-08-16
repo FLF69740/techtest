@@ -52,11 +52,12 @@ public class FirstPageActivity extends BaseActivity {
         mNewsList = new ArrayList<>();
 
         UserHelper.getUser(getCurrentUser().getUid())
-                .addOnCompleteListener(task -> getNewsWindow(Arrays.asList(task.getResult().getString(Utils.NAME_DATA_CLASSROOM_USER).split("'"))));
+                .addOnCompleteListener(task -> getNewsWindow(task.getResult().getString(Utils.NAME_DATA_CLASSROOM_USER)));
     }
 
     //GET News windows
-    private void getNewsWindow(List<String> classrooms){
+    private void getNewsWindow(String classroomsString){
+        List<String> classrooms = Arrays.asList(classroomsString.split(","));
         DateTime dateTime = new DateTime();
         DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
         NewsHelper.getNewsCollection().get().addOnCompleteListener(task -> {
@@ -85,6 +86,10 @@ public class FirstPageActivity extends BaseActivity {
                                 }else {
                                     Log.i(Utils.INFORMATION_LOG, "Alarm NOT CONCERNED : TAG " + news.getTag() + " - TITLE : " + news.getTitle());
                                 }
+                            }else if (NotificationAlarmUtils.getAlarmManagerPendingExist(this, news.getTag()) && !news.getNotification()){
+                                NotificationAlarmUtils.stopAlarm(this,
+                                        NotificationAlarmUtils.getAlarmManagerPendingIntent(this, news.getTitle(), news.getBody(), news.getTag()));
+                                Log.i(Utils.INFORMATION_LOG, "Alarm CANCELED : TAG " + news.getTag() + " - TITLE : " + news.getTitle());
                             }else {
                                 Log.i(Utils.INFORMATION_LOG, "Alarm OK : TAG " + news.getTag() + " - TITLE : " + news.getTitle());
                             }

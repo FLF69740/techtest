@@ -26,6 +26,7 @@ import com.epfd.csandroid.administrator.cakefridayedition.CakeFridayActivity;
 import com.epfd.csandroid.administrator.classroomsedition.ClassroomsEditionActivity;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.formulary.FormularyActivity;
+import com.epfd.csandroid.formulary.NewsCreatorActivity;
 import com.epfd.csandroid.formulary.PrivacyPolicyActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
@@ -157,6 +158,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 break;
             case R.id.general_drawer_policy:
                 startActivity(new Intent(this, PrivacyPolicyActivity.class));
+                break;
+            case R.id.news_creator_edition:
+                startActivity(new Intent(this, NewsCreatorActivity.class));
                 break;
         }
 
