@@ -12,6 +12,9 @@ import com.epfd.csandroid.api.NewsHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.google.android.material.tabs.TabLayout;
+
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +39,7 @@ public class CakeFridayActivity extends BaseActivity implements CakeClassroomFra
         ClassroomsHelper.getClassrooms().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.getString(Utils.NAME_DATA_CLASSROOMS) != null) {
                 List<String> myList = new ArrayList<>(Arrays.asList(documentSnapshot.getString(Utils.NAME_DATA_CLASSROOMS).split(",")));
-                myList.add(0, "ALL");
+                myList.add(0, Utils.ALL);
                 configureCakeDate(myList);
             }
 
@@ -95,13 +98,14 @@ public class CakeFridayActivity extends BaseActivity implements CakeClassroomFra
         CakeHelper.updateCakeEventDate(mDateListSaved);
         String dateChange = date.replace("/", "");
         String body;
-        if (!classroom.equals("ALL")){
+        int tag = BusinessCakeFriday.getCakeTag(new DateTime());
+        if (!classroom.equals(Utils.ALL)){
             body = getString(R.string.cake_edition_notification_body_part_one) + " " + classroom + " " + getString(R.string.cake_edition_notification_body_part_two);
         }else {
             body = getString(R.string.cake_edition_notification_body_part_one_bis) + " " + getString(R.string.cake_edition_notification_body_part_two);
         }
         NewsHelper.createNews(CakeHelper.getEventName(), date, true, Utils.getDayLessThree(null, date), getResources().getResourceEntryName(R.drawable.ic_cake_friday_photo),
-                body, CakeHelper.getCollectionName(), dateChange);
+                body, classroom, tag, CakeHelper.getCollectionName(), dateChange);
     }
 
     @Override

@@ -29,6 +29,7 @@ public class BusinessPresentation {
         arrayProjet.add(context.getString(R.string.presentation_projet_l6));
         arrayProjet.add(context.getString(R.string.presentation_projet_l7));
         arrayProjet.add(context.getString(R.string.presentation_projet_l8));
+        arrayProjet.add(context.getString(R.string.presentation_projet_l9));
 
         ArrayList<String> arrayPastorale = new ArrayList<>();
         arrayPastorale.add(context.getString(R.string.presentation_pastorale_titre));
@@ -37,9 +38,6 @@ public class BusinessPresentation {
         arrayPastorale.add(context.getString(R.string.presentation_pastorale_l3));
         arrayPastorale.add(context.getString(R.string.presentation_pastorale_l4));
         arrayPastorale.add(context.getString(R.string.presentation_pastorale_l5));
-        arrayPastorale.add(context.getString(R.string.presentation_pastorale_l6));
-        arrayPastorale.add(context.getString(R.string.presentation_pastorale_l7));
-        arrayPastorale.add(context.getString(R.string.presentation_pastorale_l8));
 
         ArrayList<String> arrayAssociation = new ArrayList<>();
         arrayAssociation.add(context.getString(R.string.presentation_association_titre));
@@ -51,7 +49,6 @@ public class BusinessPresentation {
         arrayAssociation.add(context.getString(R.string.presentation_association_l6));
         arrayAssociation.add(context.getString(R.string.presentation_association_l7));
         arrayAssociation.add(context.getString(R.string.presentation_association_l8));
-        arrayAssociation.add(context.getString(R.string.presentation_association_l9));
 
         ArrayList<String> arrayOgec = new ArrayList<>();
         arrayOgec.add(context.getString(R.string.presentation_ogec_titre));
@@ -76,12 +73,19 @@ public class BusinessPresentation {
         arrayCode.add(context.getString(R.string.presentation_reglement_l6));
         arrayCode.add(context.getString(R.string.presentation_reglement_l7));
 
+        ArrayList<String> arraySchedule = new ArrayList<>();
+        arraySchedule.add(context.getString(R.string.presentation_schedule_titre));
+        arraySchedule.add(context.getString(R.string.presentation_schedule_l1));
+        arraySchedule.add(context.getString(R.string.presentation_schedule_l2));
+        arraySchedule.add(context.getString(R.string.presentation_schedule_l3));
+
         result.add(arrayHistory);
         result.add(arrayProjet);
         result.add(arrayPastorale);
         result.add(arrayAssociation);
         result.add(arrayOgec);
         result.add(arrayCode);
+        result.add(arraySchedule);
 
         return result;
     }

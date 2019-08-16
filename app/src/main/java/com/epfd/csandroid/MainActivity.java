@@ -23,6 +23,7 @@ import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.api.PasswordHelper;
 import com.epfd.csandroid.base.BaseActivity;
+import com.epfd.csandroid.firstpage.recyclerview.FirstPageAdapter;
 import com.epfd.csandroid.formulary.ContactActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.formulary.PasswordActivity;
@@ -63,6 +64,8 @@ public class MainActivity extends BaseActivity {
     private int mAnimationAlpha = 0;
 
     private String mInternalCodeRegistration;
+
+    public static final String MAIN_EXTRA_CLASSROOMLIST = "MAIN_EXTRA_CLASSROOMLIST";
 
     private static final String DIMENSION = "DIMENSION";
     private static final String BOTTOM_DIMENSION = "BOTTOM_DIMENSION";
@@ -247,7 +250,10 @@ public class MainActivity extends BaseActivity {
                 } else {
                     UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
                         if (documentSnapshot1.toObject(User.class) != null) {
-                            startActivity(new Intent(getApplicationContext(), FirstPageActivity.class));
+                            User user = documentSnapshot1.toObject(User.class);
+                            Intent intent = new Intent(getApplicationContext(), FirstPageActivity.class);
+                            intent.putExtra(MAIN_EXTRA_CLASSROOMLIST, user.getStringClasseNameList());
+                            startActivity(intent);
                         } else {
                             startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
                         }

@@ -8,16 +8,20 @@ public class News {
     private String mPublication;
     private String mPhoto;
     private String mBody;
+    private int mTag;
+    private String mTarget;
 
     public News() {}
 
-    public News(String title, String date, Boolean notification, String publication, String photo, String body) {
+    public News(String title, String date, Boolean notification, String publication, String photo, String body, String target, int tag) {
         mTitle = title;
         mDate = date;
         mNotification = notification;
         mPublication = publication;
         mPhoto = photo;
         mBody = body;
+        mTarget = target;
+        mTag = tag;
     }
 
     public String getTitle() {
@@ -67,4 +71,21 @@ public class News {
     public void setBody(String body) {
         mBody = body;
     }
+
+    public String getTarget() {
+        return mTarget;
+    }
+
+    public void setTarget(String target) {
+        mTarget = target;
+    }
+
+    public int getTag() {
+        return mTag;
+    }
+
+    public void setTag(int tag) {
+        mTag = tag;
+    }
+
 }

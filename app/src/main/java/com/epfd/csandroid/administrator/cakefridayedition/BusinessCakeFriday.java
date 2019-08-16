@@ -2,6 +2,8 @@ package com.epfd.csandroid.administrator.cakefridayedition;
 
 import com.google.common.base.Joiner;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +66,12 @@ public class BusinessCakeFriday {
         dateList.remove(position);
         dateListString = Joiner.on(",").join(dateList);
         return dateListString;
+    }
+
+    public static int getCakeTag(DateTime dateTime){
+        StringBuilder builder = new StringBuilder();
+        builder.append(dateTime.getDayOfYear()).append(dateTime.getSecondOfDay());
+        return Integer.valueOf(builder.toString());
     }
 
 }

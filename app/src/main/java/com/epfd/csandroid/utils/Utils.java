@@ -23,6 +23,9 @@ public class Utils {
     public static final String NAME_DATA_CAKE_CLASSROOMS = "classroomsListString";
 
     public static final String NAME_DATA_CLASSROOMS = "name";
+    public static final String ALL = "ALL";
+
+    public static final String NAME_DATA_CLASSROOM_USER = "stringClasseNameList";
 
     public static final String BUNDLE_USERNAME = "BUNDLE_USERNAME";
     public static final String BUNDLE_USERMAIL = "BUNDLE_USERMAIL";

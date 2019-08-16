@@ -29,7 +29,7 @@
     <!-- AUTH -->
     <string name="connexion_deconnexion">Deconnexion</string>
     <string name="connexion_btn">SE CONNECTER</string>
-    <string name="connexion_presentation_btn">PRESENTATION ECOLE</string>
+    <string name="connexion_presentation_btn">PRESENTATION DE L\'ECOLE</string>
     <string name="connexion_contact_btn">CONTACT</string>
     <string name="connection_succeed">Connexion réussie</string>
     <string name="error_authentication_canceled">Connexion annulée</string>
@@ -65,11 +65,11 @@
     <string name="presentation_line_empty">LINE EMPTY</string>
 
     <string name="presentation_historique_titre">HISTORIQUE</string>
-    <string name="presentation_historique_l1">L\'école est née de la donation, en 1905, d\’un couple de Saint-Quentinois - Monsieur et Madame Guerin, au diocèse de Grenoble pour que leur demeure devienne un lieu de savoir pour de jeunes enfants.</string>
-    <string name="presentation_historique_l2">Cette bâtisse est plus que centenaire. Elle a subit des réfections au cours des années. Beaucoup de passagers lambda passent devant chaque jour sans savoir que derrière ces murs, une équipe travaille à l\'enseignement de jeunes enfants, à leur construction intellectuelle et sociale.</string>
-    <string name="presentation_historique_l3">Il y a une vingtaine d\'année, l\'école change de nom, elle passe d\'Ecole Privée Catholique à Ecole Privée Françoise Dolto.</string>
+    <string name="presentation_historique_l1">L\'école est née de la donation en 1905, d\’un couple de Saint-Quentinois, Monsieur et Madame Guerin, au diocèse de Grenoble pour que leur demeure devienne un lieu de savoir pour de jeunes enfants.</string>
+    <string name="presentation_historique_l2">Cette bâtisse est plus que centenaire. Elle a subi des réfections au cours des années. Beaucoup de passagers lambda passent devant chaque jour sans savoir que derrière ces murs, une équipe travaille à l\'enseignement de jeunes enfants, à leur construction intellectuelle et sociale.</string>
+    <string name="presentation_historique_l3">Il y a une vingtaine d\'année, l\'école change de nom. Elle passe d\'Ecole Privée Catholique à Ecole Privée Françoise Dolto.</string>
     <string name="presentation_historique_l4">Ce choix n\'a pas été neutre, l\'enseignement donné et la place centrale de l\'enfant en son sein étant en totale adéquation avec les travaux de la célèbre psychanalyste.</string>
-    <string name="presentation_historique_l5">Aujourd\'hui cette école jouie d\'une très bonne réputation. Elle est composée de deux classes de maternelles et de 4 classes de primaires.</string>
+    <string name="presentation_historique_l5">Aujourd\'hui cette école jouie d\'une très bonne réputation. Elle est composée de deux classes de maternelles et de quatre classes de primaires.</string>
     <string name="presentation_historique_l6">L\'école est située en plein cœur de la commune de Saint-Quentin-Fallavier en Isère.</string>
 
     <string name="presentation_projet_titre">PROJET EDUCATIF</string>
@@ -80,7 +80,8 @@
     <string name="presentation_projet_l5">•	La sensibilité</string>
     <string name="presentation_projet_l6">•	La liberté pour que chaque enfant puisse prendre ses propres décisions</string>
     <string name="presentation_projet_l7">•	La responsabilité</string>
-    <string name="presentation_projet_l8">•	La discipline et le respect des autres, au travers du travail en commun, de l\'entraide, de l\'échange, de l\'amitié - L\'émulation et non la compétition</string>
+    <string name="presentation_projet_l8">•	La discipline et le respect des autres, au travers du travail en commun, de l\'entraide, de l\'échange, de l\'amitié</string>
+    <string name="presentation_projet_l9">•	L\'émulation et non la compétition.</string>
 
     <string name="presentation_reglement_titre">CHARTE DE BONNE CONDUITE</string>
     <string name="presentation_reglement_l1">L\'inscription d\'un élève à l\'école Françoise Dolto nécessite la pleine adhésion des parents au projet éducatif et pédagogique.</string>
@@ -94,35 +95,36 @@
     <string name="presentation_pastorale_titre">PASTORALE</string>
     <string name="presentation_pastorale_l1">L\'école privée Françoise DOLTO est une école dont les fondements sont enracinés dans la foi chrétienne.</string>
     <string name="presentation_pastorale_l2">Cette foi se vit :</string>
-    <string name="presentation_pastorale_l3">• au quotidien : par l\'attitude, la bienveillance et les paroles d\'encouragement des adultes encadrant les enfants</string>
-    <string name="presentation_pastorale_l4">• à travers des temps forts et des célébrations (Noël - Paques) auxquelles les familles sont invitées à participer chaque année à l\'église du village, située à quelques mètres de l\'école.</string>
+    <string name="presentation_pastorale_l3">• au quotidien, par l\'attitude, la bienveillance et les paroles d\'encouragement des adultes encadrant les enfants</string>
+    <string name="presentation_pastorale_l4">• à travers des temps forts et des célébrations (Noël - Pâques) auxquelles les familles sont invitées à participer chaque année à l\'église du village, située à quelques mètres de l\'école.</string>
     <string name="presentation_pastorale_l5">Chacun des temps forts et célébrations sont réalisés avec les familles, dans le respect des croyances de chacun et chacune.</string>
-    <string name="presentation_pastorale_l6">Horaires des cours :</string>
-    <string name="presentation_pastorale_l7">Lundi - mardi - jeudi - vendredi : 8h35 à 11h35 / 13h35 à 16h35</string>
-    <string name="presentation_pastorale_l8">Une garderie est en place avant et après les cours, à partir de 7h30 et jusqu\'à 18h</string>
 
-    <string name="presentation_association_titre">ASSOCIATIONS</string>
-    <string name="presentation_association_l1">APEL (Association de parents d\'élèves de l\'enseignement libre) :</string>
-    <string name="presentation_association_l2">L\'objectif d\'un APEL d\'établissement est de rassembler tous les parents afin de :</string>
-    <string name="presentation_association_l3">•	 les représenter auprès du Chef d\'établissement, au sein de l\'établissement (OGEC, conseil d\'établissement…) et auprès des instances de l\'enseignement catholique à travers l\'Apel du département de l\'Isère à laquelle elle adhére ainsi qu\'auprès des pouvoirs publics (municipalité, rectorat, Inspection Académique, Conseil Général,…)</string>
-    <string name="presentation_association_l4">• rassembler au sein d\'un conseil tous les parents bénévoles qui peuvent donner de leur temps</string>
-    <string name="presentation_association_l5">•	 participer à l\'animation et à la vie de l\'établissement (accueil des nouveaux parents, organisation de manifestations diverses…)</string>
-    <string name="presentation_association_l6">Chaque année, peu après la rentrée scolaire, l\'APEL tient son assemblée générale.</string>
-    <string name="presentation_association_l7">A cette occasion, a lieu l\'élection d\'un bureau. Il est composé d\'un président, président-adjoint, trésorier et trésorier-adjoint, ainsi que de membres qui complètent l\'équipe.</string>
-    <string name="presentation_association_l8">Il en va de même pour son conseil d\'administration</string>
-    <string name="presentation_association_l9">L\'APEL est une association nationale.</string>
+    <string name="presentation_association_titre">L\'APEL</string>
+    <string name="presentation_association_l1">L\'objectif d\'un APEL d\'établissement (Association de parents d\'élèves de l\'enseignement libre) est de rassembler tous les parents afin de :</string>
+    <string name="presentation_association_l2">•	 les représenter auprès du Chef d\'établissement, au sein de l\'établissement et auprès des instances de l\'enseignement catholique à travers l\'APEL du département de l\'Isère à laquelle elle adhére ainsi qu\'auprès des pouvoirs publics (municipalité, rectorat, Inspection Académique, Conseil Général,…)</string>
+    <string name="presentation_association_l3">• rassembler au sein d\'un conseil tous les parents bénévoles qui peuvent donner de leur temps</string>
+    <string name="presentation_association_l4">•	 participer à l\'animation et à la vie de l\'établissement (accueil des nouveaux parents, organisation de manifestations diverses…)</string>
+    <string name="presentation_association_l5">Chaque année, peu après la rentrée scolaire, l\'APEL tient son assemblée générale.</string>
+    <string name="presentation_association_l6">A cette occasion, a lieu l\'élection d\'un bureau. Il est composé d\'un président, président-adjoint, trésorier et trésorier-adjoint, ainsi que de membres qui complètent l\'équipe.</string>
+    <string name="presentation_association_l7">Il en va de même pour son conseil d\'administration</string>
+    <string name="presentation_association_l8">L\'APEL est une association nationale.</string>
 
     <string name="presentation_ogec_titre">L\'OGEC</string>
     <string name="presentation_ogec_l1">L\'OGEC (Organisme de Gestion de l\'Enseignement Catholique) a pour but d\'offrir à la communauté éducative les conditions matérielles optimales qui permettent la réalisation pérenne du projet éducatif de l\'établissement.</string>
     <string name="presentation_ogec_l2">Ce rôle lui est conféré par le Statut de l\'Enseignement Catholique promulgué par les Évêques en 1992. L\'OGEC constitue le support juridique de l\'action d\'enseignement et se trouve de ce fait associé au service public de l\'éducation par l\'intermédiaire d’un contrat d\'association avec l\'État.</string>
-    <string name="presentation_ogec_l3">Le rôle de l\'OGEC s’exerce dans trois domaines principaux :</string>
-    <string name="presentation_ogec_l4">• La Gestion économique et financière :\n\n L\'OGEC assure la vie matérielle et financière de l\'établissement : comptabilité, restaurations</string>
-    <string name="presentation_ogec_l5">• La Gestion sociale :\n\n L\'OGEC est l\'employeur du personnel non-enseignant, et dans certains cas, du personnel enseignant pour les études, mais ce dernier est rémunéré par l’État ainsi que du Chef d\'établissement.</string>
-    <string name="presentation_ogec_l6">• La Gestion immobilière :\n\n L\'OGEC a la charge de l\'entretien des bâtiments scolaires, voire de leur construction si nécessaire.</string>
-    <string name="presentation_ogec_l7">L\'OGEC, membre à part entière de la communauté éducative. Chaque établissement compose une communauté éducative, placée sous la responsabilité du Chef d\'établissement. Sa mission consiste à élaborer et mettre en œuvre un projet éducatif se référant explicitement à l\'Évangile. Les gestionnaires de l\'OGEC font partie intégrante de cette communauté éducative. À ce titre, ils sont représentés au conseil d\'établissement présidé par le Chef d\'établissement. </string>
+    <string name="presentation_ogec_l3">Le rôle de l\'OGEC s’exerce dans trois domaines principaux.</string>
+    <string name="presentation_ogec_l4">• La Gestion économique et financière :\nL\'OGEC assure la vie matérielle et financière de l\'établissement (comptabilité, restauration, …)</string>
+    <string name="presentation_ogec_l5">• La Gestion sociale :\nL\'OGEC est l\'employeur du personnel non-enseignant, et dans certains cas, du personnel enseignant pour les études, mais ce dernier est rémunéré par l’État ainsi que du Chef d\'établissement.</string>
+    <string name="presentation_ogec_l6">• La Gestion immobilière :\nL\'OGEC a la charge de l\'entretien des bâtiments scolaires, voire de leur construction si nécessaire.</string>
+    <string name="presentation_ogec_l7">L\'OGEC est membre à part entière de la communauté éducative. Chaque établissement compose une communauté éducative, placée sous la responsabilité du Chef d\'établissement. Sa mission consiste à élaborer et mettre en œuvre un projet éducatif se référant explicitement à l\'Évangile. Les gestionnaires de l\'OGEC font partie intégrante de cette communauté éducative. À ce titre, ils sont représentés au conseil d\'établissement présidé par le Chef d\'établissement. </string>
     <string name="presentation_ogec_l8">Chaque année, peu après la rentrée scolaire, l\'OGEC tient son assemblée générale.</string>
     <string name="presentation_ogec_l9">A cette occasion, a lieu l\'élection d\'un bureau. Il est composé d\'un président, président-adjoint, trésorier et trésorier-adjoint, ainsi que de membres qui complètent l\'équipe.</string>
     <string name="presentation_ogec_l10">Il en va de même pour son conseil d\'administration</string>
+
+    <string name="presentation_schedule_titre">HORAIRES</string>
+    <string name="presentation_schedule_l1">Horaires des cours :</string>
+    <string name="presentation_schedule_l2">Lundi - mardi - jeudi - vendredi :\n8h35 à 11h35 / 13h35 à 16h35</string>
+    <string name="presentation_schedule_l3">Une garderie est en place avant et après les cours, à partir de 7h30 et jusqu\'à 18h</string>
 
     <!-- PRIVACY POLICY -->
     <string name="privacy_policy_text">LE FORT built the EPFD BETA app as a Free app. This SERVICE is provided by LE FORT at no cost and is intended for use as is.\n\n

@@ -6,4 +6,10 @@
 
     <!-- text size-->
     <dimen name="text_size_title">17sp</dimen>
+
+    <!-- cardView -->
+    <dimen name="margin_small">5dp</dimen>
+
+    <!-- animation -->
+    <integer name="animation_duration_medium">1500</integer>
 </resources>

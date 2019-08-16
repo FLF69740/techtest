@@ -15,6 +15,8 @@ public class NewsHelper {
     private static final String PUBLICATION = "publication";
     private static final String PHOTO = "photo";
     private static final String BODY = "body";
+    private static final String TAG = "tag";
+    private static final String TARGET = "target";
 
     // --- COLLECTION REFERENCE ---
 
@@ -24,8 +26,8 @@ public class NewsHelper {
 
     // --- CREATE ---
 
-    public static Task<Void> createNews(String title, String date, boolean notification, String publication, String photo, String body, String sectionName, String dateBloc) {
-        News newsToCreate = new News(title, date, notification, publication, photo, body);
+    public static Task<Void> createNews(String title, String date, boolean notification, String publication, String photo, String body, String target, int tag, String sectionName, String dateBloc) {
+        News newsToCreate = new News(title, date, notification, publication, photo, body, target, tag);
         String newsId = sectionName + dateBloc;
         return NewsHelper.getNewsCollection().document(newsId).set(newsToCreate);
     }
@@ -60,6 +62,14 @@ public class NewsHelper {
 
     public static Task<Void> updateNewsBody(String uid, String body) {
         return NewsHelper.getNewsCollection().document(uid).update(BODY, body);
+    }
+
+    public static Task<Void> updateNewsTag(String uid, int tag) {
+        return NewsHelper.getNewsCollection().document(uid).update(TAG, tag);
+    }
+
+    public static Task<Void> updateNewsTarget(String uid, int target) {
+        return NewsHelper.getNewsCollection().document(uid).update(TARGET, target);
     }
 
     // --- DELETE ---

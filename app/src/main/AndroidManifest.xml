@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.epfd.csandroid">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_logo_pos2"
         android:label="@string/app_name"
@@ -70,6 +73,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <receiver android:name=".utils.MyAlarmReceiver"
+            android:exported="true"/>
     </application>
 
 </manifest>
