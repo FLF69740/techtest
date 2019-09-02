@@ -9,13 +9,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.epfd.csandroid.R;
-import com.epfd.csandroid.models.News;
 
 import static com.epfd.csandroid.App.CHANNEL;
 
 public class MyAlarmReceiver extends BroadcastReceiver {
-
-    News mNews;
 
     @Override
     public void onReceive(Context context, Intent intent) {

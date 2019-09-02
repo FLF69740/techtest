@@ -27,9 +27,17 @@ public class FirstPageViewHolder extends RecyclerView.ViewHolder {
 
     public void setViewHolder(News news){
         mTitle.setText(news.getTitle());
-        mDate.setText(news.getDate());
+        mDate.setText(news.getPublication());
         mBody.setText(news.getBody());
 
-        mImage.setBackgroundResource(R.drawable.ic_cake_friday_photo);
+        switch (news.getPhoto()) {
+
+            case "ic_cake_friday_photo" :
+                mImage.setBackgroundResource(R.drawable.ic_cake_friday_photo);
+                break;
+            default:
+                mImage.setBackgroundResource(R.drawable.ic_logo_pos2);
+                break;
+        }
     }
 }

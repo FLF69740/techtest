@@ -184,7 +184,8 @@ This privacy policy page was created at privacypolicytemplate.net and modified/g
 
     <!-- CAKE FRIDAY -->
     <string name="cake_edition_label">Calendrier des goûters du vendredi</string>
-    <string name="cake_edition_notification_body_part_one">Les parents de la classe</string>
+    <string name="cake_edition_notification_body_part_intorduction">Le vendredi</string>
+    <string name="cake_edition_notification_body_part_one">, les parents de la classe</string>
     <string name="cake_edition_notification_body_part_one_bis">Les parents de toutes les classes</string>
     <string name="cake_edition_notification_body_part_two">sont sollicités pour confectionner et vendre des gateaux afin de partager un moment convivial après la classe et de récolter des fonds pour l\'école</string>
 

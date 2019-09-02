@@ -4,6 +4,7 @@
     package="com.epfd.csandroid">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name=".App"
@@ -83,7 +84,7 @@
         </service>
 
         <receiver
-            android:name=".utils.MyAlarmReceiver"
+            android:name="com.epfd.csandroid.utils.MyAlarmReceiver"
             android:exported="true" />
     </application>
 

@@ -21,6 +21,7 @@ import com.epfd.csandroid.utils.Utils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
     private FormularyAdapter mAdapter;
     private ArrayList<Kid> mKidList;
     private List<String> mClassroomsList;
+    private FirebaseAnalytics mAnalytics;
 
     private static final String BUNDLE_KEY_KID_LIST = "BUNDLE_KEY_KID_LIST";
 
@@ -50,6 +52,9 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
 
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
+        mAnalytics = FirebaseAnalytics.getInstance(this);
+   //     mAnalytics.setUserId(getCurrentUser().getUid());
+
         if (this.getCurrentUser() != null){
 
             mBottomNavigationView.setOnNavigationItemSelectedListener(item -> bottomNavigationViewAction(item.getItemId()));
@@ -145,6 +150,7 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
         }
         if (kidListVerification){
             if (this.getCurrentUser() != null) {
+                mAnalytics.setUserProperty(Utils.ANALYTICS_CLASSROOM_PROPERTY, BusinessFormulary.getKidClassroomList(mKidList));
                 String urlPicture = (this.getCurrentUser().getPhotoUrl() != null) ? this.getCurrentUser().getPhotoUrl().toString() : Utils.EMPTY;
                 UserHelper.createUser(this.getCurrentUser().getUid(), this.getCurrentUser().getDisplayName(), urlPicture,
                         BusinessFormulary.getKidNameList(mKidList), BusinessFormulary.getKidClassroomList(mKidList), BusinessFormulary.getKidGenderList(mKidList));

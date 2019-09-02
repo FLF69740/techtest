@@ -51,13 +51,13 @@ public class FirstPageActivity extends BaseActivity {
         ButterKnife.bind(this);
         mNewsList = new ArrayList<>();
 
-        UserHelper.getUser(getCurrentUser().getUid())
-                .addOnCompleteListener(task -> getNewsWindow(task.getResult().getString(Utils.NAME_DATA_CLASSROOM_USER)));
+    //    UserHelper.getUser(getCurrentUser().getUid()).addOnCompleteListener(task -> getNewsWindow(task.getResult().getString(Utils.NAME_DATA_CLASSROOM_USER)));
+        this.getNewsWindow(null);
     }
 
     //GET News windows
-    private void getNewsWindow(String classroomsString){
-        List<String> classrooms = Arrays.asList(classroomsString.split(","));
+    private void getNewsWindow(@Nullable String classroomsString){
+    //    List<String> classrooms = Arrays.asList(classroomsString.split(","));
         DateTime dateTime = new DateTime();
         DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
         NewsHelper.getNewsCollection().get().addOnCompleteListener(task -> {
@@ -69,7 +69,7 @@ public class FirstPageActivity extends BaseActivity {
                         DateTime publicationNews = fmt.parseDateTime(news.getPublication());
                         if (publicationNews.getYear() < dateTime.getYear() || (publicationNews.getYear() == dateTime.getYear() && publicationNews.getDayOfYear() <= dateTime.getDayOfYear())) {
                             mNewsList.add(news);
-                        }else {
+                        }/*else {
 
                             boolean doNotification = false;
                             for (String classroom : classrooms){
@@ -93,7 +93,7 @@ public class FirstPageActivity extends BaseActivity {
                             }else {
                                 Log.i(Utils.INFORMATION_LOG, "Alarm OK : TAG " + news.getTag() + " - TITLE : " + news.getTitle());
                             }
-                        }
+                        }*/
                     }
                 }
                 this.getStorageListNews(mNewsList);

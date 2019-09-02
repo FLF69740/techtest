@@ -40,6 +40,8 @@ public class Utils {
     public static final String BOY = "BOY";
     public static final String GIRL = "GIRL";
 
+    public static final String ANALYTICS_CLASSROOM_PROPERTY = "classe";
+
     // GET ACTUAL SCHOOL YEAR
     public static String getSchoolYear(DateTime dateTime){
         String result;

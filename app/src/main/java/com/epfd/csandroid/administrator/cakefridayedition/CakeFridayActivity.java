@@ -100,9 +100,11 @@ public class CakeFridayActivity extends BaseActivity implements CakeClassroomFra
         String body;
         int tag = BusinessCakeFriday.getCakeTag(new DateTime());
         if (!classroom.equals(Utils.ALL)){
-            body = getString(R.string.cake_edition_notification_body_part_one) + " " + classroom + " " + getString(R.string.cake_edition_notification_body_part_two);
+            body = getString(R.string.cake_edition_notification_body_part_intorduction) + " " + date +
+                    getString(R.string.cake_edition_notification_body_part_one) + " " + classroom + " " + getString(R.string.cake_edition_notification_body_part_two);
         }else {
-            body = getString(R.string.cake_edition_notification_body_part_one_bis) + " " + getString(R.string.cake_edition_notification_body_part_two);
+            body = getString(R.string.cake_edition_notification_body_part_intorduction) + " " + date +
+                    getString(R.string.cake_edition_notification_body_part_one_bis) + " " + getString(R.string.cake_edition_notification_body_part_two);
         }
         NewsHelper.createNews(CakeHelper.getEventName(), date, true, Utils.getDayLessThree(null, date), getResources().getResourceEntryName(R.drawable.ic_cake_friday_photo),
                 body, classroom, tag, CakeHelper.getCollectionName(), dateChange);
