@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".administrator.newsedition.FileNewsCreatorActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/news_file_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/news_file_title_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/contact_titre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+        android:id="@+id/news_file_title_edittext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_title_title" />
+
+    <TextView
+        android:id="@+id/news_file_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/news_creator_date_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_title_edittext" />
+
+    <TextView
+        android:id="@+id/news_file_date_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="01/01/1901"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/news_file_date_title"
+        app:layout_constraintEnd_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintStart_toEndOf="@+id/news_file_date_title"
+        app:layout_constraintTop_toTopOf="@+id/news_file_date_title" />
+
+    <TextView
+        android:id="@+id/news_file_publication_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/news_creator_publication_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_date_title" />
+
+    <TextView
+        android:id="@+id/news_file_publication_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="01/01/1901"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/news_file_publication_title"
+        app:layout_constraintEnd_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintStart_toEndOf="@+id/news_file_publication_title"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_date_title" />
+
+    <TextView
+        android:id="@+id/news_file_title_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/news_creator_news_body"
+        app:layout_constraintEnd_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_publication_title" />
+
+    <EditText
+        android:id="@+id/news_file_body_edittext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:lines="6"
+        android:gravity="top|start"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        app:layout_constraintEnd_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_title_body" />
+
+    <TextView
+        android:id="@+id/news_file_Logo_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/news_creator_news_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/news_file_tel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/news_creator_photo_telephone"
+        app:layout_constraintEnd_toStartOf="@+id/news_file_backend_btn"
+        app:layout_constraintStart_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_Logo_title" />
+
+    <Button
+        android:id="@+id/news_file_backend_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/news_creator_photo_backend"
+        app:layout_constraintBottom_toBottomOf="@+id/news_file_tel_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/news_file_tel_btn"
+        app:layout_constraintTop_toTopOf="@+id/news_file_tel_btn" />
+
+    <ImageView
+        android:id="@+id/news_file_photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/news_file_maj_btn"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/news_file_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/news_file_backend_btn"/>
+
+    <Button
+        android:id="@+id/news_file_maj_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/AJOUTER"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/news_file_delete_btn"
+        app:layout_constraintStart_toStartOf="@+id/news_file_guideline" />
+
+    <Button
+        android:id="@+id/news_file_delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/SUPPRIMER"
+        app:layout_constraintBottom_toBottomOf="@+id/news_file_maj_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/news_file_maj_btn"
+        app:layout_constraintTop_toTopOf="@+id/news_file_maj_btn" />
+
+    <Button
+        android:id="@+id/news_file_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/AJOUTER"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/news_file_guideline" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

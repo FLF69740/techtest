@@ -28,7 +28,7 @@ public class NewsHelper {
 
     public static Task<Void> createNews(String title, String date, boolean notification, String publication, String photo, String body, String target, int tag, String sectionName, String dateBloc) {
         News newsToCreate = new News(title, date, notification, publication, photo, body, target, tag);
-        String newsId = sectionName + dateBloc;
+        String newsId = sectionName + dateBloc + tag;
         return NewsHelper.getNewsCollection().document(newsId).set(newsToCreate);
     }
 

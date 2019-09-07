@@ -26,7 +26,7 @@ import com.epfd.csandroid.administrator.cakefridayedition.CakeFridayActivity;
 import com.epfd.csandroid.administrator.classroomsedition.ClassroomsEditionActivity;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.formulary.FormularyActivity;
-import com.epfd.csandroid.formulary.NewsCreatorActivity;
+import com.epfd.csandroid.administrator.newsedition.NewsCreatorActivity;
 import com.epfd.csandroid.formulary.PrivacyPolicyActivity;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;

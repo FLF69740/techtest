@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.epfd.csandroid">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -15,7 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".formulary.NewsCreatorActivity"
+            android:name=".administrator.newsedition.FileNewsCreatorActivity"
+            android:label="@string/news_creator_news_file"
+            android:parentActivityName=".administrator.newsedition.NewsCreatorActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".administrator.newsedition.NewsCreatorActivity" />
+        </activity>
+        <activity
+            android:name=".administrator.newsedition.NewsCreatorActivity"
             android:label="@string/news_creator_label"
             android:parentActivityName=".firstpage.FirstPageActivity">
             <meta-data
@@ -77,15 +82,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- NOTIFICATION SERVICE -->
+        <receiver
+            android:name=".utils.MyAlarmReceiver"
+            android:exported="true" />
+
         <service android:name=".notifications.NotificationsService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <receiver
-            android:name="com.epfd.csandroid.utils.MyAlarmReceiver"
-            android:exported="true" />
     </application>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 </manifest>

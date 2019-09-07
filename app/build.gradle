@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
 
+    implementation 'com.pixplicity.sharp:library:1.1.0'
+
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
@@ -46,16 +48,21 @@ dependencies {
 
     // Firebase
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation "com.google.firebase:firebase-core:17.2.0"
     implementation 'com.google.firebase:firebase-firestore:21.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.0'
     implementation 'com.firebaseui:firebase-ui-firestore:5.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.0.0'
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
 
     //Joda Time
     implementation 'joda-time:joda-time:2.10.3'
+
+    //EASY PERMISSION
+    implementation 'pub.devrel:easypermissions:1.1.1'
 
 }
 apply plugin: 'com.google.gms.google-services'

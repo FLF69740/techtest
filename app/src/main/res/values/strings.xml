@@ -15,6 +15,15 @@
 
     <!-- NEWS CREATOR -->
     <string name="news_creator_label">NEWS EDITEUR</string>
+    <string name="news_creator_date_title">DATE :</string>
+    <string name="news_creator_publication_title">PUBLICATION :</string>
+    <string name="news_creator_add_text"> : Ajouter un nouvel évènement</string>
+    <string name="news_creator_news_file">Fichier NEWS</string>
+    <string name="news_creator_news_body">CONTENU :</string>
+    <string name="news_creator_news_logo">LOGO :</string>
+    <string name="news_creator_photo_telephone">TELEPHONE</string>
+    <string name="news_creator_photo_backend">SERVEUR</string>
+    <string name="news_creator_add_btn_maj">MAJ</string>
 
     <!-- NOTIFICATION -->
     <string name="notification_text_parameter">Notification Francoise Dolto</string>
@@ -171,6 +180,8 @@ This privacy policy page was created at privacypolicytemplate.net and modified/g
     <string name="EMAIL">EMAIL</string>
     <string name="OK">OK</string>
     <string name="RETOUR">RETOUR</string>
+    <string name="AJOUTER">AJOUTER</string>
+    <string name="SUPPRIMER">SUPPRIMER</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
