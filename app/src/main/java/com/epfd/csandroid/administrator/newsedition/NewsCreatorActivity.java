@@ -72,7 +72,6 @@ public class NewsCreatorActivity extends BaseActivity {
                 RecyclerViewClickSupport.addTo(mRecyclerView, R.layout.creator_news_recycler_item)
                         .setOnItemClickListener((recyclerView, position, v) -> {
                             Intent intent = new Intent(getApplicationContext(), FileNewsCreatorActivity.class);
-                  //          intent.putExtra(INTENT_PHOTO_NEWS, mNewsList.get(position).getPhoto());
                             intent.putExtra(INTENT_CREATOR_NEWS, mNewsList.get(position));
                             startActivity(intent);
                         });

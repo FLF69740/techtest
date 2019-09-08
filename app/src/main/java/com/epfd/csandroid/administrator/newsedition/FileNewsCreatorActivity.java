@@ -55,6 +55,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS = 100;
     private static final int RC_CHOOSE_PHOTO = 200;
+    private static final int RC_PHOTO_BACKEND = 300;
     private Boolean mPhotoImported = false; // définit si une photo a été importé ou non (après rotation d'écran)
 
     @Override
@@ -131,8 +132,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(BUNDLE_PHOTO_NEWS, mUriString);
- /*       outState.putBoolean(BUNDLE_PHOTO_IMPORTED, mPhotoImported);
-        */
+        outState.putBoolean(BUNDLE_PHOTO_IMPORTED, mPhotoImported);
         outState.putParcelable(BUNDLE_NEWS, mNews);
     }
 
@@ -175,6 +175,15 @@ public class FileNewsCreatorActivity extends BaseActivity {
         mCalendarPublicationNews = calendar;
         mPublicationNewsBtn.setText(calendar.toString("dd/MM/yyyy"));
     };
+
+    /**
+     *  IMPORT PHOTO BACKEND
+     */
+
+    @OnClick(R.id.news_file_backend_btn)
+    public void importNewsFilePhotoBackEnd(){
+        startActivityForResult(new Intent(this, FileNewsPhotoBackEndActivity.class), RC_PHOTO_BACKEND);
+    }
 
     /**
      *  IMPORT PHOTO EXTERNAL STORAGE
