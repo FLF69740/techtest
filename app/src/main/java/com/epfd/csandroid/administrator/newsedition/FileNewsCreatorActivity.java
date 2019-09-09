@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.R;
@@ -21,8 +23,12 @@ import com.epfd.csandroid.api.NewsHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.models.News;
 import com.epfd.csandroid.utils.Utils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -48,6 +54,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
 
     private static final String BUNDLE_PHOTO_NEWS = "BUNDLE_PHOTO_NEWS";
     private static final String BUNDLE_PHOTO_IMPORTED = "BUNDLE_PHOTO_IMPORTED";
+    private static final String BUNDLE_PHOTO_BACKEND  = "BUNDLE_PHOTO_BACKEND";
     private static final String BUNDLE_NEWS = "BUNDLE_NEWS";
 
     private News mNews = new News();
@@ -57,6 +64,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
     private static final int RC_CHOOSE_PHOTO = 200;
     private static final int RC_PHOTO_BACKEND = 300;
     private Boolean mPhotoImported = false; // définit si une photo a été importé ou non (après rotation d'écran)
+    private String mPhotoBackend; // donne un nom si la photo est chargé à partir du storage
 
     @Override
     public int getFragmentLayout() {
@@ -85,12 +93,14 @@ public class FileNewsCreatorActivity extends BaseActivity {
 
             mPhotoImported = savedInstanceState.getBoolean(BUNDLE_PHOTO_IMPORTED, false);
             mUriString = savedInstanceState.getString(BUNDLE_PHOTO_NEWS, Utils.EMPTY);
+            mPhotoBackend = savedInstanceState.getString(BUNDLE_PHOTO_BACKEND, null);
             if (!mUriString.equals(Utils.EMPTY)){
                 mUriImageSelected = Uri.parse(mUriString);
-                Glide.with(this)
+                /*Glide.with(this)
                         .load(this.mUriImageSelected)
                         .apply(RequestOptions.centerCropTransform())
-                        .into(this.mPhoto);
+                        .into(this.mPhoto);*/
+                configureImageView(mUriString);
             }
 
         } else {
@@ -100,11 +110,12 @@ public class FileNewsCreatorActivity extends BaseActivity {
                 if (mNews.getPhoto() != null) {
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                     storageReference.child(Objects.requireNonNull(mNews.getPhoto())).getDownloadUrl().addOnSuccessListener(uri -> {
-                        mUriString = uri.toString();
+                    /*    mUriString = uri.toString();
                         Glide.with(getApplicationContext())
                                 .load(uri)
                                 .apply(RequestOptions.fitCenterTransform())
-                                .into(mPhoto);
+                                .into(mPhoto);*/
+                    configureImageView(uri.toString());
                     });
                 }
 
@@ -133,12 +144,21 @@ public class FileNewsCreatorActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         outState.putString(BUNDLE_PHOTO_NEWS, mUriString);
         outState.putBoolean(BUNDLE_PHOTO_IMPORTED, mPhotoImported);
+        outState.putString(BUNDLE_PHOTO_BACKEND, mPhotoBackend);
         outState.putParcelable(BUNDLE_NEWS, mNews);
     }
 
     private void goBack(){
         startActivity(new Intent(getApplicationContext(), NewsCreatorActivity.class));
         finish();
+    }
+
+    private void configureImageView(String uri){
+        mUriString = uri;
+        Glide.with(getApplicationContext())
+                .load(uri)
+                .apply(RequestOptions.fitCenterTransform())
+                .into(mPhoto);
     }
 
     /**
@@ -219,12 +239,17 @@ public class FileNewsCreatorActivity extends BaseActivity {
         if (requestCode == RC_CHOOSE_PHOTO){
             if (resultCode == RESULT_OK){
                 this.mUriImageSelected = data.getData();
-                this.mUriString = data.getData().toString();
                 this.mPhotoImported = true;
-                Glide.with(this)
-                        .load(this.mUriImageSelected)
-                        .apply(RequestOptions.centerCropTransform())
-                        .into(this.mPhoto);
+                configureImageView(mUriImageSelected.toString());
+            }
+        }
+        else if (requestCode == RC_PHOTO_BACKEND){
+            if (resultCode == RESULT_OK){
+                this.mUriString = data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_URI_BACKEND);
+                this.mUriImageSelected = Uri.parse(data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_URI_BACKEND));
+                this.mPhotoImported = false;
+                this.mPhotoBackend = data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_PHOTO_BACKEND);
+                configureImageView(mUriString);
             }
         }
     }
@@ -249,18 +274,24 @@ public class FileNewsCreatorActivity extends BaseActivity {
         }
 
         if (isNewsComplete){
-            if (mPhotoImported){
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference(tagString);
-                storageReference.putFile(this.mUriImageSelected)
-                        .addOnSuccessListener(this, taskSnapshot -> {
-                            String nameImageSavedInFirebase = taskSnapshot.getMetadata().getReference().getName();
-                            NewsHelper.createNews(mTitle.getText().toString(), mDateNewsBtn.getText().toString(), false, mPublicationNewsBtn.getText().toString(),
-                                    nameImageSavedInFirebase, mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
-                        });
+            String photoName;
+            if (mPhotoBackend != null){
+                photoName = mPhotoBackend;
             }else {
-                if (mNews.getPhoto() == null) mNews.setPhoto("ic_logo_pos2");
+                photoName = tagString;
+            }
+            if (mPhotoImported){
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference(photoName);
+                storageReference.putFile(this.mUriImageSelected).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        NewsHelper.createNews(mTitle.getText().toString(), mDateNewsBtn.getText().toString(), false, mPublicationNewsBtn.getText().toString(),
+                                photoName, mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
+                    }
+                });
+            }else {
                 NewsHelper.createNews(mTitle.getText().toString(), mDateNewsBtn.getText().toString(), false, mPublicationNewsBtn.getText().toString(),
-                        mNews.getPhoto(), mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
+                        photoName, mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
             }
             this.goBack();
         }
@@ -280,12 +311,8 @@ public class FileNewsCreatorActivity extends BaseActivity {
 
     @OnClick(R.id.news_file_maj_btn)
     public void majANews(){
-        if (!mNews.getDate().equals(mDateNewsBtn.getText().toString())){
-            NewsHelper.deleteNews("NEWS" + mNews.getDate().replace("/","") + mNews.getTag());
-            this.createANews();
-        }else {
-            this.registerNews(String.valueOf(mNews.getTag()), mNews.getDate().replace("/", ""));
-        }
+        NewsHelper.deleteNews("NEWS" + mNews.getDate().replace("/","") + mNews.getTag());
+        this.createANews();
     }
 
     @OnClick(R.id.news_file_delete_btn)

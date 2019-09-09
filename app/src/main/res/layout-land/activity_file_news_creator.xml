@@ -173,7 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/AJOUTER"
+        android:text="@string/news_creator_add_btn_maj"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/news_file_delete_btn"
         app:layout_constraintStart_toStartOf="@+id/news_file_guideline" />

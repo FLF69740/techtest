@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,9 @@ public class FileNewsPhotoBackEndActivity extends BaseActivity {
     private List<String> mPhotoNameList = new ArrayList<>();
     private PhotBackendAdapter mAdapter;
 
+    public static final String BUNDLE_EXTRA_PHOTO_BACKEND = "BUNDLE_EXTRA_PHOTO_BACKEND";
+    public static final String BUNDLE_EXTRA_URI_BACKEND = "BUNDLE_EXTRA_URI_BACKEND";
+
     @Override
     public int getFragmentLayout() {
         return R.layout.activity_file_news_photo_back_end;
@@ -54,7 +58,6 @@ public class FileNewsPhotoBackEndActivity extends BaseActivity {
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.listAll().addOnSuccessListener(listResult -> {
-            Toast.makeText(getApplicationContext(), "GETTING LIST", Toast.LENGTH_SHORT).show();
             for (StorageReference prefix : listResult.getItems()){
                 prefix.getDownloadUrl().addOnSuccessListener(uri -> {
                     mUriStringList.add(uri.toString());
@@ -65,11 +68,12 @@ public class FileNewsPhotoBackEndActivity extends BaseActivity {
         }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "STORAGE FAIL", Toast.LENGTH_SHORT).show());
 
         RecyclerViewClickSupport.addTo(mRecyclerView, R.layout.photo_backend_item)
-                .setOnItemClickListener(new RecyclerViewClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Toast.makeText(getApplicationContext(), "PHOTO : " + mPhotoNameList.get(position), Toast.LENGTH_SHORT).show();
-                    }
+                .setOnItemClickListener((recyclerView, position, v) -> {
+                    Intent intent = new Intent();
+                    intent.putExtra(BUNDLE_EXTRA_PHOTO_BACKEND, mPhotoNameList.get(position));
+                    intent.putExtra(BUNDLE_EXTRA_URI_BACKEND, mUriStringList.get(position));
+                    setResult(RESULT_OK, intent);
+                    finish();
                 });
     }
 

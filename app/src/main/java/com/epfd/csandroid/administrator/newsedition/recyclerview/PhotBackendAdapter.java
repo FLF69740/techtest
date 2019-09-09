@@ -31,6 +31,7 @@ public class PhotBackendAdapter extends RecyclerView.Adapter<PhotoBackendViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PhotoBackendViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
         holder.setPhotoBackEnd(mUriListString.get(position));
     }
 
