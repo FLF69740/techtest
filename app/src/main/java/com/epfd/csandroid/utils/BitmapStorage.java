@@ -49,7 +49,7 @@ public class BitmapStorage {
     }
 
     // check if image exist into internal memory
-    private static boolean isFileExist(Context context, String imageName){
+    public static boolean isFileExist(Context context, String imageName){
         File file = context.getFileStreamPath(imageName);
         return file.exists();
     }
@@ -67,6 +67,7 @@ public class BitmapStorage {
 
         File[] list = directory.listFiles();
         for (File ff : list) {
+            if (isInteger(ff.getName()))
             deleteImage(context, ff.getName());
         }
     }
@@ -78,6 +79,7 @@ public class BitmapStorage {
 
         File[] list = directory.listFiles();
         for (File ff : list) {
+            if (isInteger(ff.getName()))
             builder.append(ff.getName()).append(PHOTO_SEPARATOR);
         }
         return builder.toString();
@@ -92,5 +94,14 @@ public class BitmapStorage {
         }else {
             Log.i(Utils.INFORMATION_LOG, "bitmap didn't exist");
         }
+    }
+
+    private static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException | NullPointerException e) {
+            return false;
+        }
+        return true;
     }
 }

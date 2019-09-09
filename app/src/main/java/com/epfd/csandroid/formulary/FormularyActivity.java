@@ -18,12 +18,9 @@ import com.epfd.csandroid.formulary.recyclerview.FormularyAdapter;
 import com.epfd.csandroid.models.Kid;
 import com.epfd.csandroid.models.User;
 import com.epfd.csandroid.utils.Utils;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.firestore.DocumentSnapshot;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +50,6 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
         mAnalytics = FirebaseAnalytics.getInstance(this);
-   //     mAnalytics.setUserId(getCurrentUser().getUid());
 
         if (this.getCurrentUser() != null){
 
@@ -61,7 +57,6 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
 
             if (savedInstanceState != null){
                 mKidList = savedInstanceState.getParcelableArrayList(BUNDLE_KEY_KID_LIST);
-             //   this.configureRecyclerView(mKidList);
                 this.preconfigRecyclerView(mKidList);
             }else {
                 UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
@@ -76,12 +71,10 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
                                 mKidList.add(new Kid(BusinessFormulary.getStringNameFromKid(completeName), BusinessFormulary.getStringFornameFromKid(completeName), classroom, gender));
                             }
                         }
-                    //    this.configureRecyclerView(mKidList);
                         this.preconfigRecyclerView(mKidList);
                     } else {
                         mKidList = new ArrayList<>();
                         mKidList.add(new Kid("", "", "", Utils.EMPTY));
-                    //    this.configureRecyclerView(mKidList);
                         this.preconfigRecyclerView(mKidList);
                     }
                 });
@@ -90,12 +83,9 @@ public class FormularyActivity extends BaseActivity implements FormularyAdapter.
     }
 
     private void preconfigRecyclerView(List<Kid> kidList){
-        ClassroomsHelper.getClassrooms().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                mClassroomsList = Arrays.asList(documentSnapshot.getString(Utils.NAME_DATA_CLASSROOMS).split(","));
-                configureRecyclerView(kidList, mClassroomsList);
-            }
+        ClassroomsHelper.getClassrooms().addOnSuccessListener(documentSnapshot -> {
+            mClassroomsList = Arrays.asList(documentSnapshot.getString(Utils.NAME_DATA_CLASSROOMS).split(","));
+            configureRecyclerView(kidList, mClassroomsList);
         });
     }
 

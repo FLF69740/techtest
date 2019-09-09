@@ -1,5 +1,6 @@
 package com.epfd.csandroid.administrator.newsedition.recyclerview;
 
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,7 +23,7 @@ public class PhotoBackendViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, mItemView);
     }
 
-    public void setPhotoBackEnd(String uri){
+    public void setPhotoBackEnd(Bitmap uri){
         Glide.with(mItemView)
                 .load(uri)
                 .apply(RequestOptions.centerCropTransform())

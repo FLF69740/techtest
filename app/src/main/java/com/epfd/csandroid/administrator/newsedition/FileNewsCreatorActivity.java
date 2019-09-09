@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,25 +15,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.NewsHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.models.News;
+import com.epfd.csandroid.utils.BitmapStorage;
 import com.epfd.csandroid.utils.Utils;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -96,11 +93,11 @@ public class FileNewsCreatorActivity extends BaseActivity {
             mPhotoBackend = savedInstanceState.getString(BUNDLE_PHOTO_BACKEND, null);
             if (!mUriString.equals(Utils.EMPTY)){
                 mUriImageSelected = Uri.parse(mUriString);
-                /*Glide.with(this)
-                        .load(this.mUriImageSelected)
-                        .apply(RequestOptions.centerCropTransform())
-                        .into(this.mPhoto);*/
-                configureImageView(mUriString);
+                this.configureImageViewWithURI(mUriString);
+            }else if (mPhotoBackend != null){
+                this.configureImageViewWithBitmap(BitmapStorage.loadImage(this, mPhotoBackend));
+            }else if (mNews.getPhoto() != null){
+                this.configureImageViewWithBitmap(BitmapStorage.loadImage(this, mNews.getPhoto()));
             }
 
         } else {
@@ -108,15 +105,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
             if (bundle != null){
                 mNews = bundle.getParcelable(NewsCreatorActivity.INTENT_CREATOR_NEWS);
                 if (mNews.getPhoto() != null) {
-                    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-                    storageReference.child(Objects.requireNonNull(mNews.getPhoto())).getDownloadUrl().addOnSuccessListener(uri -> {
-                    /*    mUriString = uri.toString();
-                        Glide.with(getApplicationContext())
-                                .load(uri)
-                                .apply(RequestOptions.fitCenterTransform())
-                                .into(mPhoto);*/
-                    configureImageView(uri.toString());
-                    });
+                    this.configureImageViewWithBitmap(BitmapStorage.loadImage(this, mNews.getPhoto()));
                 }
 
                 mTitle.setText(mNews.getTitle());
@@ -153,10 +142,17 @@ public class FileNewsCreatorActivity extends BaseActivity {
         finish();
     }
 
-    private void configureImageView(String uri){
+    private void configureImageViewWithURI(String uri){
         mUriString = uri;
         Glide.with(getApplicationContext())
                 .load(uri)
+                .apply(RequestOptions.fitCenterTransform())
+                .into(mPhoto);
+    }
+
+    private void configureImageViewWithBitmap(Bitmap bitmap){
+        Glide.with(getApplicationContext())
+                .load(bitmap)
                 .apply(RequestOptions.fitCenterTransform())
                 .into(mPhoto);
     }
@@ -240,16 +236,14 @@ public class FileNewsCreatorActivity extends BaseActivity {
             if (resultCode == RESULT_OK){
                 this.mUriImageSelected = data.getData();
                 this.mPhotoImported = true;
-                configureImageView(mUriImageSelected.toString());
+                configureImageViewWithURI(mUriImageSelected.toString());
             }
         }
         else if (requestCode == RC_PHOTO_BACKEND){
             if (resultCode == RESULT_OK){
-                this.mUriString = data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_URI_BACKEND);
-                this.mUriImageSelected = Uri.parse(data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_URI_BACKEND));
                 this.mPhotoImported = false;
                 this.mPhotoBackend = data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_PHOTO_BACKEND);
-                configureImageView(mUriString);
+                configureImageViewWithBitmap(BitmapStorage.loadImage(this, mPhotoBackend));
             }
         }
     }
@@ -287,6 +281,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         NewsHelper.createNews(mTitle.getText().toString(), mDateNewsBtn.getText().toString(), false, mPublicationNewsBtn.getText().toString(),
                                 photoName, mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
+                        BitmapStorage.saveImageInternalStorage(getApplicationContext(), photoName, mUriImageSelected);
                     }
                 });
             }else {
