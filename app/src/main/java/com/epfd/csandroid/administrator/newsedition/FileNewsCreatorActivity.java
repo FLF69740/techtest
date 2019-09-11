@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.epfd.csandroid.api.NewsHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.models.News;
 import com.epfd.csandroid.utils.BitmapStorage;
+import com.epfd.csandroid.utils.FireBaseStorageUtils;
 import com.epfd.csandroid.utils.Utils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -76,6 +78,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        Log.i(Utils.INFORMATION_LOG, BitmapStorage.getPhotoMemoryCode(this));
         DateTime calendar = new DateTime();
         mDateNewsBtn.setText(calendar.toString("dd/MM/yyyy"));
         mPublicationNewsBtn.setText(calendar.toString("dd/MM/yyyy"));
@@ -95,9 +98,9 @@ public class FileNewsCreatorActivity extends BaseActivity {
                 mUriImageSelected = Uri.parse(mUriString);
                 this.configureImageViewWithURI(mUriString);
             }else if (mPhotoBackend != null){
-                this.configureImageViewWithBitmap(BitmapStorage.loadImage(this, mPhotoBackend));
+                this.configureImageViewWithBitmap(mPhotoBackend);
             }else if (mNews.getPhoto() != null){
-                this.configureImageViewWithBitmap(BitmapStorage.loadImage(this, mNews.getPhoto()));
+                this.configureImageViewWithBitmap(mNews.getPhoto());
             }
 
         } else {
@@ -105,7 +108,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
             if (bundle != null){
                 mNews = bundle.getParcelable(NewsCreatorActivity.INTENT_CREATOR_NEWS);
                 if (mNews.getPhoto() != null) {
-                    this.configureImageViewWithBitmap(BitmapStorage.loadImage(this, mNews.getPhoto()));
+                    this.configureImageViewWithBitmap(mNews.getPhoto());
                 }
 
                 mTitle.setText(mNews.getTitle());
@@ -138,7 +141,8 @@ public class FileNewsCreatorActivity extends BaseActivity {
     }
 
     private void goBack(){
-        startActivity(new Intent(getApplicationContext(), NewsCreatorActivity.class));
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -150,11 +154,8 @@ public class FileNewsCreatorActivity extends BaseActivity {
                 .into(mPhoto);
     }
 
-    private void configureImageViewWithBitmap(Bitmap bitmap){
-        Glide.with(getApplicationContext())
-                .load(bitmap)
-                .apply(RequestOptions.fitCenterTransform())
-                .into(mPhoto);
+    private void configureImageViewWithBitmap(String bitmap){
+        mPhoto.setImageBitmap(BitmapStorage.loadImage(this, bitmap));
     }
 
     /**
@@ -243,7 +244,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
             if (resultCode == RESULT_OK){
                 this.mPhotoImported = false;
                 this.mPhotoBackend = data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_PHOTO_BACKEND);
-                configureImageViewWithBitmap(BitmapStorage.loadImage(this, mPhotoBackend));
+                configureImageViewWithBitmap(mPhotoBackend);
             }
         }
     }
@@ -275,13 +276,17 @@ public class FileNewsCreatorActivity extends BaseActivity {
                 photoName = tagString;
             }
             if (mPhotoImported){
+                BitmapStorage.saveImageInternalStorage(this, photoName, mUriImageSelected);
+
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference(photoName);
                 storageReference.putFile(this.mUriImageSelected).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         NewsHelper.createNews(mTitle.getText().toString(), mDateNewsBtn.getText().toString(), false, mPublicationNewsBtn.getText().toString(),
                                 photoName, mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
-                        BitmapStorage.saveImageInternalStorage(getApplicationContext(), photoName, mUriImageSelected);
+                        FireBaseStorageUtils fireBaseStorageUtils = new FireBaseStorageUtils();
+                        fireBaseStorageUtils.createStorageSerial();
+
                     }
                 });
             }else {

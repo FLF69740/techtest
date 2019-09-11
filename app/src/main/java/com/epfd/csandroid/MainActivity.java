@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.epfd.csandroid.api.PhotoCodeHelper;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.api.PasswordHelper;
@@ -30,11 +31,15 @@ import com.epfd.csandroid.formulary.PasswordActivity;
 import com.epfd.csandroid.models.User;
 import com.epfd.csandroid.notifications.NotificationWindowActivity;
 import com.epfd.csandroid.presentation.PresentationActivity;
+import com.epfd.csandroid.utils.BitmapStorage;
+import com.epfd.csandroid.utils.FireBaseStorageUtils;
 import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -236,31 +241,58 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    //APEL Code verification : 1/ Formulary verification -> OK : 2/ User databse verification
+    //APEL Code && photo Code  verification : 1/ phot verification -> OK : 2/ Formulary verification -> OK : 3/ User database verification
     private void codeVerification(){
         if (this.getCurrentUser() != null){
-            PasswordHelper.getCode().addOnSuccessListener(documentSnapshot -> {
-                String backEndCode = documentSnapshot.getString(Utils.NAME_DATA_CODE);
-                if (backEndCode != null && !mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
-                    Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
-                    intent.putExtra(BUNDLE_USERNAME, getCurrentUser().getDisplayName());
-                    intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
-                    intent.putExtra(BUNDLE_PASSWORD, backEndCode);
-                    startActivity(intent);
-                } else {
-                    UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
-                        if (documentSnapshot1.toObject(User.class) != null) {
-                            User user = documentSnapshot1.toObject(User.class);
-                            Intent intent = new Intent(getApplicationContext(), FirstPageActivity.class);
-                            intent.putExtra(MAIN_EXTRA_CLASSROOMLIST, user.getStringClasseNameList());
+
+            //VERIFICATION OF PHOTOS GALLERY
+            PhotoCodeHelper.getPhotoCode().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String galleryBackEnd = documentSnapshot.getString("serial");
+                    List<String> controlList = Arrays.asList(galleryBackEnd.split(BitmapStorage.PHOTO_SEPARATOR));
+                    String myGallery = BitmapStorage.getPhotoMemoryCode(getApplicationContext());
+                    boolean imageMissing = false;
+                    for (String imageName : controlList) {
+                        if (!myGallery.contains(imageName))
+                            imageMissing = true;
+                    }
+                    if (imageMissing){
+                        FireBaseStorageUtils fireBaseStorageUtils = new FireBaseStorageUtils();
+                        fireBaseStorageUtils.initialisePhotoGallery(getApplicationContext());
+                    }
+
+                    PasswordHelper.getCode().addOnSuccessListener(documentSnapshot2 -> {
+                        String backEndCode = documentSnapshot2.getString(Utils.NAME_DATA_CODE);
+                        if (backEndCode != null && !mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
+                            Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
+                            intent.putExtra(BUNDLE_USERNAME, getCurrentUser().getDisplayName());
+                            intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
+                            intent.putExtra(BUNDLE_PASSWORD, backEndCode);
                             startActivity(intent);
                         } else {
-                            startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
+                            UserHelper.getUser(getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
+                                if (documentSnapshot1.toObject(User.class) != null) {
+                                    User user = documentSnapshot1.toObject(User.class);
+                                    Intent intent = new Intent(getApplicationContext(), FirstPageActivity.class);
+                                    intent.putExtra(MAIN_EXTRA_CLASSROOMLIST, user.getStringClasseNameList());
+                                    startActivity(intent);
+
+                                } else {
+                                    startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
+                                }
+                            });
                         }
+                        finish();
                     });
+
                 }
-                finish();
             });
+
+
+
+
+
         }
     }
 

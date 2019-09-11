@@ -1,7 +1,6 @@
 package com.epfd.csandroid.administrator.newsedition.recyclerview;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ import java.util.List;
 
 public class PhotBackendAdapter extends RecyclerView.Adapter<PhotoBackendViewHolder> {
 
-    private List<Bitmap> mBitmaps;
+    private List<String> mBitmaps;
 
-    public PhotBackendAdapter(List<Bitmap> bitmapList) {
+    public PhotBackendAdapter(List<String> bitmapList) {
         mBitmaps = bitmapList;
     }
 

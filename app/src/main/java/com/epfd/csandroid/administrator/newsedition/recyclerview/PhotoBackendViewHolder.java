@@ -1,15 +1,11 @@
 package com.epfd.csandroid.administrator.newsedition.recyclerview;
 
-import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.utils.BitmapStorage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,10 +19,9 @@ public class PhotoBackendViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, mItemView);
     }
 
-    public void setPhotoBackEnd(Bitmap uri){
-        Glide.with(mItemView)
-                .load(uri)
-                .apply(RequestOptions.centerCropTransform())
-                .into(mPhoto);
+    public void setPhotoBackEnd(String uri){
+       if (BitmapStorage.isFileExist(mItemView.getContext(), uri)){
+           mPhoto.setImageBitmap(BitmapStorage.loadImage(mItemView.getContext(), uri));
+       }
     }
 }

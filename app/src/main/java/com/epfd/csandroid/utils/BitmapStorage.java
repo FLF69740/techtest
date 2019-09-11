@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
@@ -37,11 +35,9 @@ public class BitmapStorage {
     // load Image from internal memory
     public static Bitmap loadImage(Context context, String imageName){
         Bitmap bitmap = null;
-        FileInputStream fileInputStream;
         try {
-            fileInputStream = new FileInputStream(new File(context.getFilesDir() + "/" + imageName));
-            bitmap = BitmapFactory.decodeStream(fileInputStream);
-            fileInputStream.close();
+            String path = new File(context.getFilesDir(), imageName).getAbsolutePath();
+            bitmap = BitmapFactory.decodeFile(path);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,7 +82,7 @@ public class BitmapStorage {
     }
 
     // delete a bitmap
-    private static void deleteImage(Context context, String imageName){
+    public static void deleteImage(Context context, String imageName){
         if (BitmapStorage.isFileExist(context, imageName)){
             File file = context.getFileStreamPath(imageName);
             file.delete();
