@@ -109,6 +109,7 @@ public class FileNewsCreatorActivity extends BaseActivity {
                 mNews = bundle.getParcelable(NewsCreatorActivity.INTENT_CREATOR_NEWS);
                 if (mNews.getPhoto() != null) {
                     this.configureImageViewWithBitmap(mNews.getPhoto());
+                    mPhotoBackend = mNews.getPhoto();
                 }
 
                 mTitle.setText(mNews.getTitle());
