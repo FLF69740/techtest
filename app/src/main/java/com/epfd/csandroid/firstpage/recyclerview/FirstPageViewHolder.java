@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.models.News;
+import com.epfd.csandroid.utils.BitmapStorage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,9 +21,12 @@ public class FirstPageViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.news_recycler_body) TextView mBody;
     @BindView(R.id.news_recycler_imageview) ImageView mImage;
 
+    private View mItemView;
+
     public FirstPageViewHolder(@NonNull View itemView) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
+        mItemView = itemView;
+        ButterKnife.bind(this, mItemView);
     }
 
     public void setViewHolder(News news){
@@ -36,7 +40,7 @@ public class FirstPageViewHolder extends RecyclerView.ViewHolder {
                 mImage.setBackgroundResource(R.drawable.ic_cake_friday_photo);
                 break;
             default:
-                mImage.setBackgroundResource(R.drawable.ic_logo_pos2);
+                mImage.setImageBitmap(BitmapStorage.loadImage(mItemView.getContext(), news.getPhoto()));
                 break;
         }
     }

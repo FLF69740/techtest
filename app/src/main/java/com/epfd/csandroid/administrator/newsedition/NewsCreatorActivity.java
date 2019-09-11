@@ -10,10 +10,12 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.administrator.newsedition.recyclerview.NewsCreatorAdapter;
+import com.epfd.csandroid.api.CakeHelper;
 import com.epfd.csandroid.api.NewsHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.models.News;
 import com.epfd.csandroid.utils.RecyclerViewClickSupport;
+import com.epfd.csandroid.utils.Utils;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,9 @@ public class NewsCreatorActivity extends BaseActivity {
             if (task.isSuccessful() && task.getResult() != null){
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
                     News news = documentSnapshot.toObject(News.class);
-                    mNewsList.add(news);
+                    if (!news.getTitle().equals(CakeHelper.getEventName())) {
+                        mNewsList.add(news);
+                    }
                 }
                 Context recyclerContext = mRecyclerView.getContext();
                 LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(recyclerContext, R.anim.layout_slide_from_bottom);
@@ -86,7 +90,9 @@ public class NewsCreatorActivity extends BaseActivity {
                 if (task.isSuccessful() && task.getResult() != null) {
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                         News news = documentSnapshot.toObject(News.class);
-                        mNewsList.add(news);
+                        if (!news.getTitle().equals(CakeHelper.getEventName())) {
+                            mNewsList.add(news);
+                        }
                         mAdapter.notifyDataSetChanged();
                     }
                 }

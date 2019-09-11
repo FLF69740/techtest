@@ -1,6 +1,5 @@
 package com.epfd.csandroid.administrator.newsedition.recyclerview;
 
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,10 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.models.News;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.epfd.csandroid.utils.BitmapStorage;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -39,26 +35,14 @@ public class NewsCreatorViewHolder extends RecyclerView.ViewHolder {
         mTitle.setText(news.getTitle());
         mBody.setText(news.getBody());
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
-        storageReference.child(news.getPhoto()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(mItemView.getContext())
-                        .load(uri)
-                        .apply(RequestOptions.fitCenterTransform())
-                        .into(mPhoto);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Glide.with(mItemView.getContext())
-                        .load(R.drawable.ic_logo_pos2)
-                        .apply(RequestOptions.fitCenterTransform())
-                        .into(mPhoto);
-            }
-        });
-
+        if (BitmapStorage.isFileExist(mItemView.getContext(), news.getPhoto())){
+            mPhoto.setImageBitmap(BitmapStorage.loadImage(mItemView.getContext(), news.getPhoto()));
+        }else {
+            Glide.with(mItemView.getContext())
+                    .load(R.drawable.ic_logo_pos2)
+                    .apply(RequestOptions.fitCenterTransform())
+                    .into(mPhoto);
+        }
     }
 
 }
