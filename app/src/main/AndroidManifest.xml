@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".event.EventMainActivity"
+            android:label="@string/event_event"
+            android:parentActivityName=".firstpage.FirstPageActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".firstpage.FirstPageActivity" />
+        </activity>
+        <activity
             android:name=".administrator.newsedition.FileNewsPhotoBackEndActivity"
             android:label="@string/news_creator_photo_backend"
             android:parentActivityName=".administrator.newsedition.NewsCreatorActivity">
@@ -100,10 +108,10 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 </manifest>

@@ -10,6 +10,10 @@
             android:icon="@drawable/ic_folder_shared_black_24dp"
             android:title="@string/formulary_formulary"/>
         <item
+            android:id="@+id/general_drawer_event"
+            android:icon="@drawable/ic_child_care_black_24dp"
+            android:title="@string/event_event"/>
+        <item
             android:id="@+id/general_drawer_deconnexion"
             android:icon="@drawable/ic_power_settings_new_black_24dp"
             android:title="@string/connexion_deconnexion"/>

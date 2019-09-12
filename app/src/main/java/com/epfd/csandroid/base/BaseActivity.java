@@ -25,6 +25,7 @@ import com.epfd.csandroid.R;
 import com.epfd.csandroid.administrator.cakefridayedition.CakeFridayActivity;
 import com.epfd.csandroid.administrator.classroomsedition.ClassroomsEditionActivity;
 import com.epfd.csandroid.api.UserHelper;
+import com.epfd.csandroid.event.EventMainActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.administrator.newsedition.NewsCreatorActivity;
 import com.epfd.csandroid.formulary.PrivacyPolicyActivity;
@@ -148,6 +149,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 break;
             case R.id.general_drawer_formulary :
                 startActivity(new Intent(this, FormularyActivity.class));
+                break;
+            case R.id.general_drawer_event :
+                startActivity(new Intent(this, EventMainActivity.class));
                 break;
             case R.id.general_drawer_deconnexion :
                 signOutUserFromFirebase();

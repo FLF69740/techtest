@@ -13,6 +13,9 @@
     <string name="navigation_drawer_cake_friday">Planning des goûters</string>
     <string name="navigation_drawer_news_creator">Création News</string>
 
+    <!-- EVENEMENTS -->
+    <string name="event_event">Evènements</string>
+
     <!-- NEWS CREATOR -->
     <string name="news_creator_label">NEWS EDITEUR</string>
     <string name="news_creator_date_title">DATE :</string>
