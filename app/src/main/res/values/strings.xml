@@ -12,9 +12,20 @@
     <string name="navigation_drawer_policy">Privacy Policy</string>
     <string name="navigation_drawer_cake_friday">Planning des goûters</string>
     <string name="navigation_drawer_news_creator">Création News</string>
+    <string name="navigation_drawer_event_creator">Création Evènements</string>
+    <string name="navigation_drawer_event">Evènements</string>
 
     <!-- EVENEMENTS -->
-    <string name="event_event">Evènements</string>
+    <string name="event_event">EVENEMENTS</string>
+
+    <!-- EVENTS CREATOR -->
+    <string name="event_creator_event">EVENTS EDITEUR</string>
+    <string name="event_creator_panel">PANEL</string>
+    <string name="event_creator_logo">LOGO</string>
+    <string name="event_creator_date">DATE</string>
+    <string name="event_creator_description">DESCRIPTION</string>
+    <string name="event_creator_tab_one">PRESENTATION</string>
+    <string name="event_creator_tab_two">ATELIER</string>
 
     <!-- NEWS CREATOR -->
     <string name="news_creator_label">NEWS EDITEUR</string>

@@ -26,6 +26,7 @@ import com.epfd.csandroid.administrator.cakefridayedition.CakeFridayActivity;
 import com.epfd.csandroid.administrator.classroomsedition.ClassroomsEditionActivity;
 import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.event.EventMainActivity;
+import com.epfd.csandroid.eventcreator.EventPanelActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.administrator.newsedition.NewsCreatorActivity;
 import com.epfd.csandroid.formulary.PrivacyPolicyActivity;
@@ -165,6 +166,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 break;
             case R.id.news_creator_edition:
                 startActivity(new Intent(this, NewsCreatorActivity.class));
+                break;
+            case R.id.event_creator_edition:
+                startActivity(new Intent(this, EventPanelActivity.class));
                 break;
         }
 
