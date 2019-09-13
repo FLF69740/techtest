@@ -19,8 +19,10 @@
     <string name="event_event">EVENEMENTS</string>
 
     <!-- EVENTS CREATOR -->
+    <string name="event_creator_event_menu">EVENTS MENU</string>
     <string name="event_creator_event">EVENTS EDITEUR</string>
     <string name="event_creator_panel">PANEL</string>
+    <string name="event_creator_title">TITRE</string>
     <string name="event_creator_logo">LOGO</string>
     <string name="event_creator_date">DATE</string>
     <string name="event_creator_description">DESCRIPTION</string>

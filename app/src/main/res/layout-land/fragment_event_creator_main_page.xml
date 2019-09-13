@@ -10,6 +10,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <EditText
+            android:id="@+id/event_creator_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
+            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_three"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/event_creator_guide_four"
+            app:layout_constraintTop_toBottomOf="@+id/event_creator_description_title" />
+
+        <EditText
+            android:id="@+id/event_creator_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/event_creator_guide_four"
+            app:layout_constraintTop_toBottomOf="@+id/event_creator_title_title" />
+
         <ImageView
             android:id="@+id/event_creator_panel_photo"
             android:layout_width="0dp"
@@ -18,11 +52,11 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_wallpaper_pink_24dp"
             android:clickable="true"
             android:focusable="true"
+            android:src="@drawable/ic_wallpaper_pink_24dp"
             app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_one"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_creator_panel" />
 
@@ -32,10 +66,10 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_logo_pos2"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_two"
+            android:src="@drawable/ic_logo_pos2"
+            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_three"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,28 +90,59 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/event_creator_logo"
             app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_one" />
+            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_two" />
 
         <TextView
             android:id="@+id/event_creator_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="@string/event_creator_date"
-            app:layout_constraintBottom_toBottomOf="@+id/event_creator_logo"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_two"
+            app:layout_constraintEnd_toStartOf="@+id/event_creator_date_picker"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_one" />
+
+        <TextView
+            android:id="@+id/event_creator_date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/event_creator_date"
+            app:layout_constraintBottom_toBottomOf="@+id/event_creator_date_title"
+            app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
+            app:layout_constraintStart_toEndOf="@+id/event_creator_date_title"
+            app:layout_constraintTop_toTopOf="@+id/event_creator_date_title" />
+
+        <TextView
+            android:id="@+id/event_creator_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/event_creator_description"
             app:layout_constraintStart_toStartOf="@+id/event_creator_guide_four"
-            app:layout_constraintTop_toTopOf="@+id/event_creator_logo" />
+            app:layout_constraintTop_toBottomOf="@+id/event_creator_title" />
+
+        <TextView
+            android:id="@+id/event_creator_title_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/event_creator_title"
+            app:layout_constraintStart_toStartOf="@+id/event_creator_guide_four"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/event_creator_guide_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.35" />
+            app:layout_constraintGuide_percent="0.4" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/event_creator_guide_two"
@@ -107,47 +172,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="1" />
 
-        <TextView
-            android:id="@+id/event_creator_date_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/event_creator_date"
-            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_two"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/event_creator_guide_four"
-            app:layout_constraintTop_toBottomOf="@+id/event_creator_date_title" />
-
-        <TextView
-            android:id="@+id/event_creator_description_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/event_creator_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_creator_title" />
-
-        <EditText
-            android:id="@+id/event_creator_description"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:gravity="top|start"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:scrollHorizontally="false"
-            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_three"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_creator_description_title" />
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/event_creator_bottomNavigationView"
             android:layout_width="0dp"
@@ -160,29 +184,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/event_creator_guide_navigation_bottom"
             app:menu="@menu/menu_bottom_nav_event_panel" />
-
-        <TextView
-            android:id="@+id/event_creator_title_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/event_creator_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_two" />
-
-        <EditText
-            android:id="@+id/event_creator_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_creator_title_title" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

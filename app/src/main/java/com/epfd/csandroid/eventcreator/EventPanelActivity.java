@@ -23,9 +23,9 @@ public class EventPanelActivity extends BaseActivity {
 
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
-        Event tempEvent = new Event("temp", "01/01/1901", "temp event for test", "An awesome picture", "good label");
+        Event event = getIntent().getExtras().getParcelable(EventCreatorMenuActivity.INTENT_EVENT_CREATOR_MENU);
         ViewPager viewPager = findViewById(R.id.event_creator_panel_viewpager);
-        viewPager.setAdapter(new EventPanelAdapter(getSupportFragmentManager(), 2, tempEvent, this));
+        viewPager.setAdapter(new EventPanelAdapter(getSupportFragmentManager(), 2, event, this));
         TabLayout tabLayout = findViewById(R.id.event_creator_panel_tablayout);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
