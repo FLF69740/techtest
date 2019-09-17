@@ -13,7 +13,7 @@ public class EventHelper {
 
     // --- COLLECTION REFERENCE ---
 
-    private static CollectionReference getEventsCollection(){
+    public static CollectionReference getEventsCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 

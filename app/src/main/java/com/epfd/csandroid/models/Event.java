@@ -13,6 +13,8 @@ public class Event implements Parcelable {
     private String mStages;
     private boolean mAffichage;
 
+    public Event() {}
+
     public Event(String name, String date, String description, String photo, String label) {
         mName = name;
         mDate = date;
