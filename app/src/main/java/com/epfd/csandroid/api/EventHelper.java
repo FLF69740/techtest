@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class EventHelper {
 
     private static final String COLLECTION_NAME = "events";
+    public static final String ROOT_UID = "EVENT";
 
     // --- COLLECTION REFERENCE ---
 
@@ -18,9 +19,8 @@ public class EventHelper {
 
     // --- CREATE ---
 
-    public static Task<Void> createEvent(String uid, String name, String date, String description, String photo, String label) {
-        Event eventToCreate = new Event(name, date, description, photo, label);
-        return EventHelper.getEventsCollection().document(uid).set(eventToCreate);
+    public static Task<Void> createEvent(String uid, Event event) {
+        return EventHelper.getEventsCollection().document(uid).set(event);
     }
 
     // --- GET ---

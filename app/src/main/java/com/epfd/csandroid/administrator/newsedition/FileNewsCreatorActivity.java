@@ -287,14 +287,15 @@ public class FileNewsCreatorActivity extends BaseActivity {
                                 photoName, mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
                         FireBaseStorageUtils fireBaseStorageUtils = new FireBaseStorageUtils();
                         fireBaseStorageUtils.createStorageSerial();
-
+                        goBack();
                     }
                 });
             }else {
                 NewsHelper.createNews(mTitle.getText().toString(), mDateNewsBtn.getText().toString(), false, mPublicationNewsBtn.getText().toString(),
                         photoName, mBody.getText().toString(), "ALL", Integer.valueOf(tagString), "NEWS", dateBloc);
+                this.goBack();
             }
-            this.goBack();
+
         }
     }
 

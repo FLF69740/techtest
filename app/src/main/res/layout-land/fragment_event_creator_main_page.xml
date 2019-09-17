@@ -64,16 +64,15 @@
             android:id="@+id/event_creator_label"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_logo_pos2"
             app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_three"
             app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
+            app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_five"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_creator_logo" />
+            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_two" />
 
         <TextView
             android:id="@+id/event_creator_panel"
@@ -83,39 +82,52 @@
             android:layout_marginTop="8dp"
             android:text="@string/event_creator_panel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/colorWhite"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="25"/>
 
         <TextView
             android:id="@+id/event_creator_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="@string/event_creator_logo"
-            app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
+            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_two"
+            app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_five"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_two" />
+            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_one"
+            android:textColor="@color/colorWhite"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="25"/>
 
         <TextView
             android:id="@+id/event_creator_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="@string/event_creator_date"
             app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_two"
-            app:layout_constraintEnd_toStartOf="@+id/event_creator_date_picker"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_one" />
+            app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
+            app:layout_constraintStart_toStartOf="@+id/event_creator_guide_five"
+            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_one"
+            android:textColor="@color/colorWhite"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="25"/>
 
         <TextView
             android:id="@+id/event_creator_date_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:text="@string/event_creator_date"
-            app:layout_constraintBottom_toBottomOf="@+id/event_creator_date_title"
+            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_three"
             app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
-            app:layout_constraintStart_toEndOf="@+id/event_creator_date_title"
-            app:layout_constraintTop_toTopOf="@+id/event_creator_date_title" />
+            app:layout_constraintStart_toStartOf="@+id/event_creator_guide_five"
+            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_two" />
 
         <TextView
             android:id="@+id/event_creator_description_title"
@@ -125,7 +137,12 @@
             android:layout_marginTop="8dp"
             android:text="@string/event_creator_description"
             app:layout_constraintStart_toStartOf="@+id/event_creator_guide_four"
-            app:layout_constraintTop_toBottomOf="@+id/event_creator_title" />
+            app:layout_constraintTop_toBottomOf="@+id/event_creator_title"
+            android:textColor="@color/colorWhite"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="25"/>
 
         <TextView
             android:id="@+id/event_creator_title_title"
@@ -135,7 +152,12 @@
             android:layout_marginTop="8dp"
             android:text="@string/event_creator_title"
             app:layout_constraintStart_toStartOf="@+id/event_creator_guide_four"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/colorWhite"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="25"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/event_creator_guide_one"
@@ -149,14 +171,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.55" />
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/event_creator_guide_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.9" />
+            app:layout_constraintGuide_percent="0.8" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/event_creator_guide_four"
@@ -164,6 +186,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/event_creator_guide_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/event_creator_guide_navigation_bottom"
@@ -176,7 +205,7 @@
             android:id="@+id/event_creator_bottomNavigationView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorSecondAccentDark"
             app:itemIconTint="@color/colorWhite"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -184,6 +213,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/event_creator_guide_navigation_bottom"
             app:menu="@menu/menu_bottom_nav_event_panel" />
+
+        <Button
+            android:id="@+id/event_creator_save_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/event_creator_save"
+            android:theme="@style/EPFD_Button"
+            app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_navigation_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/event_creator_guide_three" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

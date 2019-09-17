@@ -37,7 +37,7 @@ public class EventCreatorMenuActivity extends BaseActivity {
     @OnClick(R.id.event_creator_add_event)
     public void addAnEvent(){
         DateTime dateTime = new DateTime();
-        Event event = new Event("TESTI", dateTime.toString("dd/MM/yyyy"),"", Utils.EMPTY, Utils.EMPTY);
+        Event event = new Event("", dateTime.toString("dd/MM/yyyy"),"", Utils.EMPTY, Utils.EMPTY);
         Intent intent = new Intent(this, EventPanelActivity.class);
         intent.putExtra(INTENT_EVENT_CREATOR_MENU, event);
         startActivity(intent);

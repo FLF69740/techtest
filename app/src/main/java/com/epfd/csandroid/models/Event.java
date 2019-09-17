@@ -11,6 +11,7 @@ public class Event implements Parcelable {
     private String mPhoto;
     private String mLabel;
     private String mStages;
+    private boolean mAffichage;
 
     public Event(String name, String date, String description, String photo, String label) {
         mName = name;
@@ -19,6 +20,7 @@ public class Event implements Parcelable {
         mPhoto = photo;
         mLabel = label;
         mStages = "";
+        mAffichage = false;
     }
 
     public String getName() {
@@ -69,6 +71,14 @@ public class Event implements Parcelable {
         mStages = stages;
     }
 
+    public boolean isAffichage() {
+        return mAffichage;
+    }
+
+    public void setAffichage(boolean affichage) {
+        mAffichage = affichage;
+    }
+
     protected Event(Parcel in) {
         mName = in.readString();
         mDate = in.readString();
@@ -76,6 +86,7 @@ public class Event implements Parcelable {
         mPhoto = in.readString();
         mLabel = in.readString();
         mStages = in.readString();
+        mAffichage = in.readByte() != 0x00;
     }
 
     @Override
@@ -91,6 +102,7 @@ public class Event implements Parcelable {
         dest.writeString(mPhoto);
         dest.writeString(mLabel);
         dest.writeString(mStages);
+        dest.writeByte((byte) (mAffichage ? 0x01 : 0x00));
     }
 
     @SuppressWarnings("unused")
