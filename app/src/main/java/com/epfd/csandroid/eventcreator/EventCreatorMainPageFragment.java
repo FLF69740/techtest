@@ -25,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.epfd.csandroid.R;
@@ -35,16 +34,14 @@ import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.utils.BitmapStorage;
 import com.epfd.csandroid.utils.FireBaseStorageUtils;
 import com.epfd.csandroid.utils.Utils;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
 import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -78,7 +75,7 @@ public class EventCreatorMainPageFragment extends Fragment {
     private String mNavChoice;
     private boolean mLabelImported;
 
-    public static EventCreatorMainPageFragment newInstance(Event event){
+    static EventCreatorMainPageFragment newInstance(Event event){
         EventCreatorMainPageFragment eventCreatorMainPageFragment = new EventCreatorMainPageFragment();
         Bundle bundle = new Bundle(1);
         bundle.putParcelable(BUNDLE_EVENT_CREATOR_PANEL_EVENT_OBJECT, event);
@@ -111,8 +108,8 @@ public class EventCreatorMainPageFragment extends Fragment {
                 this.configureImageViewWithBitmap(mEvent.getLabel(), RC_LABEL_BACKEND);
             }
         }else {
-            mEvent = getArguments().getParcelable(BUNDLE_EVENT_CREATOR_PANEL_EVENT_OBJECT);
-            if (!mEvent.getName().equals("")){
+            assert getArguments() != null; mEvent = getArguments().getParcelable(BUNDLE_EVENT_CREATOR_PANEL_EVENT_OBJECT);
+            assert mEvent != null; if (!mEvent.getName().equals("")){
                 mSaveBtn.setText(getString(R.string.event_creator_maj));
             }
         }
@@ -157,13 +154,13 @@ public class EventCreatorMainPageFragment extends Fragment {
     }
 
     @OnClick(R.id.event_creator_panel_photo)
-    public void eventCreatorLoadPhoto(){
+    void eventCreatorLoadPhoto(){
         mNavChoice = BUNDLE_PHOTO_IMPORTED;
         playAnimation(true);
     }
 
     @OnClick(R.id.event_creator_label)
-    public void eventCreatorLoadLogo(){
+    void eventCreatorLoadLogo(){
         mNavChoice = BUNDLE_LABEL_IMPORTED;
         playAnimation(true);
     }
@@ -171,10 +168,10 @@ public class EventCreatorMainPageFragment extends Fragment {
     private void configureImageViewWithURI(String uri, int requestCode){
         if (requestCode == RC_CHOOSE_PHOTO) {
             mUriPhotoString = uri;
-            Glide.with(getContext()).load(uri).apply(RequestOptions.fitCenterTransform()).into(mPhoto);
+            Glide.with(Objects.requireNonNull(getContext())).load(uri).apply(RequestOptions.fitCenterTransform()).into(mPhoto);
         }else if (requestCode == RC_CHOOSE_LABEL) {
             mUriLabelString = uri;
-            Glide.with(getContext()).load(uri).apply(RequestOptions.fitCenterTransform()).into(mLabel);
+            Glide.with(Objects.requireNonNull(getContext())).load(uri).apply(RequestOptions.fitCenterTransform()).into(mLabel);
         }
     }
 
@@ -190,11 +187,11 @@ public class EventCreatorMainPageFragment extends Fragment {
     private DateTime mCalendarDateEvent = new DateTime();
 
     @OnClick(R.id.event_creator_date_picker)
-    public void clickOnDateEventBtn(){
-        new DatePickerDialog(getContext(), dateEventInsertion, mCalendarDateEvent.getYear(), mCalendarDateEvent.getMonthOfYear()-1, mCalendarDateEvent.getDayOfMonth()).show();
+    void clickOnDateEventBtn(){
+        new DatePickerDialog(Objects.requireNonNull(getContext()), dateEventInsertion, mCalendarDateEvent.getYear(), mCalendarDateEvent.getMonthOfYear()-1, mCalendarDateEvent.getDayOfMonth()).show();
     }
 
-    DatePickerDialog.OnDateSetListener dateEventInsertion = (view, year, month, dayOfMonth) -> {
+    private DatePickerDialog.OnDateSetListener dateEventInsertion = (view, year, month, dayOfMonth) -> {
         DateTime calendar = new DateTime();
         calendar = calendar.year().setCopy(year);
         calendar = calendar.monthOfYear().setCopy(month+1);
@@ -248,7 +245,7 @@ public class EventCreatorMainPageFragment extends Fragment {
 
     @AfterPermissionGranted(RC_IMAGE_PERMS)
     private void importEventPhotoExternalStorage(int requestCode){
-        if (!EasyPermissions.hasPermissions(getContext(), PERMS)){
+        if (!EasyPermissions.hasPermissions(Objects.requireNonNull(getContext()), PERMS)){
             EasyPermissions.requestPermissions(this, "Accepter l'import photo", RC_IMAGE_PERMS, PERMS);
             return;
         }
@@ -260,7 +257,7 @@ public class EventCreatorMainPageFragment extends Fragment {
      *  IMPORT PHOTO BACKEND
      */
 
-    public void importEventPhotoBackEnd(int requestCode){
+    private void importEventPhotoBackEnd(int requestCode){
         startActivityForResult(new Intent(getContext(), FileNewsPhotoBackEndActivity.class), requestCode);
     }
 
@@ -274,22 +271,22 @@ public class EventCreatorMainPageFragment extends Fragment {
         if (requestCode == RC_CHOOSE_PHOTO && resultCode == RESULT_OK){
             this.mPhotoImported = true;
             this.mEvent.setPhoto(Utils.EMPTY);
-            this.mUriPhotoString = data.getData().toString();
+            assert data != null; this.mUriPhotoString = Objects.requireNonNull(data.getData()).toString();
             configureImageViewWithURI(mUriPhotoString, requestCode);
         } else if (requestCode == RC_CHOOSE_LABEL && resultCode == RESULT_OK){
             this.mLabelImported = true;
             this.mEvent.setLabel(Utils.EMPTY);
-            this.mUriLabelString = data.getData().toString();
+            assert data != null; this.mUriLabelString = Objects.requireNonNull(data.getData()).toString();
             configureImageViewWithURI(mUriLabelString, requestCode);
         } else if (requestCode == RC_PHOTO_BACKEND && resultCode == RESULT_OK){
             this.mPhotoImported = false;
             this.mUriPhotoString = Utils.EMPTY;
-            this.mEvent.setPhoto(data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_PHOTO_BACKEND));
+            assert data != null; this.mEvent.setPhoto(data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_PHOTO_BACKEND));
             configureImageViewWithBitmap(mEvent.getPhoto(), requestCode);
         } else if (requestCode == RC_LABEL_BACKEND && resultCode == RESULT_OK){
             this.mLabelImported = false;
             this.mUriLabelString = Utils.EMPTY;
-            this.mEvent.setLabel(data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_PHOTO_BACKEND));
+            assert data != null; this.mEvent.setLabel(data.getStringExtra(FileNewsPhotoBackEndActivity.BUNDLE_EXTRA_PHOTO_BACKEND));
             configureImageViewWithBitmap(mEvent.getLabel(), requestCode);
         }
     }
@@ -341,7 +338,7 @@ public class EventCreatorMainPageFragment extends Fragment {
      */
 
     @OnClick(R.id.event_creator_save_btn)
-    public void registerEvent(){
+    void registerEvent(){
         boolean isEventComplete = true;
         if (mEvent.getName().equals("") | mEvent.getDescription().equals("")){
             isEventComplete = false;
@@ -381,12 +378,9 @@ public class EventCreatorMainPageFragment extends Fragment {
                     mUriLabelString = Utils.EMPTY;
                 });
             }
-            EventHelper.createEvent(EventHelper.ROOT_UID + mEvent.getDate().replace("/", ""), mEvent).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Snackbar.make(mView, R.string.event_creator_save, Snackbar.LENGTH_SHORT).show();
-                    mSaveBtn.setText(getString(R.string.event_creator_maj));
-                }
+            EventHelper.createEvent(EventHelper.ROOT_UID + mEvent.getDate().replace("/", ""), mEvent).addOnSuccessListener(aVoid -> {
+                Snackbar.make(mView, R.string.event_creator_save, Snackbar.LENGTH_SHORT).show();
+                mSaveBtn.setText(getString(R.string.event_creator_maj));
             });
         }else {
             Snackbar.make(mView, R.string.event_creator_incomplet, Snackbar.LENGTH_SHORT).show();
