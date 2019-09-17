@@ -19,11 +19,19 @@ public class EventPanelAdapter extends FragmentPagerAdapter {
     private List<String> mTablTitle = new ArrayList<>();
     private Event mEvent;
 
-    public EventPanelAdapter(@NonNull FragmentManager fm, int behavior, Event event, Context context) {
+    public EventPanelAdapter(@NonNull FragmentManager fm, int behavior, Event event, boolean tabStage, Context context) {
         super(fm, behavior);
         mTablTitle.add(context.getString(R.string.event_creator_tab_one));
-        mTablTitle.add(context.getString(R.string.event_creator_tab_two));
+        if (tabStage) {
+            mTablTitle.add(context.getString(R.string.event_creator_tab_two));
+        }
         mEvent = event;
+    }
+
+    public void addStage(Context context){
+        if (mTablTitle.size() == 1) {
+            mTablTitle.add(context.getString(R.string.event_creator_tab_two));
+        }
     }
 
     @NonNull
@@ -43,6 +51,6 @@ public class EventPanelAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return mTablTitle.size();
     }
 }

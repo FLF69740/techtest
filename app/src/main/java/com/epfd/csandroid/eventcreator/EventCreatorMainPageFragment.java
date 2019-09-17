@@ -7,6 +7,7 @@ import android.animation.AnimatorSet;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -381,6 +382,7 @@ public class EventCreatorMainPageFragment extends Fragment {
             EventHelper.createEvent(EventHelper.ROOT_UID + mEvent.getDate().replace("/", ""), mEvent).addOnSuccessListener(aVoid -> {
                 Snackbar.make(mView, R.string.event_creator_save, Snackbar.LENGTH_SHORT).show();
                 mSaveBtn.setText(getString(R.string.event_creator_maj));
+                mCallback.eventFirstPageValidate();
             });
         }else {
             Snackbar.make(mView, R.string.event_creator_incomplet, Snackbar.LENGTH_SHORT).show();
@@ -389,7 +391,27 @@ public class EventCreatorMainPageFragment extends Fragment {
     }
 
 
+    /**
+     *  Callback
+     */
 
+    // interface for button clicked
+    public interface EventSaveClickedListener{
+        void eventFirstPageValidate();
+    }
+
+    //callback for button clicked
+    private EventSaveClickedListener mCallback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (EventSaveClickedListener) getActivity();
+        } catch (ClassCastException e){
+            throw new ClassCastException(e.toString() + " must implement ItemClickedListener");
+        }
+    }
 
 
 

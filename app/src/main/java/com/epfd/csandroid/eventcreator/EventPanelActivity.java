@@ -9,7 +9,9 @@ import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.models.Event;
 import com.google.android.material.tabs.TabLayout;
 
-public class EventPanelActivity extends BaseActivity {
+public class EventPanelActivity extends BaseActivity implements EventCreatorMainPageFragment.EventSaveClickedListener{
+
+    private EventPanelAdapter mAdapter;
 
     @Override
     public int getFragmentLayout() {
@@ -25,11 +27,24 @@ public class EventPanelActivity extends BaseActivity {
     public void start(@Nullable Bundle savedInstanceState) {
         Event event = getIntent().getExtras().getParcelable(EventCreatorMenuActivity.INTENT_EVENT_CREATOR_MENU);
         ViewPager viewPager = findViewById(R.id.event_creator_panel_viewpager);
-        viewPager.setAdapter(new EventPanelAdapter(getSupportFragmentManager(), 2, event, this));
+        // configure adapter for a new Event
+        if (event.getName().equals("")) {
+         //   viewPager.setAdapter(new EventPanelAdapter(getSupportFragmentManager(), 2, event, false, this));
+            mAdapter = new EventPanelAdapter(getSupportFragmentManager(), 2, event, false, this);
+        }else {// configure adapter for an existing Event
+         //   viewPager.setAdapter(new EventPanelAdapter(getSupportFragmentManager(), 2, event, true, this));
+            mAdapter = new EventPanelAdapter(getSupportFragmentManager(), 2, event, true, this);
+        }
+        viewPager.setAdapter(mAdapter);
         TabLayout tabLayout = findViewById(R.id.event_creator_panel_tablayout);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
 
+    @Override
+    public void eventFirstPageValidate() {
+        mAdapter.addStage(this);
+        mAdapter.notifyDataSetChanged();
+    }
 }
