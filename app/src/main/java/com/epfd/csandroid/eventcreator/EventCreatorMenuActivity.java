@@ -1,18 +1,13 @@
 package com.epfd.csandroid.eventcreator;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.base.BaseActivity;
@@ -20,16 +15,10 @@ import com.epfd.csandroid.eventcreator.recyclerview.EventCreatorMenuAdapter;
 import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.utils.RecyclerViewClickSupport;
 import com.epfd.csandroid.utils.Utils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

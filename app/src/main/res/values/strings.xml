@@ -14,13 +14,14 @@
     <string name="navigation_drawer_news_creator">Création News</string>
     <string name="navigation_drawer_event_creator">Création Evènements</string>
     <string name="navigation_drawer_event">Evènements</string>
+    <string name="navigation_drawer_stage_creator">Création Ateliers</string>
 
     <!-- EVENEMENTS -->
     <string name="event_event">EVENEMENTS</string>
 
     <!-- EVENTS CREATOR -->
-    <string name="event_creator_event_menu">EVENTS MENU</string>
-    <string name="event_creator_event">EVENTS EDITEUR</string>
+    <string name="event_creator_event_menu">MENU EVENEMENTS</string>
+    <string name="event_creator_event">EDITEUR EVENEMENT</string>
     <string name="event_creator_panel">PANEL</string>
     <string name="event_creator_title">TITRE</string>
     <string name="event_creator_logo">LOGO</string>
@@ -31,6 +32,10 @@
     <string name="event_creator_save">ENREGISTRER</string>
     <string name="event_creator_maj">METTRE A JOUR</string>
     <string name="event_creator_incomplet">EVENEMENT INCOMPLET</string>
+
+    <!-- STAGE CREATOR -->
+    <string name="stage_creator_stage_menu">MENU STAGES</string>
+    <string name="stage_creator_stage">EDITEUR STAGE</string>
 
     <!-- NEWS CREATOR -->
     <string name="news_creator_label">NEWS EDITEUR</string>

@@ -48,6 +48,10 @@
                     android:id="@+id/event_creator_edition"
                     android:icon="@drawable/ic_golf_course_pink_24dp"
                     android:title="@string/navigation_drawer_event_creator"/>
+                <item
+                    android:id="@+id/stage_creator_edition"
+                    android:icon="@drawable/ic_store_mall_directory_pink_24dp"
+                    android:title="@string/navigation_drawer_stage_creator"/>
             </group>
         </menu>
     </item>
