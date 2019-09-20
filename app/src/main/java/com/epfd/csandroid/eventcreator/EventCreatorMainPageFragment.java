@@ -379,7 +379,12 @@ public class EventCreatorMainPageFragment extends Fragment {
                     mUriLabelString = Utils.EMPTY;
                 });
             }
-            EventHelper.createEvent(EventHelper.ROOT_UID + mEvent.getDate().replace("/", ""), mEvent).addOnSuccessListener(aVoid -> {
+
+            if (mEvent.getUid().equals(Utils.EMPTY)){
+                mEvent.setUid(EventHelper.ROOT_UID + mEvent.getDate().replace("/",""));
+            }
+
+            EventHelper.createEvent(mEvent.getUid(), mEvent).addOnSuccessListener(aVoid -> {
                 Snackbar.make(mView, R.string.event_creator_save, Snackbar.LENGTH_SHORT).show();
                 mSaveBtn.setText(getString(R.string.event_creator_maj));
                 mCallback.eventFirstPageValidate();

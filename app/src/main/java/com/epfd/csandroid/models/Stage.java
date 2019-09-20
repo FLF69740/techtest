@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Stage implements Parcelable {
 
+    private String mUid;
     private String mTitle;
     private String mPhoto;
     private String mSchedule;
@@ -12,7 +13,8 @@ public class Stage implements Parcelable {
 
     public Stage() {}
 
-    public Stage(String title, String photo, String schedule, int people) {
+    public Stage(String uid, String title, String photo, String schedule, int people) {
+        mUid = uid;
         mTitle = title;
         mPhoto = photo;
         mSchedule = schedule;
@@ -51,7 +53,16 @@ public class Stage implements Parcelable {
         mPeople = people;
     }
 
+    public String getUid() {
+        return mUid;
+    }
+
+    public void setUid(String uid) {
+        mUid = uid;
+    }
+
     protected Stage(Parcel in) {
+        mUid = in.readString();
         mTitle = in.readString();
         mPhoto = in.readString();
         mSchedule = in.readString();
@@ -65,6 +76,7 @@ public class Stage implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mUid);
         dest.writeString(mTitle);
         dest.writeString(mPhoto);
         dest.writeString(mSchedule);

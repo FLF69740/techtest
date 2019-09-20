@@ -391,8 +391,14 @@ public class FileStageCreatorActivity extends BaseActivity {
                 });
             }
 
-            StageCreatorHelper.createStage(StageCreatorHelper.ROOT_UID + photoReference, mStage);
+            if (mStage.getUid().equals(Utils.EMPTY)) {
+                mStage.setUid(StageCreatorHelper.ROOT_UID + photoReference);
+                StageCreatorHelper.createStage(StageCreatorHelper.ROOT_UID + photoReference, mStage);
+            }else {
+                StageCreatorHelper.createStage(mStage.getUid(), mStage);
+            }
 
+            Toast.makeText(this, "ENREGISTREMENT STAGE", Toast.LENGTH_SHORT).show();
 
         }else {
             Toast.makeText(this, "STAGE INCOMPLET", Toast.LENGTH_SHORT).show();

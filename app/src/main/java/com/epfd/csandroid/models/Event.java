@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Event implements Parcelable {
 
+    private String mUid;
     private String mName;
     private String mDate;
     private String mDescription;
@@ -15,7 +16,8 @@ public class Event implements Parcelable {
 
     public Event() {}
 
-    public Event(String name, String date, String description, String photo, String label) {
+    public Event(String uid, String name, String date, String description, String photo, String label) {
+        mUid = uid;
         mName = name;
         mDate = date;
         mDescription = description;
@@ -23,6 +25,14 @@ public class Event implements Parcelable {
         mLabel = label;
         mStages = "";
         mAffichage = false;
+    }
+
+    public String getUid() {
+        return mUid;
+    }
+
+    public void setUid(String uid) {
+        mUid = uid;
     }
 
     public String getName() {
@@ -82,6 +92,7 @@ public class Event implements Parcelable {
     }
 
     protected Event(Parcel in) {
+        mUid = in.readString();
         mName = in.readString();
         mDate = in.readString();
         mDescription = in.readString();
@@ -98,6 +109,7 @@ public class Event implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mUid);
         dest.writeString(mName);
         dest.writeString(mDate);
         dest.writeString(mDescription);
