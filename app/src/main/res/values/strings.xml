@@ -36,6 +36,19 @@
     <!-- STAGE CREATOR -->
     <string name="stage_creator_stage_menu">MENU STAGES</string>
     <string name="stage_creator_stage">EDITEUR STAGE</string>
+    <string name="stage_creator_title">TITRE :</string>
+    <string name="stage_creator_photo">PHOTO :</string>
+    <string name="stage_creator_people">Nombre requis de personnes par plages horaires</string>
+    <string name="stage_creator_schedules_title">PLAGES HORAIRES :</string>
+    <string name="stage_creator_schedules_start_btn">DEBUT</string>
+    <string name="stage_creator_schedules_end_btn">FIN</string>
+    <string name="stage_creator_schedules_scale">HH:mm / HH:mm</string>
+
+
+
+
+
+
 
     <!-- NEWS CREATOR -->
     <string name="news_creator_label">NEWS EDITEUR</string>

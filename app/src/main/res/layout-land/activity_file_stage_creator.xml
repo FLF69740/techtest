@@ -16,6 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/file_stage_vertical_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
     <TextView
         android:id="@+id/stage_file_title_title"
         android:layout_width="wrap_content"
@@ -35,7 +42,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/file_stage_vertical_middle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stage_file_title_title" />
 
@@ -51,16 +58,16 @@
 
     <ImageView
         android:id="@+id/stage_file_photo"
-        android:scaleType="centerCrop"
-        android:clickable="true"
-        android:focusable="true"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="w,1:3"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/file_stage_vertical_middle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stage_file_photo_title"
         app:srcCompat="@android:color/darker_gray" />
@@ -82,9 +89,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/stage_file_save"
+        app:layout_constraintEnd_toStartOf="@+id/file_stage_vertical_middle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stage_file_people_title" />
 
@@ -95,7 +104,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/stage_creator_schedules_start_btn"
         app:layout_constraintEnd_toStartOf="@+id/stage_file_add_schedule_end"
-        app:layout_constraintStart_toEndOf="@+id/stage_file_schedules_answer"
+        app:layout_constraintStart_toStartOf="@+id/file_stage_vertical_middle"
         app:layout_constraintTop_toBottomOf="@+id/stage_file_schedule_title" />
 
     <ImageView
@@ -119,30 +128,21 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/stage_creator_schedules_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stage_file_people_edittext" />
+        app:layout_constraintStart_toStartOf="@+id/file_stage_vertical_middle"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/stage_file_schedule_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/stage_file_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stage_file_add_schedule_start" />
 
     <TextView
         android:id="@+id/stage_file_schedules_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/stage_creator_schedules_scale"
-        app:layout_constraintBottom_toBottomOf="@+id/stage_file_add_schedule_start"
-        app:layout_constraintEnd_toStartOf="@+id/stage_file_add_schedule_start"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/stage_file_add_schedule_start" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/file_stage_vertical_middle"
+        app:layout_constraintTop_toBottomOf="@+id/stage_file_add_schedule_start" />
 
     <Button
         android:id="@+id/stage_file_add_schedule_end"
@@ -153,6 +153,19 @@
         app:layout_constraintEnd_toStartOf="@+id/stage_file_register_schedule"
         app:layout_constraintStart_toEndOf="@+id/stage_file_add_schedule_start"
         app:layout_constraintTop_toTopOf="@+id/stage_file_add_schedule_start" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/stage_file_schedule_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/stage_file_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/file_stage_vertical_middle"
+        app:layout_constraintTop_toBottomOf="@+id/stage_file_schedules_answer" />
 
     <Button
         android:id="@+id/stage_file_save"
