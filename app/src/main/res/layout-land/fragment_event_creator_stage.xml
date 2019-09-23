@@ -15,26 +15,28 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_event_creator_stage_guideline"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_event_creator_stage_guideline_land"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/stage_creator_add_stage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_store_mall_directory_pink_24dp"
             android:tint="@color/colorWhite"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_event_creator_stage_guideline"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_event_creator_stage_guideline_land"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_event_creator_stage_guideline"
+            android:id="@+id/fragment_event_creator_stage_guideline_land"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -51,7 +53,7 @@
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fragment_event_creator_stage_guideline" />
+            app:layout_constraintTop_toTopOf="@+id/fragment_event_creator_stage_guideline_land" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

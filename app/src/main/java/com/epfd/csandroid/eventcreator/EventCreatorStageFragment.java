@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.api.StageCreatorHelper;
 import com.epfd.csandroid.eventcreator.recyclerview.EventCreatorStageFragmentAdapter;
 import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.models.Stage;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -31,12 +31,11 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
     private static final String BUNDLE_EVENT_CREATOR_STAGE_EVENT_OBJECT = "BUNDLE_EVENT_CREATOR_STAGE_EVENT_OBJECT";
     private static final String BUNDLE_EVENT_OUTSTATE = "BUNDLE_EVENT_OUTSTATE";
 
-    @BindView(R.id.event_creator_stage_fragment_bottomNavigationView) BottomNavigationView mBottomNavigationView;
     @BindView(R.id.fragment_event_creator_stage_recycler) RecyclerView mRecyclerView;
+    @BindView(R.id.event_creator_event_publication_state) ImageView mPublicationBtn;
 
     private List<Stage> mStages;
     private Event mEvent;
-    private View mView;
     private EventCreatorStageFragmentAdapter mAdapter;
 
     static EventCreatorStageFragment newInstance(Event event){
@@ -52,9 +51,8 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_event_creator_stage, container, false);
-        ButterKnife.bind(this, mView);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> bottomNavigationViewAction(item.getItemId()));
+        View view = inflater.inflate(R.layout.fragment_event_creator_stage, container, false);
+        ButterKnife.bind(this, view);
 
         if (savedInstanceState != null){
             mEvent = savedInstanceState.getParcelable(BUNDLE_EVENT_OUTSTATE);
@@ -65,13 +63,15 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
 
         if (!mEvent.getStages().equals("")){
             this.setStageListObject(mEvent.getStages());
+        }else {
+            mStages = new ArrayList<>();
         }
         mAdapter = new EventCreatorStageFragmentAdapter(mStages, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
 
-        return mView;
+        return view;
     }
 
     @Override
@@ -82,6 +82,18 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
 
     @OnClick(R.id.stage_creator_add_stage) void eventCreatorAddStage(){
         startActivityForResult(new Intent(getContext(), EventCreatorStageListingActivity.class), STAGE_REQUEST_CODE);
+    }
+
+    @OnClick(R.id.event_creator_event_publication_state) void changeEventVisibilityState(){
+        if (mEvent.isAffichage()){
+            mEvent.setAffichage(false);
+            EventHelper.updateEventVisibility(mEvent.getUid(), false);
+            mPublicationBtn.setImageResource(R.drawable.ic_visibility_off_24dp);
+        }else {
+            mEvent.setAffichage(true);
+            EventHelper.updateEventVisibility(mEvent.getUid(), true);
+            mPublicationBtn.setImageResource(R.drawable.ic_visibility_24dp);
+        }
     }
 
     /**
@@ -100,26 +112,6 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
             });
         }
 
-    }
-
-    /**
-     *  BOTTOM NAVIGATION ACTION
-     */
-
-    private Boolean bottomNavigationViewAction(Integer integer){
-        switch (integer){
-            case R.id.stage_fragment_save :
-                Snackbar.make(mView, R.string.event_creator_stages_link, Snackbar.LENGTH_SHORT).show();
-                break;
-            case R.id.stage_fragment_publication :
-                if (mEvent.isAffichage()){
-                    Snackbar.make(mView, R.string.event_creator_event_not_published, Snackbar.LENGTH_SHORT).show();
-                }else {
-                    Snackbar.make(mView, R.string.event_creator_event_published, Snackbar.LENGTH_SHORT).show();
-                }
-                break;
-        }
-        return true;
     }
 
     /**

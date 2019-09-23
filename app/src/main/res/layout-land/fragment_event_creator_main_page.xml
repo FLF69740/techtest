@@ -54,6 +54,7 @@
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:focusable="true"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_wallpaper_pink_24dp"
             app:layout_constraintBottom_toTopOf="@+id/event_creator_guide_one"
             app:layout_constraintEnd_toStartOf="@+id/event_creator_guide_four"
