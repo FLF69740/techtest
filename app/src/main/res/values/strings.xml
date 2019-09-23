@@ -32,6 +32,9 @@
     <string name="event_creator_save">ENREGISTRER</string>
     <string name="event_creator_maj">METTRE A JOUR</string>
     <string name="event_creator_incomplet">EVENEMENT INCOMPLET</string>
+    <string name="event_creator_event_published">Publication évènement effectuée</string>
+    <string name="event_creator_event_not_published">Publication évènement enlevée</string>
+    <string name="event_creator_stages_link">Stages attachés à l\'évènement</string>
 
     <!-- STAGE CREATOR -->
     <string name="stage_creator_stage_menu">MENU STAGES</string>
@@ -44,10 +47,8 @@
     <string name="stage_creator_schedules_end_btn">FIN</string>
     <string name="stage_creator_schedules_scale">HH:mm / HH:mm</string>
     <string name="stage_creator_places">PLACES</string>
-
-
-
-
+    <string name="stage_creator_stage_incomplet">STAGE INCOMPLET</string>
+    <string name="stage_creator_stage_enregistre">ENREGISTREMENT STAGE</string>
 
 
     <!-- NEWS CREATOR -->
@@ -216,6 +217,8 @@ This privacy policy page was created at privacypolicytemplate.net and modified/g
     <string name="FORNAME">PRENOM</string>
     <string name="EMAIL">EMAIL</string>
     <string name="OK">OK</string>
+    <string name="ENREGISTRER">ENREGISTRER</string>
+    <string name="PUBLIER">PUBLIER</string>
     <string name="RETOUR">RETOUR</string>
     <string name="AJOUTER">AJOUTER</string>
     <string name="SUPPRIMER">SUPPRIMER</string>

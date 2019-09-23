@@ -398,10 +398,10 @@ public class FileStageCreatorActivity extends BaseActivity {
                 StageCreatorHelper.createStage(mStage.getUid(), mStage);
             }
 
-            Toast.makeText(this, "ENREGISTREMENT STAGE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.stage_creator_stage_enregistre, Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(this, "STAGE INCOMPLET", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.stage_creator_stage_incomplet, Toast.LENGTH_SHORT).show();
         }
 
 

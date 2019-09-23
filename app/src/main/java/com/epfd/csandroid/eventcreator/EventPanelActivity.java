@@ -3,7 +3,10 @@ package com.epfd.csandroid.eventcreator;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.models.Event;
@@ -47,4 +50,5 @@ public class EventPanelActivity extends BaseActivity implements EventCreatorMain
         mAdapter.addStage(this);
         mAdapter.notifyDataSetChanged();
     }
+
 }

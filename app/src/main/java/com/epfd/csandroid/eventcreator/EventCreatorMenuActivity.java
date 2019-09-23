@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Toast;
+
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.base.BaseActivity;
@@ -15,6 +17,7 @@ import com.epfd.csandroid.eventcreator.recyclerview.EventCreatorMenuAdapter;
 import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.utils.RecyclerViewClickSupport;
 import com.epfd.csandroid.utils.Utils;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import org.joda.time.DateTime;
 import java.util.ArrayList;
@@ -23,9 +26,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EventCreatorMenuActivity extends BaseActivity {
+public class EventCreatorMenuActivity extends BaseActivity{
 
     public static final String INTENT_EVENT_CREATOR_MENU = "INTENT_EVENT_CREATOR_MENU";
+
 
     private List<Event> mEventList;
     private EventCreatorMenuAdapter mAdapter;
@@ -77,6 +81,5 @@ public class EventCreatorMenuActivity extends BaseActivity {
         intent.putExtra(INTENT_EVENT_CREATOR_MENU, event);
         startActivity(intent);
     }
-
 
 }
