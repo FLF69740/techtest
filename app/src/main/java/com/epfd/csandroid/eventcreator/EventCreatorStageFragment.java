@@ -1,6 +1,5 @@
 package com.epfd.csandroid.eventcreator;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -9,40 +8,24 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.api.StageCreatorHelper;
 import com.epfd.csandroid.eventcreator.recyclerview.EventCreatorStageFragmentAdapter;
 import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.models.Stage;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import static android.app.Activity.RESULT_OK;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class EventCreatorStageFragment extends Fragment implements EventCreatorStageFragmentAdapter.ListenerStageFragment{
 
     private static final String BUNDLE_EVENT_CREATOR_STAGE_EVENT_OBJECT = "BUNDLE_EVENT_CREATOR_STAGE_EVENT_OBJECT";
@@ -56,7 +39,7 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
     private View mView;
     private EventCreatorStageFragmentAdapter mAdapter;
 
-    public static EventCreatorStageFragment newInstance(Event event){
+    static EventCreatorStageFragment newInstance(Event event){
         EventCreatorStageFragment eventCreatorStageFragment = new EventCreatorStageFragment();
         Bundle bundle = new Bundle(1);
         bundle.putParcelable(BUNDLE_EVENT_CREATOR_STAGE_EVENT_OBJECT, event);
@@ -71,12 +54,7 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_event_creator_stage, container, false);
         ButterKnife.bind(this, mView);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return bottomNavigationViewAction(item.getItemId());
-            }
-        });
+        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> bottomNavigationViewAction(item.getItemId()));
 
         if (savedInstanceState != null){
             mEvent = savedInstanceState.getParcelable(BUNDLE_EVENT_OUTSTATE);
@@ -117,7 +95,8 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
             StageCreatorHelper.getStage(stageName).addOnSuccessListener(documentSnapshot -> {
                 Stage stage = documentSnapshot.toObject(Stage.class);
                 mStages.add(stage);
-                mAdapter.notifyDataSetChanged();
+                mAdapter = new EventCreatorStageFragmentAdapter(mStages, this);
+                mRecyclerView.setAdapter(mAdapter);
             });
         }
 
@@ -152,15 +131,31 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (STAGE_REQUEST_CODE == requestCode && resultCode == RESULT_OK){
-            String stage = data.getStringExtra(EventCreatorStageListingActivity.FOR_RESULT_STAGE_EXTRA);
-            Toast.makeText(getContext(), "STAGE IMPORTE : " + stage, Toast.LENGTH_SHORT).show();
+        if (STAGE_REQUEST_CODE == requestCode && resultCode == RESULT_OK && !mEvent.getStages().contains(data.getStringExtra(EventCreatorStageListingActivity.FOR_RESULT_STAGE_EXTRA))){
+            String stage = mEvent.getStages();
+            if (!mEvent.getStages().equals("")){
+                stage += ",";
+            }
+            stage += data.getStringExtra(EventCreatorStageListingActivity.FOR_RESULT_STAGE_EXTRA);
+            mEvent.setStages(stage);
+            EventHelper.updateEventStages(mEvent.getUid(), stage).addOnSuccessListener(aVoid -> setStageListObject(mEvent.getStages()));
         }
     }
 
 
     @Override
     public void deleteStage(int position) {
+        String stage = mEvent.getStages();
+        stage = stage.replace(mStages.get(position).getUid(), "");
+        if (stage.contains(",,")) {
+            stage = stage.replace(",,", ",");
+        }else if (stage.endsWith(",")){
+            stage = stage.substring(0, stage.length()-1);
+        }else if (stage.startsWith(",")){
+            stage = stage.substring(1);
+        }
+        mEvent.setStages(stage);
+        EventHelper.updateEventStages(mEvent.getUid(), stage);
         mStages.remove(position);
         mAdapter.notifyDataSetChanged();
     }
