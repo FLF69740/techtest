@@ -15,9 +15,15 @@ import android.widget.ImageView;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.api.StageCreatorHelper;
+import com.epfd.csandroid.api.StageRegistrationHelper;
 import com.epfd.csandroid.eventcreator.recyclerview.EventCreatorStageFragmentAdapter;
 import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.models.Stage;
+import com.epfd.csandroid.models.StageRegistration;
+import com.epfd.csandroid.utils.Utils;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -92,6 +98,7 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
         }else {
             mEvent.setAffichage(true);
             EventHelper.updateEventVisibility(mEvent.getUid(), true);
+
             mPublicationBtn.setImageResource(R.drawable.ic_visibility_24dp);
         }
     }
@@ -115,6 +122,28 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
     }
 
     /**
+     *  STAGES REGISTRATION
+     */
+
+    private void createStageRegistration(String stageName){
+        StageCreatorHelper.getStage(stageName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Stage stage = documentSnapshot.toObject(Stage.class);
+                if (stage != null && !stage.getSchedule().equals(Utils.EMPTY)) {
+                    int scheduleNumber = Utils.getSequenceNumberIntoAString(stage.getSchedule(), ',');
+                    StringBuilder registrationAnswer = new StringBuilder();
+                    for (int i = 0; i < scheduleNumber; i++) {
+                        registrationAnswer.append(Utils.EMPTY + ",");
+                    }
+                    StageRegistration stageRegistration = new StageRegistration(registrationAnswer.toString(), mEvent.getUid()+stageName, registrationAnswer.toString());
+                    StageRegistrationHelper.createStageRegistration(stageRegistration.getUid(), stageRegistration);
+                }
+            }
+        });
+    }
+
+    /**
      *  Callback
      */
 
@@ -129,6 +158,7 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
                 stage += ",";
             }
             stage += data.getStringExtra(EventCreatorStageListingActivity.FOR_RESULT_STAGE_EXTRA);
+            createStageRegistration(data.getStringExtra(EventCreatorStageListingActivity.FOR_RESULT_STAGE_EXTRA));
             mEvent.setStages(stage);
             EventHelper.updateEventStages(mEvent.getUid(), stage).addOnSuccessListener(aVoid -> setStageListObject(mEvent.getStages()));
         }
@@ -148,6 +178,7 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
         }
         mEvent.setStages(stage);
         EventHelper.updateEventStages(mEvent.getUid(), stage);
+        StageRegistrationHelper.deleteStageRegistration(mEvent.getUid()+mStages.get(position).getUid());
         mStages.remove(position);
         mAdapter.notifyDataSetChanged();
     }

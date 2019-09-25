@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.models.Stage;
 import com.epfd.csandroid.utils.BitmapStorage;
+import com.epfd.csandroid.utils.Utils;
 
 import java.lang.ref.WeakReference;
 
@@ -35,16 +36,7 @@ class EventCreatorStageFragmentViewHolder extends RecyclerView.ViewHolder {
     public void SetStageFragmentHolder(Stage stage, EventCreatorStageFragmentAdapter.ListenerStageFragment callback){
         mPhoto.setImageBitmap(BitmapStorage.loadImage(mItemView.getContext(), stage.getPhoto()));
         mTitle.setText(stage.getTitle());
-        char someChar = ',';
-        int count = 0;
-
-        for (int i = 0; i < stage.getSchedule().length(); i++) {
-            if (stage.getSchedule().charAt(i) == someChar) {
-                count++;
-            }
-        }
-
-        int places = count * stage.getPeople();
+        int places = Utils.getSequenceNumberIntoAString(stage.getSchedule(), ',') * stage.getPeople();
         mPlaces.setText(String.valueOf(places));
 
         this.mWeakReference = new WeakReference<>(callback);

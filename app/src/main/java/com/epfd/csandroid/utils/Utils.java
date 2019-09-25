@@ -78,5 +78,18 @@ public class Utils {
         return dateTime.toString("dd/MM/yyyy");
     }
 
+    //charsequence into a String
+    public static int getSequenceNumberIntoAString(String target, char someChar){
+        int count = 0;
+
+        for (int i = 0; i < target.length(); i++) {
+            if (target.charAt(i) == someChar) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
 
 }
