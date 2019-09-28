@@ -1,16 +1,12 @@
 package com.epfd.csandroid.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class StageRegistration {
 
     private String mParticipant;
     private String mUid;
     private String mUrlParticipant;
 
-    public StageRegistration() {
-    }
+    public StageRegistration() {}
 
     public StageRegistration(String participant, String uid, String urlParticipant) {
         mParticipant = participant;

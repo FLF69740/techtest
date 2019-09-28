@@ -7,6 +7,8 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class Utils {
 
+    public static final String PARTICIPANT_SEPARATOR = "$!$";
+
     public static final String APEL = "apel.dolto.sqf@gmail.com";
     public static final String SCHOOL = "ecole.dolto.sqf@gmail.com";
     public static final String DEV = "slayer171.flf@gmail.com";

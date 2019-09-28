@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
-
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.base.BaseActivity;
@@ -17,7 +15,6 @@ import com.epfd.csandroid.eventcreator.recyclerview.EventCreatorMenuAdapter;
 import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.utils.RecyclerViewClickSupport;
 import com.epfd.csandroid.utils.Utils;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import org.joda.time.DateTime;
 import java.util.ArrayList;

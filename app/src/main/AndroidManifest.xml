@@ -11,7 +11,14 @@
         android:roundIcon="@drawable/ic_logo_pos2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".eventcreator.EventCreatorStageListingActivity"/>
+        <activity android:name=".event.EventFileActivity"
+            android:label="@string/event_event_single"
+            android:parentActivityName=".event.EventMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".event.EventMainActivity" />
+        </activity>
+        <activity android:name=".eventcreator.EventCreatorStageListingActivity" />
         <activity
             android:name=".administrator.stageedition.FileStageCreatorActivity"
             android:label="@string/stage_creator_stage"
@@ -142,10 +149,10 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

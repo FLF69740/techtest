@@ -2,11 +2,7 @@ package com.epfd.csandroid.eventcreator;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
-
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.models.Event;
@@ -32,10 +28,8 @@ public class EventPanelActivity extends BaseActivity implements EventCreatorMain
         ViewPager viewPager = findViewById(R.id.event_creator_panel_viewpager);
         // configure adapter for a new Event
         if (event.getName().equals("")) {
-         //   viewPager.setAdapter(new EventPanelAdapter(getSupportFragmentManager(), 2, event, false, this));
             mAdapter = new EventPanelAdapter(getSupportFragmentManager(), 2, event, false, this);
         }else {// configure adapter for an existing Event
-         //   viewPager.setAdapter(new EventPanelAdapter(getSupportFragmentManager(), 2, event, true, this));
             mAdapter = new EventPanelAdapter(getSupportFragmentManager(), 2, event, true, this);
         }
         viewPager.setAdapter(mAdapter);
