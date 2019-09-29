@@ -72,6 +72,12 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
         }else {
             mStages = new ArrayList<>();
         }
+
+        if (mEvent.isAffichage()){
+            mPublicationBtn.setImageResource(R.drawable.ic_visibility_24dp);
+        } else {
+            mPublicationBtn.setImageResource(R.drawable.ic_visibility_off_24dp);
+        }
         mAdapter = new EventCreatorStageFragmentAdapter(mStages, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -134,9 +140,16 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
                     int scheduleNumber = Utils.getSequenceNumberIntoAString(stage.getSchedule(), ',');
                     StringBuilder registrationAnswer = new StringBuilder();
                     for (int i = 0; i < scheduleNumber; i++) {
-                        registrationAnswer.append(Utils.EMPTY + ",");
+                        if (stage.getPeople() != 1) {
+                            for (int j = 1; j < stage.getPeople(); j++) {
+                                registrationAnswer.append(Utils.EMPTY).append(Utils.PARTICIPANT_SEPARATOR);
+                            }
+                            registrationAnswer.append(Utils.EMPTY + ",");
+                        }else {
+                            registrationAnswer.append(Utils.EMPTY + ",");
+                        }
                     }
-                    StageRegistration stageRegistration = new StageRegistration(registrationAnswer.toString(), mEvent.getUid()+stageName, registrationAnswer.toString());
+                    StageRegistration stageRegistration = new StageRegistration(registrationAnswer.toString(), mEvent.getUid()+stageName, stage.getPeople());
                     StageRegistrationHelper.createStageRegistration(stageRegistration.getUid(), stageRegistration);
                 }
             }

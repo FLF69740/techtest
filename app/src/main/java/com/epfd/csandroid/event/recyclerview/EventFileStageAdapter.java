@@ -1,39 +1,37 @@
 package com.epfd.csandroid.event.recyclerview;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.models.Stage;
-
 import java.util.List;
 
 public class EventFileStageAdapter extends RecyclerView.Adapter<EventFileStageHolder> {
 
     private List<Stage> mStages;
+    private final ListenerEventFileStage mCallback;
 
-    public EventFileStageAdapter(List<Stage> stages) {
+    public interface ListenerEventFileStage{
+        void goParticipation(String stageName);
+    }
+
+    public EventFileStageAdapter(List<Stage> stages, ListenerEventFileStage callback) {
         mStages = stages;
+        mCallback = callback;
     }
 
     @NonNull
     @Override
     public EventFileStageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.event_file_stage_item, parent, false);
-        return new EventFileStageHolder(view);
+        return new EventFileStageHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event_file_stage_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull EventFileStageHolder holder, int position) {
         holder.setIsRecyclable(false);
-        holder.setEventFileStageListItem(mStages.get(position));
+        holder.setEventFileStageListItem(mStages.get(position), mCallback);
     }
 
     @Override

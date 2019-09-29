@@ -52,7 +52,9 @@ public class EventMainActivity extends BaseActivity {
             if (task.isSuccessful() && task.getResult() != null){
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
                     Event event = documentSnapshot.toObject(Event.class);
-                    mEventList.add(event);
+                    if (event.isAffichage()) {
+                        mEventList.add(event);
+                    }
                 }
                 Context recyclerContext = mRecyclerView.getContext();
                 LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(recyclerContext, R.anim.layout_slide_from_right);

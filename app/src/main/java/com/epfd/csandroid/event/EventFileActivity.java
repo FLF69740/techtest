@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.administrator.stageedition.recyclerview.StageCreatorAdapter;
@@ -30,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EventFileActivity extends BaseActivity {
+public class EventFileActivity extends BaseActivity implements EventFileStageAdapter.ListenerEventFileStage {
 
     @BindView(R.id.event_file_photo) ImageView mPhoto;
     @BindView(R.id.event_file_logo) ImageView mLogo;
@@ -40,6 +41,7 @@ public class EventFileActivity extends BaseActivity {
     @BindView(R.id.event_file_stage_recycler) RecyclerView mRecyclerView;
 
     private EventFileStageAdapter mAdapter;
+    private Event mEvent;
     private List<Stage> mStageList;
 
     @Override
@@ -56,14 +58,13 @@ public class EventFileActivity extends BaseActivity {
     public void start(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
-        Event event = getIntent().getExtras().getParcelable(EventMainActivity.INTENT_EVENT_MENU);
+        mEvent = getIntent().getExtras().getParcelable(EventMainActivity.INTENT_EVENT_MENU);
 
-        mPhoto.setImageBitmap(BitmapStorage.loadImage(this, event.getPhoto()));
-        mLogo.setImageBitmap(BitmapStorage.loadImage(this, event.getLabel()));
-        mTitle.setText(event.getName());
-        mDate.setText(event.getDate());
-        mDescription.setText(event.getDescription());
-
+        mPhoto.setImageBitmap(BitmapStorage.loadImage(this, mEvent.getPhoto()));
+        mLogo.setImageBitmap(BitmapStorage.loadImage(this, mEvent.getLabel()));
+        mTitle.setText(mEvent.getName());
+        mDate.setText(mEvent.getDate());
+        mDescription.setText(mEvent.getDescription());
 
         mStageList = new ArrayList<>();
 
@@ -71,16 +72,30 @@ public class EventFileActivity extends BaseActivity {
             if (task.isSuccessful() && task.getResult() != null){
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
                     Stage stage = documentSnapshot.toObject(Stage.class);
-                    if (event.getStages().contains(stage.getUid())) {
+                    if (mEvent.getStages().contains(stage.getUid())) {
+                        setUserTimeTable(stage);
                         mStageList.add(stage);
                     }
                 }
-                mAdapter = new EventFileStageAdapter(mStageList);
+                mAdapter = new EventFileStageAdapter(mStageList, this);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 mRecyclerView.setAdapter(mAdapter);
             }
         });
     }
 
+    //extract currentUser timetable with StageRegistrationHelper
+    private void setUserTimeTable(Stage stage){
 
+    }
+
+
+    @Override
+    public void goParticipation(String stageUid) {
+        Stage stage = new Stage();
+        for (Stage request : mStageList){
+            if (request.getUid().equals(stageUid)) stage = request;
+        }
+        ScheduleEventModalFragment.newInstance(stage, mEvent.getUid()).show(getSupportFragmentManager(), "MODAL");
+    }
 }

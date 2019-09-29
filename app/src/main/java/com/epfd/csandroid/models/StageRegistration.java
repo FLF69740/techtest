@@ -4,14 +4,14 @@ public class StageRegistration {
 
     private String mParticipant;
     private String mUid;
-    private String mUrlParticipant;
+    private int mPeople;
 
     public StageRegistration() {}
 
-    public StageRegistration(String participant, String uid, String urlParticipant) {
+    public StageRegistration(String participant, String uid, int people) {
         mParticipant = participant;
         mUid = uid;
-        mUrlParticipant = urlParticipant;
+        mPeople = people;
     }
 
     public String getParticipant() {
@@ -30,11 +30,11 @@ public class StageRegistration {
         mUid = uid;
     }
 
-    public String getUrlParticipant() {
-        return mUrlParticipant;
+    public int getPeople() {
+        return mPeople;
     }
 
-    public void setUrlParticipant(String urlParticipant) {
-        mUrlParticipant = urlParticipant;
+    public void setPeople(int people) {
+        mPeople = people;
     }
 }
