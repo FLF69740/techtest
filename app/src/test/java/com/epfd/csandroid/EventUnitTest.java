@@ -266,7 +266,21 @@ public class EventUnitTest {
         assertEquals("EMPTY!EMPTY", result.toString());
     }
 
+    @Test
+    public void testListPlanningToStringMethod(){
+        List<SingleScheduleBottomSheet> planning = getPlanning(getStage1());
+        StageRegistration registration = getStageRegistration1();
+        List<String> peopleGroup = Arrays.asList(registration.getParticipant().split(","));
+        for (int i = 0 ; i < planning.size() ; i++){
+            planning.get(i).setParticipantList(peopleGroup.get(i));
+        }
 
+        assertEquals(getStageRegistration1().getParticipant(), EventBusiness.listPlanningToString(planning));
+
+        EventBusiness.addParticipantIntoPlanning(planning, MY_NAME, 1);
+
+        assertEquals("MY_NAME!EMPTY,MY_NAME!EMPTY,MY_NAME!EMPTY,", EventBusiness.listPlanningToString(planning));
+    }
 
 
 }

@@ -136,4 +136,19 @@ public class EventBusiness {
         planning.get(position).setNotRegistered(true);
     }
 
+    //PARTICIPANT LIST TO STRING
+    public static String listPlanningToString(List<SingleScheduleBottomSheet> planning){
+        StringBuilder builder = new StringBuilder();
+        for (SingleScheduleBottomSheet sheet : planning){
+            String prefix = "";
+            for (String participantName : sheet.getParticipantList()){
+                builder.append(prefix);
+                prefix = Utils.PARTICIPANT_SEPARATOR;
+                builder.append(participantName);
+            }
+            builder.append(",");
+        }
+        return builder.toString();
+    }
+
 }

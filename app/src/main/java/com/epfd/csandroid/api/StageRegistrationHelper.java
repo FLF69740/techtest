@@ -31,7 +31,7 @@ public class StageRegistrationHelper {
     // --- UPDATE ---
 
     public static Task<Void> updateStageRegistrationParticipant(String uid, String participant){
-        return StageRegistrationHelper.getStageRegistrationCollection().document(uid).update("schedules", participant);
+        return StageRegistrationHelper.getStageRegistrationCollection().document(uid).update("participant", participant);
     }
 
     // --- DELETE ---
