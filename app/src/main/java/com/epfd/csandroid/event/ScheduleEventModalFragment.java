@@ -5,45 +5,49 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.StageRegistrationHelper;
 import com.epfd.csandroid.event.recyclerview.BottomSheetSchedulesAdapter;
-import com.epfd.csandroid.event.recyclerview.EventFileStageAdapter;
+import com.epfd.csandroid.models.ModalUserTimeTable;
 import com.epfd.csandroid.models.SingleScheduleBottomSheet;
 import com.epfd.csandroid.models.Stage;
 import com.epfd.csandroid.models.StageRegistration;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.firebase.firestore.DocumentSnapshot;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ScheduleEventModalFragment extends BottomSheetDialogFragment {
+public class ScheduleEventModalFragment extends BottomSheetDialogFragment implements BottomSheetSchedulesAdapter.ListenerBottomSheet{
 
     @BindView(R.id.modal_fragment_stage_title) TextView mTitle;
     @BindView(R.id.modal_fragment_recycler) RecyclerView mRecyclerView;
 
     private BottomSheetSchedulesAdapter mAdapter;
+    private ArrayList<SingleScheduleBottomSheet> mPlanning;
+    private String mUserName;
+    private String mRegistration;
 
     private static final String KEY_SCHEDULE_ID = "KEY_SCHEDULE_ID";
     private static final String KEY_EVENT_ID = "KEY_EVENT_ID";
+    private static final String KEY_TIMETABLE = "KEY_TIMETABLE";
+    private static final String KEY_USERNAME = "KEY_USERNAME";
+    private static final String SAVE_INSTANCE_STATE_REGISTRATION = "SAVE_INSTANCE_STATE_REGISTRATION";
+    private static final String SAVE_INSTANCE_STATE_PLANNING = "SAVE_INSTANCE_STATE_PLANNING";
 
-    static ScheduleEventModalFragment newInstance(Stage stage, String eventUid){
+    static ScheduleEventModalFragment newInstance(Stage stage, String eventUid, ModalUserTimeTable timeTable, String userName){
         ScheduleEventModalFragment scheduleEventModalFragment = new ScheduleEventModalFragment();
-        Bundle bundle = new Bundle(2);
+        Bundle bundle = new Bundle(4);
         bundle.putParcelable(KEY_SCHEDULE_ID, stage);
         bundle.putString(KEY_EVENT_ID, eventUid);
+        bundle.putParcelable(KEY_TIMETABLE, timeTable);
+        bundle.putString(KEY_USERNAME, userName);
         scheduleEventModalFragment.setArguments(bundle);
         return scheduleEventModalFragment;
     }
@@ -61,22 +65,38 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Stage stage = getArguments().getParcelable(KEY_SCHEDULE_ID);
-        String registration = getArguments().getString(KEY_EVENT_ID) + stage.getUid();
+        mRegistration = getArguments().getString(KEY_EVENT_ID) + stage.getUid();
+        ModalUserTimeTable timeTable = getArguments().getParcelable(KEY_TIMETABLE);
+        mUserName = getArguments().getString(KEY_USERNAME);
 
         mTitle.setText(stage.getTitle());
 
         List<String> scheduleStageString = Arrays.asList(stage.getSchedule().split(","));
-        List<SingleScheduleBottomSheet> planning = new ArrayList<>();
 
-        for (String schedule : scheduleStageString){
-            SingleScheduleBottomSheet singleScheduleBottomSheet = new SingleScheduleBottomSheet(schedule);
-            planning.add(singleScheduleBottomSheet);
-            updatePeopleIntoPlanning(planning, registration);
+        if (savedInstanceState != null){
+            mPlanning = savedInstanceState.getParcelableArrayList(SAVE_INSTANCE_STATE_PLANNING);
+        }else {
+            mPlanning = new ArrayList<>();
+
+            for (String schedule : scheduleStageString) {
+                SingleScheduleBottomSheet singleScheduleBottomSheet = new SingleScheduleBottomSheet(schedule);
+                mPlanning.add(singleScheduleBottomSheet);
+                updatePeopleIntoPlanning(mPlanning, mRegistration);
+            }
+
+            EventBusiness.compareTimeTableAndStagePlanning(mPlanning, timeTable);
+
         }
 
-        mAdapter = new BottomSheetSchedulesAdapter(planning);
+        mAdapter = new BottomSheetSchedulesAdapter(mPlanning, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(SAVE_INSTANCE_STATE_PLANNING, mPlanning);
     }
 
     private void updatePeopleIntoPlanning(List<SingleScheduleBottomSheet> planning, String uid){
@@ -91,4 +111,15 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment {
     }
 
 
+    @Override
+    public void activeParticipation(int position) {
+        EventBusiness.addParticipantIntoPlanning(mPlanning, mUserName, position);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void deleteParticipation(int position) {
+        EventBusiness.deleteParticipantIntoPlanning(mPlanning, mUserName, position);
+        mAdapter.notifyDataSetChanged();
+    }
 }

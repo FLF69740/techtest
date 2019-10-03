@@ -17,15 +17,23 @@ import android.widget.Toast;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.administrator.stageedition.recyclerview.StageCreatorAdapter;
 import com.epfd.csandroid.api.StageCreatorHelper;
+import com.epfd.csandroid.api.StageRegistrationHelper;
 import com.epfd.csandroid.base.BaseActivity;
 import com.epfd.csandroid.event.recyclerview.EventFileStageAdapter;
 import com.epfd.csandroid.models.Event;
+import com.epfd.csandroid.models.ModalUserTimeTable;
 import com.epfd.csandroid.models.Stage;
+import com.epfd.csandroid.models.StageRegistration;
 import com.epfd.csandroid.utils.BitmapStorage;
 import com.epfd.csandroid.utils.RecyclerViewClickSupport;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,6 +51,7 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
     private EventFileStageAdapter mAdapter;
     private Event mEvent;
     private List<Stage> mStageList;
+    private ModalUserTimeTable mTimeTable;
 
     @Override
     public int getFragmentLayout() {
@@ -59,6 +68,7 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
         ButterKnife.bind(this);
 
         mEvent = getIntent().getExtras().getParcelable(EventMainActivity.INTENT_EVENT_MENU);
+        mTimeTable = new ModalUserTimeTable();
 
         mPhoto.setImageBitmap(BitmapStorage.loadImage(this, mEvent.getPhoto()));
         mLogo.setImageBitmap(BitmapStorage.loadImage(this, mEvent.getLabel()));
@@ -86,6 +96,20 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
 
     //extract currentUser timetable with StageRegistrationHelper
     private void setUserTimeTable(Stage stage){
+        StageRegistrationHelper.getStageRegistration(mEvent.getUid()+stage.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                StageRegistration stageRegistration = documentSnapshot.toObject(StageRegistration.class);
+
+                if (getCurrentUser().getDisplayName() != null && stageRegistration.getParticipant().contains(getCurrentUser().getDisplayName())){
+                    EventBusiness.getTimeTableUpdated(mTimeTable, getCurrentUser().getDisplayName(),stageRegistration, stage);
+                }
+            }
+        });
+
+
+
+
 
     }
 
@@ -96,6 +120,6 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
         for (Stage request : mStageList){
             if (request.getUid().equals(stageUid)) stage = request;
         }
-        ScheduleEventModalFragment.newInstance(stage, mEvent.getUid()).show(getSupportFragmentManager(), "MODAL");
+        ScheduleEventModalFragment.newInstance(stage, mEvent.getUid(), mTimeTable, getCurrentUser().getDisplayName()).show(getSupportFragmentManager(), "MODAL");
     }
 }

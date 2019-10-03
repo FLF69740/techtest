@@ -14,10 +14,16 @@ import java.util.List;
 public class BottomSheetSchedulesAdapter extends RecyclerView.Adapter<BottomSheetSchedulesViewHolder> {
 
     private List<SingleScheduleBottomSheet> mSchedules;
+    private final ListenerBottomSheet mCallback;
 
-    public BottomSheetSchedulesAdapter(List<SingleScheduleBottomSheet> schedules) {
+    public interface ListenerBottomSheet{
+        void activeParticipation(int position);
+        void deleteParticipation(int position);
+    }
+
+    public BottomSheetSchedulesAdapter(List<SingleScheduleBottomSheet> schedules, ListenerBottomSheet callback) {
         mSchedules = schedules;
-        int i = 0;
+        mCallback = callback;
     }
 
     @NonNull
@@ -29,7 +35,7 @@ public class BottomSheetSchedulesAdapter extends RecyclerView.Adapter<BottomShee
     @Override
     public void onBindViewHolder(@NonNull BottomSheetSchedulesViewHolder holder, int position) {
         holder.setIsRecyclable(false);
-        holder.setSchedulesTable(mSchedules.get(position));
+        holder.setSchedulesTable(mSchedules.get(position), mCallback, position);
     }
 
     @Override
