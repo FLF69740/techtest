@@ -39,7 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EventFileActivity extends BaseActivity implements EventFileStageAdapter.ListenerEventFileStage {
+public class EventFileActivity extends BaseActivity implements EventFileStageAdapter.ListenerEventFileStage, ScheduleEventModalFragment.modalFragmentListener {
 
     @BindView(R.id.event_file_photo) ImageView mPhoto;
     @BindView(R.id.event_file_logo) ImageView mLogo;
@@ -96,14 +96,11 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
 
     //extract currentUser timetable with StageRegistrationHelper
     private void setUserTimeTable(Stage stage){
-        StageRegistrationHelper.getStageRegistration(mEvent.getUid()+stage.getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                StageRegistration stageRegistration = documentSnapshot.toObject(StageRegistration.class);
+        StageRegistrationHelper.getStageRegistration(mEvent.getUid()+stage.getUid()).addOnSuccessListener(documentSnapshot -> {
+            StageRegistration stageRegistration = documentSnapshot.toObject(StageRegistration.class);
 
-                if (getCurrentUser().getDisplayName() != null && stageRegistration.getParticipant().contains(getCurrentUser().getDisplayName())){
-                    EventBusiness.getTimeTableUpdated(mTimeTable, getCurrentUser().getDisplayName(),stageRegistration, stage);
-                }
+            if (getCurrentUser().getDisplayName() != null && stageRegistration.getParticipant().contains(getCurrentUser().getDisplayName())){
+                EventBusiness.getTimeTableUpdated(mTimeTable, getCurrentUser().getDisplayName(),stageRegistration, stage);
             }
         });
 
@@ -113,6 +110,9 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
 
     }
 
+    /**
+     *  CALLBACK
+     */
 
     @Override
     public void goParticipation(String stageUid) {
@@ -121,5 +121,13 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
             if (request.getUid().equals(stageUid)) stage = request;
         }
         ScheduleEventModalFragment.newInstance(stage, mEvent.getUid(), mTimeTable, getCurrentUser().getDisplayName()).show(getSupportFragmentManager(), "MODAL");
+    }
+
+    @Override
+    public void callbackModal(ModalUserTimeTable modalUserTimeTable) {
+        mTimeTable = new ModalUserTimeTable();
+        for (Stage stage : mStageList) {
+             this.setUserTimeTable(stage);
+        }
     }
 }

@@ -11,14 +11,16 @@ public class SingleScheduleBottomSheet implements Parcelable {
 
     private List<String> mParticipantList;
     private String mSchedule;
+    private String mRegistrationId;
     private boolean mActifReservation; // boolean : false if participant is registered into an other stage
     private boolean mNotRegistered; // boolean : false if participant is registered into the stage showed
 
-    public SingleScheduleBottomSheet(String schedule) {
+    public SingleScheduleBottomSheet(String schedule, String registrationId) {
         mParticipantList = new ArrayList<>();
         mSchedule = schedule;
         mActifReservation = true;
         mNotRegistered = true;
+        mRegistrationId = registrationId;
     }
 
     public List<String> getParticipantList() {
@@ -32,6 +34,14 @@ public class SingleScheduleBottomSheet implements Parcelable {
             mParticipantList = new ArrayList<>(Arrays.asList(participantDataLine.split(Utils.PARTICIPANT_SEPARATOR)));
         }
 
+    }
+
+    public String getRegistrationId() {
+        return mRegistrationId;
+    }
+
+    public void setRegistrationId(String registrationId) {
+        mRegistrationId = registrationId;
     }
 
     public String getSchedule() {
@@ -66,6 +76,7 @@ public class SingleScheduleBottomSheet implements Parcelable {
             mParticipantList = null;
         }
         mSchedule = in.readString();
+        mRegistrationId = in.readString();
         mActifReservation = in.readByte() != 0x00;
         mNotRegistered = in.readByte() != 0x00;
     }
@@ -84,6 +95,7 @@ public class SingleScheduleBottomSheet implements Parcelable {
             dest.writeList(mParticipantList);
         }
         dest.writeString(mSchedule);
+        dest.writeString(mRegistrationId);
         dest.writeByte((byte) (mActifReservation ? 0x01 : 0x00));
         dest.writeByte((byte) (mNotRegistered ? 0x01 : 0x00));
     }

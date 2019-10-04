@@ -12,10 +12,12 @@ public class ModalUserTimeTable implements Parcelable {
 
     private List<DateTime> mListReservationStart;
     private List<DateTime> mListReservationEnd;
+    private List<String> mTablesId;
 
     public ModalUserTimeTable() {
         mListReservationStart = new ArrayList<>();
         mListReservationEnd = new ArrayList<>();
+        mTablesId = new ArrayList<>();
     }
 
     public List<DateTime> getListReservationStart() {
@@ -34,6 +36,14 @@ public class ModalUserTimeTable implements Parcelable {
         mListReservationEnd = listReservationEnd;
     }
 
+    public List<String> getTablesId() {
+        return mTablesId;
+    }
+
+    public void setTablesId(List<String> tablesId) {
+        mTablesId = tablesId;
+    }
+
     protected ModalUserTimeTable(Parcel in) {
         if (in.readByte() == 0x01) {
             mListReservationStart = new ArrayList<DateTime>();
@@ -46,6 +56,12 @@ public class ModalUserTimeTable implements Parcelable {
             in.readList(mListReservationEnd, DateTime.class.getClassLoader());
         } else {
             mListReservationEnd = null;
+        }
+        if (in.readByte() == 0x01) {
+            mTablesId = new ArrayList<String>();
+            in.readList(mTablesId, String.class.getClassLoader());
+        } else {
+            mTablesId = null;
         }
     }
 
@@ -67,6 +83,12 @@ public class ModalUserTimeTable implements Parcelable {
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(mListReservationEnd);
+        }
+        if (mTablesId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mTablesId);
         }
     }
 

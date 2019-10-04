@@ -24,10 +24,10 @@ public class EventBusiness {
         return dateTime;
     }
 
-    public static List<DateTime> loadSchedulesStart(List<Integer> participantReservationId, Stage stage){
+    public static List<DateTime> loadSchedulesStart(List<Integer> scheduleNumberDetection, Stage stage){
         List<DateTime> resultList = new ArrayList<>();
         List<String> stageScheduleString = Arrays.asList(stage.getSchedule().split(","));
-        for (int placeSchedule : participantReservationId){
+        for (int placeSchedule : scheduleNumberDetection){
             resultList.add(getStartSchedule(stageScheduleString.get(placeSchedule)));
         }
         return resultList;
@@ -57,7 +57,13 @@ public class EventBusiness {
         List<Integer> scheduleNumberDetection = new ArrayList<>();
         List<String> stageRegistrationParticipantList = Arrays.asList(stageRegistration.getParticipant().split(","));
         for (int i = 0; i < stageRegistrationParticipantList.size(); i++) {
-            if (stageRegistrationParticipantList.get(i).contains(username)) scheduleNumberDetection.add(i);
+            if (stageRegistrationParticipantList.get(i).contains(username)){
+                scheduleNumberDetection.add(i);
+                List<String> listTableId = timeTable.getTablesId();
+                listTableId.add(stageRegistration.getUid());
+                timeTable.setTablesId(listTableId);
+            }
+
         }
 
         List<DateTime> lastScheduleRegistration = timeTable.getListReservationStart();
@@ -83,10 +89,18 @@ public class EventBusiness {
 
                 if (modalStart.getMinuteOfDay() >= timeTable.getListReservationStart().get(i).getMinuteOfDay() &&
                         modalStart.getMinuteOfDay() < timeTable.getListReservationEnd().get(i).getMinuteOfDay()) {
-                    planning.get(j).setActifReservation(false);
+                    if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())){
+                        planning.get(j).setNotRegistered(false);
+                    }else {
+                        planning.get(j).setActifReservation(false);
+                    }
                 }else if (modalEnd.getMinuteOfDay() > timeTable.getListReservationStart().get(i).getMinuteOfDay() &&
                         modalEnd.getMinuteOfDay() <= timeTable.getListReservationEnd().get(i).getMinuteOfDay()){
-                    planning.get(j).setActifReservation(false);
+                    if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())){
+                        planning.get(j).setNotRegistered(false);
+                    }else {
+                        planning.get(j).setActifReservation(false);
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.epfd.csandroid.event;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +34,13 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
     private BottomSheetSchedulesAdapter mAdapter;
     private ArrayList<SingleScheduleBottomSheet> mPlanning;
     private String mUserName;
+    private ModalUserTimeTable mTimeTable;
     private String mRegistration;
 
     private static final String KEY_SCHEDULE_ID = "KEY_SCHEDULE_ID";
     private static final String KEY_EVENT_ID = "KEY_EVENT_ID";
     private static final String KEY_TIMETABLE = "KEY_TIMETABLE";
     private static final String KEY_USERNAME = "KEY_USERNAME";
-    private static final String SAVE_INSTANCE_STATE_REGISTRATION = "SAVE_INSTANCE_STATE_REGISTRATION";
     private static final String SAVE_INSTANCE_STATE_PLANNING = "SAVE_INSTANCE_STATE_PLANNING";
 
     static ScheduleEventModalFragment newInstance(Stage stage, String eventUid, ModalUserTimeTable timeTable, String userName){
@@ -67,7 +68,7 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
 
         Stage stage = getArguments().getParcelable(KEY_SCHEDULE_ID);
         mRegistration = getArguments().getString(KEY_EVENT_ID) + stage.getUid();
-        ModalUserTimeTable timeTable = getArguments().getParcelable(KEY_TIMETABLE);
+        mTimeTable = getArguments().getParcelable(KEY_TIMETABLE);
         mUserName = getArguments().getString(KEY_USERNAME);
 
         mTitle.setText(stage.getTitle());
@@ -80,12 +81,12 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
             mPlanning = new ArrayList<>();
 
             for (String schedule : scheduleStageString) {
-                SingleScheduleBottomSheet singleScheduleBottomSheet = new SingleScheduleBottomSheet(schedule);
+                SingleScheduleBottomSheet singleScheduleBottomSheet = new SingleScheduleBottomSheet(schedule, mRegistration);
                 mPlanning.add(singleScheduleBottomSheet);
                 updatePeopleIntoPlanning(mPlanning, mRegistration);
             }
 
-            EventBusiness.compareTimeTableAndStagePlanning(mPlanning, timeTable);
+            EventBusiness.compareTimeTableAndStagePlanning(mPlanning, mTimeTable);
 
         }
 
@@ -116,7 +117,13 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
     public void activeParticipation(int position) {
         EventBusiness.addParticipantIntoPlanning(mPlanning, mUserName, position);
         StageRegistrationHelper.updateStageRegistrationParticipant(mRegistration, EventBusiness.listPlanningToString(mPlanning))
-                .addOnSuccessListener(aVoid -> mAdapter.notifyDataSetChanged());
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mAdapter.notifyDataSetChanged();
+                        mCallback.callbackModal(mTimeTable);
+                    }
+                });
 
     }
 
@@ -124,6 +131,36 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
     public void deleteParticipation(int position) {
         EventBusiness.deleteParticipantIntoPlanning(mPlanning, mUserName, position);
         StageRegistrationHelper.updateStageRegistrationParticipant(mRegistration, EventBusiness.listPlanningToString(mPlanning))
-                .addOnSuccessListener(aVoid -> mAdapter.notifyDataSetChanged());
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mAdapter.notifyDataSetChanged();
+                        mCallback.callbackModal(mTimeTable);
+                    }
+                });
     }
+
+
+    /**
+     *  CALLBACK
+     */
+
+    // interface for button clicked
+    public interface modalFragmentListener{
+        void callbackModal(ModalUserTimeTable modalUserTimeTable);
+    }
+
+    //callback for button clicked
+    private modalFragmentListener mCallback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (modalFragmentListener) getActivity();
+        } catch (ClassCastException e){
+            throw new ClassCastException(e.toString() + " must implement ItemClickedListener");
+        }
+    }
+
 }
