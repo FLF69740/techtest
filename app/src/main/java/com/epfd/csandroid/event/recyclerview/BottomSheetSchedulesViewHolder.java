@@ -1,5 +1,6 @@
 package com.epfd.csandroid.event.recyclerview;
 
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.models.SingleScheduleBottomSheet;
+import com.epfd.csandroid.utils.Utils;
 
 import java.lang.ref.WeakReference;
 
@@ -39,10 +41,15 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
         mSchedule.setText(scheduleDatas.getSchedule());
         StringBuilder peopleListString = new StringBuilder();
         for (String personae : scheduleDatas.getParticipantList()){
-            peopleListString.append(personae).append("\n");
+            if (personae.equals(Utils.EMPTY)){
+                peopleListString.append("<font color='#FFFFFF'>" + Utils.EMPTY +"</font>").append("<br>");
+            }else {
+                peopleListString.append(personae).append("<br>");
+            }
         }
-        mPeople.setText(peopleListString.toString());
-        if (!scheduleDatas.isActifReservation()){
+        mPeople.setText(Html.fromHtml(peopleListString.toString()));
+
+        if (!scheduleDatas.isActifReservation() || !peopleListString.toString().contains(Utils.EMPTY)){
             mModalAddBtn.setVisibility(View.GONE);
             mModalDeleteBtn.setVisibility(View.GONE);
         }else if (!scheduleDatas.isNotRegistered()){

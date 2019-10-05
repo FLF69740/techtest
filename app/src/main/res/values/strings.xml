@@ -21,6 +21,7 @@
     <string name="event_event_single">EVENEMENT</string>
     <string name="event_file_stage_volunteer">ATELIERS DES BENEVOLES</string>
     <string name="event_file_stage_text_btn">Je participe !</string>
+    <string name="event_file_stage_needs">TABLEAU DES BESOINS</string>
 
     <!-- EVENTS CREATOR -->
     <string name="event_creator_event_menu">MENU EVENEMENTS</string>

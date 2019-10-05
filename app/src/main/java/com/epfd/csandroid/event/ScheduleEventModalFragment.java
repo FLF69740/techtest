@@ -18,7 +18,6 @@ import com.epfd.csandroid.models.ModalUserTimeTable;
 import com.epfd.csandroid.models.SingleScheduleBottomSheet;
 import com.epfd.csandroid.models.Stage;
 import com.epfd.csandroid.models.StageRegistration;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,12 +116,9 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
     public void activeParticipation(int position) {
         EventBusiness.addParticipantIntoPlanning(mPlanning, mUserName, position);
         StageRegistrationHelper.updateStageRegistrationParticipant(mRegistration, EventBusiness.listPlanningToString(mPlanning))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        mAdapter.notifyDataSetChanged();
-                        mCallback.callbackModal(mTimeTable);
-                    }
+                .addOnSuccessListener(aVoid -> {
+                    mAdapter.notifyDataSetChanged();
+                    mCallback.callbackModal(mTimeTable);
                 });
 
     }
@@ -131,12 +127,9 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
     public void deleteParticipation(int position) {
         EventBusiness.deleteParticipantIntoPlanning(mPlanning, mUserName, position);
         StageRegistrationHelper.updateStageRegistrationParticipant(mRegistration, EventBusiness.listPlanningToString(mPlanning))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        mAdapter.notifyDataSetChanged();
-                        mCallback.callbackModal(mTimeTable);
-                    }
+                .addOnSuccessListener(aVoid -> {
+                    mAdapter.notifyDataSetChanged();
+                    mCallback.callbackModal(mTimeTable);
                 });
     }
 
