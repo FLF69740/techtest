@@ -132,26 +132,23 @@ public class EventCreatorStageFragment extends Fragment implements EventCreatorS
      */
 
     private void createStageRegistration(String stageName){
-        StageCreatorHelper.getStage(stageName).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Stage stage = documentSnapshot.toObject(Stage.class);
-                if (stage != null && !stage.getSchedule().equals(Utils.EMPTY)) {
-                    int scheduleNumber = Utils.getSequenceNumberIntoAString(stage.getSchedule(), ',');
-                    StringBuilder registrationAnswer = new StringBuilder();
-                    for (int i = 0; i < scheduleNumber; i++) {
-                        if (stage.getPeople() != 1) {
-                            for (int j = 1; j < stage.getPeople(); j++) {
-                                registrationAnswer.append(Utils.EMPTY).append(Utils.PARTICIPANT_SEPARATOR);
-                            }
-                            registrationAnswer.append(Utils.EMPTY + ",");
-                        }else {
-                            registrationAnswer.append(Utils.EMPTY + ",");
+        StageCreatorHelper.getStage(stageName).addOnSuccessListener(documentSnapshot -> {
+            Stage stage = documentSnapshot.toObject(Stage.class);
+            if (stage != null && !stage.getSchedule().equals(Utils.EMPTY)) {
+                int scheduleNumber = Utils.getSequenceNumberIntoAString(stage.getSchedule(), ',');
+                StringBuilder registrationAnswer = new StringBuilder();
+                for (int i = 0; i < scheduleNumber; i++) {
+                    if (stage.getPeople() != 1) {
+                        for (int j = 1; j < stage.getPeople(); j++) {
+                            registrationAnswer.append(Utils.EMPTY).append(Utils.PARTICIPANT_SEPARATOR);
                         }
+                        registrationAnswer.append(Utils.EMPTY + ",");
+                    }else {
+                        registrationAnswer.append(Utils.EMPTY + ",");
                     }
-                    StageRegistration stageRegistration = new StageRegistration(registrationAnswer.toString(), mEvent.getUid()+stageName, stage.getPeople());
-                    StageRegistrationHelper.createStageRegistration(stageRegistration.getUid(), stageRegistration);
                 }
+                StageRegistration stageRegistration = new StageRegistration(registrationAnswer.toString(), mEvent.getUid()+stageName, stage.getPeople());
+                StageRegistrationHelper.createStageRegistration(stageRegistration.getUid(), stageRegistration);
             }
         });
     }

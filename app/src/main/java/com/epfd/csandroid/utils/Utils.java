@@ -1,8 +1,12 @@
 package com.epfd.csandroid.utils;
 
+import com.epfd.csandroid.formulary.recyclerview.FormularyAdapter;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.util.List;
 
 
 public class Utils {
@@ -89,8 +93,20 @@ public class Utils {
                 count++;
             }
         }
-
         return count;
+    }
+
+    //transform list to String with separator
+    public static String getStringListWithSeparator(List<String> myList, String separator){
+        StringBuilder builder = new StringBuilder();
+            String prefix = "";
+            for (String identity : myList){
+                builder.append(prefix);
+                prefix = separator;
+                builder.append(identity);
+            }
+
+        return builder.toString();
     }
 
 

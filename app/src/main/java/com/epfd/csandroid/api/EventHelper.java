@@ -55,6 +55,10 @@ public class EventHelper {
         return EventHelper.getEventsCollection().document(uid).update("stages", stages);
     }
 
+    public static Task<Void> updateEventNeeds(String uid, String needs){
+        return EventHelper.getEventsCollection().document(uid).update("needs", needs);
+    }
+
     public static Task<Void> updateEventVisibility(String uid, boolean state){
         return EventHelper.getEventsCollection().document(uid).update("affichage", state);
     }

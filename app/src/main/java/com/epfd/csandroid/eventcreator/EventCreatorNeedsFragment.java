@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import com.epfd.csandroid.R;
+import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.eventcreator.recyclerview.EventCreatorNeedsAdapter;
 import com.epfd.csandroid.models.Event;
+import com.epfd.csandroid.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,12 +65,14 @@ public class EventCreatorNeedsFragment extends Fragment implements EventCreatorN
 
         if (mEvent.getNeeds() != null) {
             mMyNeed = new ArrayList<>(Arrays.asList(mEvent.getNeeds().split(",")));
+
         }else {
             mMyNeed = new ArrayList<>();
-            mMyNeed.add("");
+            mEvent.setNeeds(Utils.getStringListWithSeparator(mMyNeed, ","));
+
         }
 
-
+        mMyNeed.add("");
 
         Context recyclerContext = mRecyclerView.getContext();
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(recyclerContext, R.anim.layout_slide_from_bottom);
@@ -90,12 +94,14 @@ public class EventCreatorNeedsFragment extends Fragment implements EventCreatorN
     @Override
     public void addNeed(String need) {
         mMyNeed.add(0, need);
-        mAdapter.notifyDataSetChanged();
+        mEvent.setNeeds(Utils.getStringListWithSeparator(mMyNeed, ","));
+        EventHelper.updateEventNeeds(mEvent.getUid(), mEvent.getNeeds()).addOnSuccessListener(aVoid -> mAdapter.notifyDataSetChanged());
     }
 
     @Override
     public void deleteNeed(int position) {
         mMyNeed.remove(position);
-        mAdapter.notifyDataSetChanged();
+        mEvent.setNeeds(Utils.getStringListWithSeparator(mMyNeed, ","));
+        EventHelper.updateEventNeeds(mEvent.getUid(), mEvent.getNeeds()).addOnSuccessListener(aVoid -> mAdapter.notifyDataSetChanged());
     }
 }
