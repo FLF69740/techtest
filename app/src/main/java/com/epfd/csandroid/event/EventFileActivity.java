@@ -1,21 +1,13 @@
 package com.epfd.csandroid.event;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.epfd.csandroid.R;
-import com.epfd.csandroid.administrator.stageedition.recyclerview.StageCreatorAdapter;
 import com.epfd.csandroid.api.StageCreatorHelper;
 import com.epfd.csandroid.api.StageRegistrationHelper;
 import com.epfd.csandroid.base.BaseActivity;
@@ -25,19 +17,12 @@ import com.epfd.csandroid.models.ModalUserTimeTable;
 import com.epfd.csandroid.models.Stage;
 import com.epfd.csandroid.models.StageRegistration;
 import com.epfd.csandroid.utils.BitmapStorage;
-import com.epfd.csandroid.utils.RecyclerViewClickSupport;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class EventFileActivity extends BaseActivity implements EventFileStageAdapter.ListenerEventFileStage, ScheduleEventModalFragment.modalFragmentListener {
 
@@ -46,6 +31,7 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
     @BindView(R.id.event_file_title) TextView mTitle;
     @BindView(R.id.event_file_date) TextView mDate;
     @BindView(R.id.event_file_description) TextView mDescription;
+    @BindView(R.id.event_file_needs_btn) ImageView mNeedsListing;
     @BindView(R.id.event_file_stage_recycler) RecyclerView mRecyclerView;
 
     private EventFileStageAdapter mAdapter;
@@ -103,11 +89,10 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
                 EventBusiness.getTimeTableUpdated(mTimeTable, getCurrentUser().getDisplayName(),stageRegistration, stage);
             }
         });
+    }
 
-
-
-
-
+    @OnClick(R.id.event_file_needs_btn) void getNeedsLisiting(){
+        Toast.makeText(this, "MESSAGE", Toast.LENGTH_SHORT).show();
     }
 
     /**

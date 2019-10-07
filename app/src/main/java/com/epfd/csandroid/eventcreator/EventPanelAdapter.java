@@ -24,6 +24,7 @@ public class EventPanelAdapter extends FragmentPagerAdapter {
         mTablTitle.add(context.getString(R.string.event_creator_tab_one));
         if (tabStage) {
             mTablTitle.add(context.getString(R.string.event_creator_tab_two));
+            mTablTitle.add(context.getString(R.string.event_creator_tab_three));
         }
         mEvent = event;
     }
@@ -31,16 +32,22 @@ public class EventPanelAdapter extends FragmentPagerAdapter {
     public void addStage(Context context){
         if (mTablTitle.size() == 1) {
             mTablTitle.add(context.getString(R.string.event_creator_tab_two));
+            mTablTitle.add(context.getString(R.string.event_creator_tab_three));
         }
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return EventCreatorMainPageFragment.newInstance(mEvent);
+        switch (position){
+            case 0 :
+                return EventCreatorMainPageFragment.newInstance(mEvent);
+            case 1 :
+                return EventCreatorStageFragment.newInstance(mEvent);
+
+            default: return EventCreatorNeedsFragment.newInstance(mEvent);
         }
-        return EventCreatorStageFragment.newInstance(mEvent);
+
     }
 
     @Nullable

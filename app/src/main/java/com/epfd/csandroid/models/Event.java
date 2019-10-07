@@ -12,6 +12,7 @@ public class Event implements Parcelable {
     private String mPhoto;
     private String mLabel;
     private String mStages;
+    private String mNeeds;
     private boolean mAffichage;
 
     public Event() {}
@@ -24,6 +25,7 @@ public class Event implements Parcelable {
         mPhoto = photo;
         mLabel = label;
         mStages = "";
+        mNeeds = "";
         mAffichage = false;
     }
 
@@ -91,6 +93,14 @@ public class Event implements Parcelable {
         mAffichage = affichage;
     }
 
+    public String getNeeds() {
+        return mNeeds;
+    }
+
+    public void setNeeds(String needs) {
+        mNeeds = needs;
+    }
+
     protected Event(Parcel in) {
         mUid = in.readString();
         mName = in.readString();
@@ -99,6 +109,7 @@ public class Event implements Parcelable {
         mPhoto = in.readString();
         mLabel = in.readString();
         mStages = in.readString();
+        mNeeds = in.readString();
         mAffichage = in.readByte() != 0x00;
     }
 
@@ -116,6 +127,7 @@ public class Event implements Parcelable {
         dest.writeString(mPhoto);
         dest.writeString(mLabel);
         dest.writeString(mStages);
+        dest.writeString(mNeeds);
         dest.writeByte((byte) (mAffichage ? 0x01 : 0x00));
     }
 

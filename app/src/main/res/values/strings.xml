@@ -33,6 +33,7 @@
     <string name="event_creator_description">DESCRIPTION</string>
     <string name="event_creator_tab_one">PRESENTATION</string>
     <string name="event_creator_tab_two">ATELIER</string>
+    <string name="event_creator_tab_three">BESOINS</string>
     <string name="event_creator_save">ENREGISTRER</string>
     <string name="event_creator_maj">METTRE A JOUR</string>
     <string name="event_creator_incomplet">EVENEMENT INCOMPLET</string>
