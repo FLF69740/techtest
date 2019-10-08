@@ -24,7 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EventFileActivity extends BaseActivity implements EventFileStageAdapter.ListenerEventFileStage, ScheduleEventModalFragment.modalFragmentListener {
+public class EventFileActivity extends BaseActivity implements EventFileStageAdapter.ListenerEventFileStage, ScheduleEventModalFragment.modalFragmentListener,
+NeedsEventModalFragment.needsFragmentListener{
 
     @BindView(R.id.event_file_photo) ImageView mPhoto;
     @BindView(R.id.event_file_logo) ImageView mLogo;
@@ -95,6 +96,8 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
         NeedsEventModalFragment.newInstance(mEvent, getCurrentUser().getDisplayName()).show(getSupportFragmentManager(), "MODAL_NEED");
     }
 
+
+
     /**
      *  CALLBACK
      */
@@ -114,5 +117,10 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
         for (Stage stage : mStageList) {
              this.setUserTimeTable(stage);
         }
+    }
+
+    @Override
+    public void callbackNeeds(Event event) {
+        mEvent = event;
     }
 }
