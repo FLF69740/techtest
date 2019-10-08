@@ -42,7 +42,7 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
         StringBuilder peopleListString = new StringBuilder();
         for (String personae : scheduleDatas.getParticipantList()){
             if (personae.equals(Utils.EMPTY)){
-                peopleListString.append("<font color='#FFFFFF'>" + Utils.EMPTY +"</font>").append("<br>");
+                peopleListString.append("<font color='#FF00FF'>" + Utils.EMPTY +"</font>").append("<br>");
             }else {
                 peopleListString.append(personae).append("<br>");
             }

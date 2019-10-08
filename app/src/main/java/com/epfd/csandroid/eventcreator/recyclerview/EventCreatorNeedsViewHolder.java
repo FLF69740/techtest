@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.epfd.csandroid.R;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -34,7 +36,8 @@ class EventCreatorNeedsViewHolder extends RecyclerView.ViewHolder {
             mTextView.setVisibility(View.INVISIBLE);
 
         }else {
-            mTextView.setText(need);
+            String title = Arrays.asList(need.split(":")).get(0);
+            mTextView.setText(title);
             mTextView.setVisibility(View.VISIBLE);
             mEditText.setVisibility(View.INVISIBLE);
             mValidation.setVisibility(View.INVISIBLE);

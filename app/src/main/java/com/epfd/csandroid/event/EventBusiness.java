@@ -128,7 +128,7 @@ public class EventBusiness {
         planning.get(position).setNotRegistered(false);
     }
 
-    //ADD A PARTICIPANT INTO A PLANNING
+    //DELETE A PARTICIPANT INTO A PLANNING
     public static void deleteParticipantIntoPlanning(List<SingleScheduleBottomSheet> planning, String name, int position){
         List<String> participantList = planning.get(position).getParticipantList();
         boolean inscription = true;

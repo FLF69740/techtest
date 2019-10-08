@@ -63,13 +63,11 @@ public class EventCreatorNeedsFragment extends Fragment implements EventCreatorN
             mEvent = getArguments().getParcelable(BUNDLE_EVENT_CREATOR_NEEDS_EVENT_OBJECT);
         }
 
-        if (mEvent.getNeeds() != null) {
+        if (!mEvent.getNeeds().equals("")) {
             mMyNeed = new ArrayList<>(Arrays.asList(mEvent.getNeeds().split(",")));
 
         }else {
             mMyNeed = new ArrayList<>();
-            mEvent.setNeeds(Utils.getStringListWithSeparator(mMyNeed, ","));
-
         }
 
         mMyNeed.add("");
@@ -93,7 +91,7 @@ public class EventCreatorNeedsFragment extends Fragment implements EventCreatorN
 
     @Override
     public void addNeed(String need) {
-        mMyNeed.add(0, need);
+        mMyNeed.add(0, need + ":" + Utils.EMPTY);
         mEvent.setNeeds(Utils.getStringListWithSeparator(mMyNeed, ","));
         EventHelper.updateEventNeeds(mEvent.getUid(), mEvent.getNeeds()).addOnSuccessListener(aVoid -> mAdapter.notifyDataSetChanged());
     }

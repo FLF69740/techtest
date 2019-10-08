@@ -36,6 +36,10 @@ public class SingleScheduleBottomSheet implements Parcelable {
 
     }
 
+    public void setListToList(List<String> participantList) {
+        mParticipantList = participantList;
+    }
+
     public String getRegistrationId() {
         return mRegistrationId;
     }

@@ -92,7 +92,7 @@ public class EventFileActivity extends BaseActivity implements EventFileStageAda
     }
 
     @OnClick(R.id.event_file_needs_btn) void getNeedsLisiting(){
-        Toast.makeText(this, "MESSAGE", Toast.LENGTH_SHORT).show();
+        NeedsEventModalFragment.newInstance(mEvent, getCurrentUser().getDisplayName()).show(getSupportFragmentManager(), "MODAL_NEED");
     }
 
     /**
