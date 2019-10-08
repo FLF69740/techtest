@@ -1,10 +1,12 @@
 package com.epfd.csandroid.eventcreator;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -56,7 +58,11 @@ public class EventCreatorMenuActivity extends BaseActivity{
                 Context recyclerContext = mRecyclerView.getContext();
                 LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(recyclerContext, R.anim.layout_slide_from_bottom);
                 mAdapter = new EventCreatorMenuAdapter(mEventList);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+                }else {
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                }
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutAnimation(controller);
                 mRecyclerView.scheduleLayoutAnimation();
