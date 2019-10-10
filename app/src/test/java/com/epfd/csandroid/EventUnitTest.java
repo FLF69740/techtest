@@ -235,7 +235,7 @@ public class EventUnitTest {
         EventBusiness.getTimeTableUpdated(timeTable, MY_NAME, getStageRegistration2(), getStage2());
 
 
-        EventBusiness.compareTimeTableAndStagePlanning(planning, timeTable);
+        EventBusiness.compareTimeTableAndStagePlanning(planning, timeTable, false);
 
         int falseNb = 0;
         for (SingleScheduleBottomSheet singleScheduleBottomSheet : planning){
@@ -249,7 +249,7 @@ public class EventUnitTest {
 
         planning = getPlanning(getStage1Bis());
 
-        EventBusiness.compareTimeTableAndStagePlanning(planning, timeTable);
+        EventBusiness.compareTimeTableAndStagePlanning(planning, timeTable, false);
 
         falseNb = 0;
         for (SingleScheduleBottomSheet singleScheduleBottomSheet : planning){

@@ -109,7 +109,7 @@ NeedsEventModalFragment.needsFragmentListener {
         for (Stage request : mStageList){
             if (request.getUid().equals(stageUid)) stage = request;
         }
-        ScheduleEventModalFragment.newInstance(stage, mEvent.getUid(), mTimeTable, getCurrentUser().getDisplayName()).show(getSupportFragmentManager(), "MODAL");
+        ScheduleEventModalFragment.newInstance(stage, mEvent.getUid(), mTimeTable, getCurrentUser().getDisplayName(), getCurrentUser().getEmail()).show(getSupportFragmentManager(), "MODAL");
     }
 
     @Override

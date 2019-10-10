@@ -76,7 +76,7 @@ public class EventBusiness {
     }
 
     //COMPARE SCHEDULES BETWEEN TIMETABLE AND STAGE PLANNING AND UPDATE PLANNING
-    public static void compareTimeTableAndStagePlanning(List<SingleScheduleBottomSheet> planning, ModalUserTimeTable timeTable){
+    public static void compareTimeTableAndStagePlanning(List<SingleScheduleBottomSheet> planning, ModalUserTimeTable timeTable, boolean adminAct){
 
         DateTime modalStart = new DateTime();
         DateTime modalEnd = new DateTime();
@@ -89,17 +89,26 @@ public class EventBusiness {
 
                 if (modalStart.getMinuteOfDay() >= timeTable.getListReservationStart().get(i).getMinuteOfDay() &&
                         modalStart.getMinuteOfDay() < timeTable.getListReservationEnd().get(i).getMinuteOfDay()) {
-                    if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())){
+
+                    if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())) {
                         planning.get(j).setNotRegistered(false);
-                    }else {
-                        planning.get(j).setActifReservation(false);
+                    } else {
+                        if (!adminAct) {
+                            planning.get(j).setActifReservation(false);
+                        } else {
+                            planning.get(j).setNotRegistered(true);
+                        }
                     }
                 }else if (modalEnd.getMinuteOfDay() > timeTable.getListReservationStart().get(i).getMinuteOfDay() &&
                         modalEnd.getMinuteOfDay() <= timeTable.getListReservationEnd().get(i).getMinuteOfDay()){
-                    if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())){
+                    if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())) {
                         planning.get(j).setNotRegistered(false);
-                    }else {
-                        planning.get(j).setActifReservation(false);
+                    } else {
+                        if (!adminAct) {
+                            planning.get(j).setActifReservation(false);
+                        } else {
+                            planning.get(j).setNotRegistered(true);
+                        }
                     }
                 }
             }

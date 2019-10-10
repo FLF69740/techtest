@@ -15,6 +15,7 @@ public class BottomSheetSchedulesAdapter extends RecyclerView.Adapter<BottomShee
 
     private List<SingleScheduleBottomSheet> mSchedules;
     private final ListenerBottomSheet mCallback;
+    private boolean mScheduleAdmin = false;
 
     public interface ListenerBottomSheet{
         void activeParticipation(int position);
@@ -35,7 +36,11 @@ public class BottomSheetSchedulesAdapter extends RecyclerView.Adapter<BottomShee
     @Override
     public void onBindViewHolder(@NonNull BottomSheetSchedulesViewHolder holder, int position) {
         holder.setIsRecyclable(false);
-        holder.setSchedulesTable(mSchedules.get(position), mCallback, position);
+        holder.setSchedulesTable(mSchedules.get(position), mCallback, position, mScheduleAdmin);
+    }
+
+    public void setSchedulesAdmin(boolean scheduleAdmin){
+        mScheduleAdmin = scheduleAdmin;
     }
 
     @Override
