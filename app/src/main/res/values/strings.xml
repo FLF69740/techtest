@@ -232,6 +232,7 @@ This privacy policy page was created at privacypolicytemplate.net and modified/g
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- ADMINISTARTOR SECTION -->
+    <string name="admin_dialog_admin_name">Nom de l\'Admin</string>
 
     <!-- CLASSROOMS EDITION -->
     <string name="classrooms_edition_label">EDITION DES CLASSES</string>

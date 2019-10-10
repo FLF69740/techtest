@@ -21,6 +21,7 @@ import com.epfd.csandroid.api.EventHelper;
 import com.epfd.csandroid.event.recyclerview.BottomSheetSchedulesAdapter;
 import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.models.SingleScheduleBottomSheet;
+import com.epfd.csandroid.utils.AdminDialog;
 import com.epfd.csandroid.utils.Utils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -33,9 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class NeedsEventModalFragment extends BottomSheetDialogFragment implements BottomSheetSchedulesAdapter.ListenerBottomSheet {
-
-
+public class NeedsEventModalFragment extends BottomSheetDialogFragment implements BottomSheetSchedulesAdapter.ListenerBottomSheet, AdminDialog.ListenerAdminDialog{
 
     @BindView(R.id.modal_fragment_stage_title) TextView mTitle;
     @BindView(R.id.modal_fragment_recycler) RecyclerView mRecyclerView;
@@ -43,19 +42,26 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
     private BottomSheetSchedulesAdapter mAdapter;
     private String mUserName;
     private Event mEvent;
+    private String mMailDev;
     private ArrayList<SingleScheduleBottomSheet> mPlanning;
+    private int mAdminPosition; // after dialog fragment callback define planning position
+    private boolean mAdminAddAction; // after dialog fragment callback define if it'a add process or delete process
 
     private static final String KEY_EVENT_ID = "KEY_EVENT_ID";
     private static final String KEY_USERNAME = "KEY_USERNAME";
+    private static final String KEY_MAIL = "KEY_MAIL";
     private static final String SAVE_INSTANCE_STATE_PLANNING = "SAVE_INSTANCE_STATE_PLANNING";
+    private static final String SAVE_INSTANCE_STATE_ADMIN_POS = "SAVE_INSTANCE_STATE_ADMIN_POS";
+    private static final String SAVE_INSTANCE_STATE_ADMIN_ACTION = "SAVE_INSTANCE_STATE_ADMIN_ACTION";
 
     public NeedsEventModalFragment() {}
 
-    static NeedsEventModalFragment newInstance(Event event, String username){
+    static NeedsEventModalFragment newInstance(Event event, String username, String mailDev){
         NeedsEventModalFragment needsEventModalFragment = new NeedsEventModalFragment();
-        Bundle bundle = new Bundle(2);
+        Bundle bundle = new Bundle(3);
         bundle.putParcelable(KEY_EVENT_ID, event);
         bundle.putString(KEY_USERNAME, username);
+        bundle.putString(KEY_MAIL, mailDev);
         needsEventModalFragment.setArguments(bundle);
         return needsEventModalFragment;
     }
@@ -73,6 +79,7 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
 
         mEvent = getArguments().getParcelable(KEY_EVENT_ID);
         mUserName = getArguments().getString(KEY_USERNAME);
+        mMailDev = getArguments().getString(KEY_MAIL);
 
         mTitle.setText(getContext().getString(R.string.event_file_stage_needs));
 
@@ -98,75 +105,111 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
 
     }
 
-    // GET the list of needs name
-    private static List<String> getRootNeeds(List<String>  needsListString){
-        List<String> rootNeeds = new ArrayList<>();
-        for (String need : needsListString){
-            rootNeeds.add(need.substring(0, need.indexOf(":")));
-        }
-        return rootNeeds;
-    }
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(SAVE_INSTANCE_STATE_PLANNING, mPlanning);
+        outState.putInt(SAVE_INSTANCE_STATE_ADMIN_POS, mAdminPosition);
+        outState.putBoolean(SAVE_INSTANCE_STATE_ADMIN_ACTION, mAdminAddAction);
     }
 
     @Override
     public void activeParticipation(int position) {
-        if (mPlanning.get(position).getParticipantList().get(0).contains(Utils.EMPTY)){
-            mPlanning.get(position).setParticipantList(mUserName);
-        }else {
+        if (mMailDev.equals(Utils.DEV)) {
+            mAdminPosition = position;
+            mAdminAddAction = true;
+            AdminDialog adminDialog = new AdminDialog();
+            adminDialog.setTargetFragment(this, 0);
+            adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
+            mPlanning.get(position).setNotRegistered(true);
+            mAdapter.notifyDataSetChanged();
+        }else{
+            addProcess(position, false, null);
+        }
+    }
+
+    private void addProcess(int position, boolean adminAct, @Nullable String adminName){
+        String targetName = mUserName;
+        if (adminAct) {
+            targetName = adminName;
+        }
+        if (mPlanning.get(position).getParticipantList().get(0).contains(Utils.EMPTY)) {
+            mPlanning.get(position).setParticipantList(targetName);
+        } else {
             mPlanning.get(position).setParticipantList(Utils.getStringListWithSeparator(mPlanning.get(position).getParticipantList(), Utils.PARTICIPANT_SEPARATOR)
                     + Utils.PARTICIPANT_SEPARATOR + mUserName);
         }
-        mPlanning.get(position).setNotRegistered(false);
 
-        StringBuilder builder = new StringBuilder();
-        String prefix = "";
-        for (int i = 0 ; i < mPlanning.size() ; i++){
-            String prefix_under = "";
-            builder.append(prefix).append(mPlanning.get(i).getSchedule()).append(":");
-            for (int j = 0 ; j < mPlanning.get(i).getParticipantList().size() ; j++){
-                builder.append(prefix_under).append(mPlanning.get(i).getParticipantList().get(j));
-                prefix_under = Utils.PARTICIPANT_SEPARATOR;
-            }
-            prefix = ",";
+        if (!adminAct) {
+            mPlanning.get(position).setNotRegistered(false);
         }
 
-        mEvent.setNeeds(builder.toString());
+        mEvent.setNeeds(EventBusiness.getEventNeedsString(mPlanning));
 
-        EventHelper.updateEventNeeds(mEvent.getUid(), builder.toString()).addOnSuccessListener(aVoid -> {
+        EventHelper.updateEventNeeds(mEvent.getUid(), mEvent.getNeeds()).addOnSuccessListener(aVoid -> {
             mAdapter.notifyDataSetChanged();
             mCallback.callbackNeeds(mEvent);
         });
-
     }
 
     @Override
     public void deleteParticipation(int position) {
-        mPlanning.get(position).getParticipantList().remove(mPlanning.get(position).getParticipantList().size()-1);
-        mPlanning.get(position).setNotRegistered(true);
-
-        StringBuilder builder = new StringBuilder();
-        String prefix = "";
-        for (int i = 0 ; i < mPlanning.size() ; i++){
-            String prefix_under = "";
-            builder.append(prefix).append(mPlanning.get(i).getSchedule()).append(":");
-            for (int j = 0 ; j < mPlanning.get(i).getParticipantList().size() ; j++){
-                builder.append(prefix_under).append(mPlanning.get(i).getParticipantList().get(j));
-                prefix_under = Utils.PARTICIPANT_SEPARATOR;
-            }
-            prefix = ",";
+        if (mMailDev.equals(Utils.DEV)) {
+            mAdminPosition = position;
+            mAdminAddAction = false;
+            AdminDialog adminDialog = new AdminDialog();
+            adminDialog.setTargetFragment(this, 0);
+            adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
+            mPlanning.get(position).setNotRegistered(false);
+            mAdapter.notifyDataSetChanged();
+        }else{
+            deleteProcess(position, false, null);
         }
 
-        mEvent.setNeeds(builder.toString());
+    }
 
-        EventHelper.updateEventNeeds(mEvent.getUid(), builder.toString()).addOnSuccessListener(aVoid -> {
+    private void deleteProcess(int position, boolean adminAct, @Nullable String adminName){
+        boolean targetFind = false;
+        String targetName = mUserName;
+        if (adminAct) {
+            targetName = adminName;
+        }
+        for (int i = 0; i < mPlanning.get(position).getParticipantList().size(); i++){
+            if (mPlanning.get(position).getParticipantList().get(i).equals(targetName)){
+                mPlanning.get(position).getParticipantList().remove(i);
+                targetFind = true;
+            }
+            if (targetFind){
+                i = mPlanning.get(position).getParticipantList().size();
+            }
+        }
+        if (!adminAct) {
+            mPlanning.get(position).setNotRegistered(true);
+        }
+
+        mEvent.setNeeds(EventBusiness.getEventNeedsString(mPlanning));
+
+        EventHelper.updateEventNeeds(mEvent.getUid(), mEvent.getNeeds()).addOnSuccessListener(aVoid -> {
             mAdapter.notifyDataSetChanged();
             mCallback.callbackNeeds(mEvent);
         });
+    }
+
+    @Override
+    public void getAdminChoiceUsername(String name) {
+        if (mAdminAddAction){
+            if (!name.equals("ADMIN") && !name.equals(Utils.EMPTY) && !name.equals(mUserName)) {
+                addProcess(mAdminPosition, true, name);
+            } else if (name.equals("ADMIN") || name.equals(mUserName)) {
+                addProcess(mAdminPosition, false, null);
+            }
+        }else {
+            if (!name.equals("ADMIN") && !name.equals(Utils.EMPTY) && !name.equals(mUserName)) {
+                deleteProcess(mAdminPosition, true, name);
+            } else if (name.equals("ADMIN") || name.equals(mUserName)) {
+                deleteProcess(mAdminPosition, false, null);
+            }
+        }
     }
 
     /**

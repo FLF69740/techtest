@@ -1,6 +1,7 @@
 package com.epfd.csandroid.event;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class EventFileActivity extends BaseActivity implements EventFileStageAdapter.ListenerEventFileStage, ScheduleEventModalFragment.modalFragmentListener,
-NeedsEventModalFragment.needsFragmentListener{
+NeedsEventModalFragment.needsFragmentListener {
 
     @BindView(R.id.event_file_photo) ImageView mPhoto;
     @BindView(R.id.event_file_logo) ImageView mLogo;
@@ -93,7 +94,7 @@ NeedsEventModalFragment.needsFragmentListener{
     }
 
     @OnClick(R.id.event_file_needs_btn) void getNeedsLisiting(){
-        NeedsEventModalFragment.newInstance(mEvent, getCurrentUser().getDisplayName()).show(getSupportFragmentManager(), "MODAL_NEED");
+        NeedsEventModalFragment.newInstance(mEvent, getCurrentUser().getDisplayName(), getCurrentUser().getEmail()).show(getSupportFragmentManager(), "MODAL_NEED");
     }
 
 
@@ -118,6 +119,10 @@ NeedsEventModalFragment.needsFragmentListener{
              this.setUserTimeTable(stage);
         }
     }
+
+    /**
+     *  AMONT CALLBACK
+     */
 
     @Override
     public void callbackNeeds(Event event) {

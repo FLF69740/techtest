@@ -165,4 +165,20 @@ public class EventBusiness {
         return builder.toString();
     }
 
+    //COMPILE LIST TO STRING FOR NEEDS INTO EVENT
+    public static String getEventNeedsString(ArrayList<SingleScheduleBottomSheet> planning){
+        StringBuilder builder = new StringBuilder();
+        String prefix = "";
+        for (int i = 0; i < planning.size(); i++) {
+            String prefix_under = "";
+            builder.append(prefix).append(planning.get(i).getSchedule()).append(":");
+            for (int j = 0; j < planning.get(i).getParticipantList().size(); j++) {
+                builder.append(prefix_under).append(planning.get(i).getParticipantList().get(j));
+                prefix_under = Utils.PARTICIPANT_SEPARATOR;
+            }
+            prefix = ",";
+        }
+        return builder.toString();
+    }
+
 }
