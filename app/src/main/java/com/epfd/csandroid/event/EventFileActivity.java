@@ -1,9 +1,12 @@
 package com.epfd.csandroid.event;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +21,11 @@ import com.epfd.csandroid.models.ModalUserTimeTable;
 import com.epfd.csandroid.models.Stage;
 import com.epfd.csandroid.models.StageRegistration;
 import com.epfd.csandroid.utils.BitmapStorage;
+import com.epfd.csandroid.utils.StorageUtils;
+import com.epfd.csandroid.utils.Utils;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -38,6 +45,7 @@ NeedsEventModalFragment.needsFragmentListener {
 
     private EventFileStageAdapter mAdapter;
     private Event mEvent;
+    private List<StageRegistration> mRegistrations;
     private List<Stage> mStageList;
     private ModalUserTimeTable mTimeTable;
 
@@ -65,6 +73,7 @@ NeedsEventModalFragment.needsFragmentListener {
         mDescription.setText(mEvent.getDescription());
 
         mStageList = new ArrayList<>();
+        mRegistrations = new ArrayList<>();
 
         StageCreatorHelper.getStageCollection().get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult() != null){
@@ -86,6 +95,7 @@ NeedsEventModalFragment.needsFragmentListener {
     private void setUserTimeTable(Stage stage){
         StageRegistrationHelper.getStageRegistration(mEvent.getUid()+stage.getUid()).addOnSuccessListener(documentSnapshot -> {
             StageRegistration stageRegistration = documentSnapshot.toObject(StageRegistration.class);
+            mRegistrations.add(stageRegistration);
 
             if (getCurrentUser().getDisplayName() != null && stageRegistration.getParticipant().contains(getCurrentUser().getDisplayName())){
                 EventBusiness.getTimeTableUpdated(mTimeTable, getCurrentUser().getDisplayName(),stageRegistration, stage);
@@ -127,5 +137,36 @@ NeedsEventModalFragment.needsFragmentListener {
     @Override
     public void callbackNeeds(Event event) {
         mEvent = event;
+    }
+
+    /**
+     *  SEND PLANNINGS TO EMAIL
+     */
+
+    @OnClick(R.id.event_file_logo) void sendAllPlannings(){
+        if (getCurrentUser().getEmail().equals(Utils.DEV)){
+
+            StringBuilder builder = new StringBuilder();
+            builder.append(EventBusiness.getFirstStepOfPlanningPaper())
+                    .append(EventBusiness.getSecondStepOfPlanningPaper(mRegistrations, mStageList))
+                    .append(EventBusiness.getThirdStepOfPlanningPaper(mEvent.getNeeds()));
+            StorageUtils.setTextInStorage(getFilesDir(), this, "MYFILE.csv", "MYFOLDER", builder.toString());
+
+            File imagePath = new File(getFilesDir(), "MYFOLDER");
+            File newFile = new File(imagePath, "MYFILE.csv");
+
+            String[] mail = {getCurrentUser().getEmail()};
+            String subject = R.string.event_file_email_subject + mEvent.getName() + ", " + mEvent.getDate();
+            String message = R.string.event_file_email_message + mEvent.getName() + ", " + mEvent.getDate();
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_EMAIL, mail);
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            intent.putExtra(Intent.EXTRA_TEXT, message);
+            intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this,"com.epfd.csandroid", newFile));
+
+            intent.setType("message/rcf822");
+            startActivity(Intent.createChooser(intent, "choose"));
+        }
     }
 }

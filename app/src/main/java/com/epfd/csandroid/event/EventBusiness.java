@@ -1,5 +1,6 @@
 package com.epfd.csandroid.event;
 
+import com.epfd.csandroid.models.Event;
 import com.epfd.csandroid.models.ModalUserTimeTable;
 import com.epfd.csandroid.models.SingleScheduleBottomSheet;
 import com.epfd.csandroid.models.Stage;
@@ -187,6 +188,56 @@ public class EventBusiness {
             }
             prefix = ",";
         }
+        return builder.toString();
+    }
+
+    //GET FIRST STEP OF PLANNING PAPER
+    public static String getFirstStepOfPlanningPaper(){
+        return "Tableau des besoins humains pour la tenue des stands\n\nATELIERS\n";
+    }
+
+    //GET SECOND STEP OF PLANNING PAPER
+    public static String getSecondStepOfPlanningPaper(List<StageRegistration> stageRegistrations, List<Stage> stages){
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0 ;  i < stageRegistrations.size() ; i++){
+            for (int j = 0 ; j < stages.size() ; j++){
+                if (stageRegistrations.get(i).getUid().contains(stages.get(j).getUid())){
+                    builder.append("\nHoraires;PLANNING\n");
+                    List<String> horaires = Arrays.asList(stages.get(j).getSchedule().split(","));
+                    List<String> participant = Arrays.asList(stageRegistrations.get(i).getParticipant().split(","));
+                    for (int k = 0; k < horaires.size(); k++){
+                        builder.append(horaires.get(k)).append(";* ").append(participant.get(k)).append("\n");
+                    }
+
+
+                }
+            }
+        }
+
+        String result = builder.toString();
+        result = result.replace(Utils.PARTICIPANT_SEPARATOR, "\n;* ");
+        result = result.replace(Utils.EMPTY, "");
+
+        return result;
+    }
+
+    //GET THIRD STEP OF PLANNING PAPER
+    public static String getThirdStepOfPlanningPaper(String eventNeeds){
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("\nTableau des besoins en fournitures\n\n");
+
+
+        List<String> fournituresEtNoms = Arrays.asList(eventNeeds.split(","));
+        for (String need : fournituresEtNoms){
+            builder.append("Fournitures;Volontaires\n");
+            need = need.replace(":", ";");
+            need = need.replace(Utils.EMPTY, " ");
+            need = need.replace(Utils.PARTICIPANT_SEPARATOR, "\n;*");
+            builder.append(need).append("\n\n");
+        }
+
         return builder.toString();
     }
 

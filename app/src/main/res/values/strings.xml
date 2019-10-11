@@ -22,6 +22,8 @@
     <string name="event_file_stage_volunteer">ATELIERS DES BENEVOLES</string>
     <string name="event_file_stage_text_btn">Je participe !</string>
     <string name="event_file_stage_needs">TABLEAU DES BESOINS</string>
+    <string name="event_file_email_subject">Planning</string>
+    <string name="event_file_email_message">Envoie du planning de l\'événement : </string>
 
     <!-- EVENTS CREATOR -->
     <string name="event_creator_event_menu">MENU EVENEMENTS</string>
