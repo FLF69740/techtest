@@ -2,15 +2,15 @@ package com.epfd.csandroid.event;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.epfd.csandroid.R;
 import com.epfd.csandroid.api.StageCreatorHelper;
 import com.epfd.csandroid.api.StageRegistrationHelper;
@@ -24,7 +24,6 @@ import com.epfd.csandroid.utils.BitmapStorage;
 import com.epfd.csandroid.utils.StorageUtils;
 import com.epfd.csandroid.utils.Utils;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +41,9 @@ NeedsEventModalFragment.needsFragmentListener {
     @BindView(R.id.event_file_description) TextView mDescription;
     @BindView(R.id.event_file_needs_btn) ImageView mNeedsListing;
     @BindView(R.id.event_file_stage_recycler) RecyclerView mRecyclerView;
+    @BindView(R.id.scrollView_event_file) ScrollView mScrollView;
+    @BindView(R.id.event_file_logo_wait_process) ImageView mLogoWait;
+    @BindView(R.id.event_file_progressBar) ProgressBar mProgressBar;
 
     private EventFileStageAdapter mAdapter;
     private Event mEvent;
@@ -88,6 +90,10 @@ NeedsEventModalFragment.needsFragmentListener {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 mRecyclerView.setAdapter(mAdapter);
             }
+        }).addOnSuccessListener(queryDocumentSnapshots -> {
+            mScrollView.setVisibility(View.VISIBLE);
+            mLogoWait.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
         });
     }
 
