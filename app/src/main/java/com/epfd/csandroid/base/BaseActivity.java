@@ -29,6 +29,7 @@ import com.epfd.csandroid.api.UserHelper;
 import com.epfd.csandroid.event.EventMainActivity;
 import com.epfd.csandroid.eventcreator.EventCreatorMenuActivity;
 import com.epfd.csandroid.eventcreator.EventPanelActivity;
+import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.administrator.newsedition.NewsCreatorActivity;
 import com.epfd.csandroid.formulary.PrivacyPolicyActivity;
@@ -144,17 +145,25 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+            case R.id.general_drawer_first_page:
+                startActivity(new Intent(this, FirstPageActivity.class));
+                finish();
+                break;
             case R.id.cake_friday_edition :
                 startActivity(new Intent(this, CakeFridayActivity.class));
+                finish();
                 break;
             case R.id.classromms_edition :
                 startActivity(new Intent(this, ClassroomsEditionActivity.class));
+                finish();
                 break;
             case R.id.general_drawer_formulary :
                 startActivity(new Intent(this, FormularyActivity.class));
+                finish();
                 break;
             case R.id.general_drawer_event :
                 startActivity(new Intent(this, EventMainActivity.class));
+                finish();
                 break;
             case R.id.general_drawer_deconnexion :
                 signOutUserFromFirebase();
@@ -162,18 +171,23 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 break;
             case R.id.general_drawer_delete :
                 this.onClickDeleteButton();
+                finish();
                 break;
             case R.id.general_drawer_policy:
                 startActivity(new Intent(this, PrivacyPolicyActivity.class));
+                finish();
                 break;
             case R.id.news_creator_edition:
                 startActivity(new Intent(this, NewsCreatorActivity.class));
+                finish();
                 break;
             case R.id.event_creator_edition:
                 startActivity(new Intent(this, EventCreatorMenuActivity.class));
+                finish();
                 break;
             case R.id.stage_creator_edition:
                 startActivity(new Intent(this, StageCreatorActivity.class));
+                finish();
                 break;
         }
 

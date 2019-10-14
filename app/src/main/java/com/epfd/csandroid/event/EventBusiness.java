@@ -77,7 +77,7 @@ public class EventBusiness {
     }
 
     //COMPARE SCHEDULES BETWEEN TIMETABLE AND STAGE PLANNING AND UPDATE PLANNING
-    public static void compareTimeTableAndStagePlanning(List<SingleScheduleBottomSheet> planning, ModalUserTimeTable timeTable, boolean adminAct){
+    public static void compareTimeTableAndStagePlanning(List<SingleScheduleBottomSheet> planning, ModalUserTimeTable timeTable){
 
         DateTime modalStart = new DateTime();
         DateTime modalEnd = new DateTime();
@@ -94,22 +94,14 @@ public class EventBusiness {
                     if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())) {
                         planning.get(j).setNotRegistered(false);
                     } else {
-                        if (!adminAct) {
-                            planning.get(j).setActifReservation(false);
-                        } else {
-                            planning.get(j).setNotRegistered(true);
-                        }
+                        planning.get(j).setActifReservation(false);
                     }
                 }else if (modalEnd.getMinuteOfDay() > timeTable.getListReservationStart().get(i).getMinuteOfDay() &&
                         modalEnd.getMinuteOfDay() <= timeTable.getListReservationEnd().get(i).getMinuteOfDay()){
                     if (timeTable.getTablesId().get(i).equals(planning.get(j).getRegistrationId())) {
                         planning.get(j).setNotRegistered(false);
                     } else {
-                        if (!adminAct) {
-                            planning.get(j).setActifReservation(false);
-                        } else {
-                            planning.get(j).setNotRegistered(true);
-                        }
+                        planning.get(j).setActifReservation(false);
                     }
                 }
             }
@@ -128,10 +120,14 @@ public class EventBusiness {
         }
         StringBuilder result = new StringBuilder();
         String prefix = "";
-        for (String participantName : participantList){
-            result.append(prefix);
-            prefix = Utils.PARTICIPANT_SEPARATOR;
-            result.append(participantName);
+        if (participantList.size() != 1) {
+            for (String participantName : participantList) {
+                result.append(prefix);
+                prefix = Utils.PARTICIPANT_SEPARATOR;
+                result.append(participantName);
+            }
+        }else {
+            result.append(participantList.get(0));
         }
 
         planning.get(position).setParticipantList(result.toString());

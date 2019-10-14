@@ -39,7 +39,7 @@ public class NewsCreatorActivity extends BaseActivity {
 
     @Override
     public Boolean isAChildActivity() {
-        return true;
+        return false;
     }
 
     @Override

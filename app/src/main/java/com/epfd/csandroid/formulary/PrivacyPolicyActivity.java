@@ -21,6 +21,6 @@ public class PrivacyPolicyActivity extends BaseActivity {
 
     @Override
     public Boolean isAChildActivity() {
-        return true;
+        return false;
     }
 }

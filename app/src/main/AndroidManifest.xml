@@ -29,20 +29,10 @@
         </activity>
         <activity
             android:name=".administrator.stageedition.StageCreatorActivity"
-            android:label="@string/stage_creator_stage_menu"
-            android:parentActivityName=".firstpage.FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".firstpage.FirstPageActivity" />
-        </activity>
+            android:label="@string/stage_creator_stage_menu"/>
         <activity
             android:name=".eventcreator.EventCreatorMenuActivity"
-            android:label="@string/event_creator_event_menu"
-            android:parentActivityName=".firstpage.FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".firstpage.FirstPageActivity" />
-        </activity>
+            android:label="@string/event_creator_event_menu"/>
         <activity
             android:name=".eventcreator.EventPanelActivity"
             android:label="@string/event_creator_event"
@@ -54,12 +44,7 @@
         </activity>
         <activity
             android:name=".event.EventMainActivity"
-            android:label="@string/event_event"
-            android:parentActivityName=".firstpage.FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".firstpage.FirstPageActivity" />
-        </activity>
+            android:label="@string/event_event" />
         <activity
             android:name=".administrator.newsedition.FileNewsPhotoBackEndActivity"
             android:label="@string/news_creator_photo_backend"
@@ -78,31 +63,13 @@
         </activity>
         <activity
             android:name=".administrator.newsedition.NewsCreatorActivity"
-            android:label="@string/news_creator_label"
-            android:parentActivityName=".firstpage.FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".firstpage.FirstPageActivity" />
-        </activity>
-        <activity
-            android:name=".notifications.NotificationWindowActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:label="@string/news_creator_label"/>
         <activity
             android:name=".administrator.cakefridayedition.CakeFridayActivity"
-            android:label="@string/cake_edition_label"
-            android:parentActivityName=".firstpage.FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".firstpage.FirstPageActivity" />
-        </activity>
+            android:label="@string/cake_edition_label"/>
         <activity
             android:name=".administrator.classroomsedition.ClassroomsEditionActivity"
-            android:label="@string/classrooms_edition_label"
-            android:parentActivityName=".firstpage.FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".firstpage.FirstPageActivity" />
-        </activity>
+            android:label="@string/classrooms_edition_label"/>
         <activity
             android:name=".formulary.ContactActivity"
             android:label="@string/connexion_contact_btn"
@@ -122,12 +89,7 @@
         </activity>
         <activity
             android:name=".formulary.PrivacyPolicyActivity"
-            android:label="@string/navigation_drawer_policy"
-            android:parentActivityName=".firstpage.FirstPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".firstpage.FirstPageActivity" />
-        </activity>
+            android:label="@string/navigation_drawer_policy"/>
         <activity android:name=".firstpage.FirstPageActivity" />
         <activity android:name=".formulary.PasswordActivity" />
         <activity android:name=".formulary.FormularyActivity" />

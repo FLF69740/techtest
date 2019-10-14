@@ -134,9 +134,9 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
             targetName = adminName;
         }
         if (mPlanning.get(position).getParticipantList().get(0).contains(Utils.EMPTY)) {
-            mPlanning.get(position).setParticipantList(targetName);
+            mPlanning.get(position).setOtherParticipantList(targetName);
         } else {
-            mPlanning.get(position).setParticipantList(Utils.getStringListWithSeparator(mPlanning.get(position).getParticipantList(), Utils.PARTICIPANT_SEPARATOR)
+            mPlanning.get(position).setOtherParticipantList(Utils.getStringListWithSeparator(mPlanning.get(position).getParticipantList(), Utils.PARTICIPANT_SEPARATOR)
                     + Utils.PARTICIPANT_SEPARATOR + mUserName);
         }
 

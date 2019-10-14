@@ -31,7 +31,7 @@ public class CakeFridayActivity extends BaseActivity implements CakeClassroomFra
 
     @Override
     public Boolean isAChildActivity() {
-        return true;
+        return false;
     }
 
     @Override

@@ -27,13 +27,21 @@ public class SingleScheduleBottomSheet implements Parcelable {
         return mParticipantList;
     }
 
-    public void setParticipantList(String participantDataLine) {
+    public void setOtherParticipantList(String participantDataLine) {
         if (!participantDataLine.contains(Utils.PARTICIPANT_SEPARATOR)) {
             mParticipantList.add(participantDataLine);
         } else {
             mParticipantList = new ArrayList<>(Arrays.asList(participantDataLine.split(Utils.PARTICIPANT_SEPARATOR)));
         }
+    }
 
+    public void setParticipantList(String participantDataLine) {
+        if (!participantDataLine.contains(Utils.PARTICIPANT_SEPARATOR)) {
+            mParticipantList = new ArrayList<>();
+            mParticipantList.add(participantDataLine);
+        } else {
+            mParticipantList = new ArrayList<>(Arrays.asList(participantDataLine.split(Utils.PARTICIPANT_SEPARATOR)));
+        }
     }
 
     public void setListToList(List<String> participantList) {

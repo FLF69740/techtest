@@ -7,10 +7,14 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.AnimatedVectorDrawable;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,15 +25,15 @@ import android.widget.Toast;
 
 import com.epfd.csandroid.api.PhotoCodeHelper;
 import com.epfd.csandroid.api.UserHelper;
+import com.epfd.csandroid.api.VersionCodeHelper;
 import com.epfd.csandroid.firstpage.FirstPageActivity;
 import com.epfd.csandroid.api.PasswordHelper;
 import com.epfd.csandroid.base.BaseActivity;
-import com.epfd.csandroid.firstpage.recyclerview.FirstPageAdapter;
 import com.epfd.csandroid.formulary.ContactActivity;
 import com.epfd.csandroid.formulary.FormularyActivity;
 import com.epfd.csandroid.formulary.PasswordActivity;
 import com.epfd.csandroid.models.User;
-import com.epfd.csandroid.notifications.NotificationWindowActivity;
+import com.epfd.csandroid.models.VersionCode;
 import com.epfd.csandroid.presentation.PresentationActivity;
 import com.epfd.csandroid.utils.BitmapStorage;
 import com.epfd.csandroid.utils.FireBaseStorageUtils;
@@ -37,7 +41,9 @@ import com.epfd.csandroid.utils.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -71,7 +77,6 @@ public class MainActivity extends BaseActivity {
     private String mInternalCodeRegistration;
 
     public static final String MAIN_EXTRA_CLASSROOMLIST = "MAIN_EXTRA_CLASSROOMLIST";
-
     private static final String DIMENSION = "DIMENSION";
     private static final String BOTTOM_DIMENSION = "BOTTOM_DIMENSION";
     private static final String LEFT_DIMENSION = "LEFT_DIMENSION";
@@ -82,22 +87,24 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
-        if (getIntent().getExtras() != null && getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_BODY) != null && getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_TITLE) != null) {
-            if (!getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_BODY).equals("") && !getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_TITLE).equals("")) {
-                Intent intent = new Intent(this, NotificationWindowActivity.class);
-                intent.putExtra(Utils.CONSOLE_NOTIF_BODY, getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_BODY));
-                intent.putExtra(Utils.CONSOLE_NOTIF_TITLE, getIntent().getExtras().getString(Utils.CONSOLE_NOTIF_TITLE));
-                startActivity(intent);
-                finish();
+        int i = 0;
+        VersionCodeHelper.getVersionCode().addOnSuccessListener(documentSnapshot -> {
+            VersionCode versionCode = documentSnapshot.toObject(VersionCode.class);
+            if (!BuildConfig.VERSION_NAME.equals(versionCode.getVersionNumber()) && versionCode.isVersionPublished()){
+                Toast.makeText(getApplicationContext(), "PAS LA BONNE VERSION", Toast.LENGTH_SHORT).show();
+            }else {
+                mProgressBar.setVisibility(View.INVISIBLE);
+                mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
+                ImageView imageView = findViewById(R.id.logo_animation);
+                imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
+                AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) imageView.getBackground();
+                animationDrawable.start();
+                playAnimation();
             }
-        }
-        mProgressBar.setVisibility(View.INVISIBLE);
-        mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
-        ImageView imageView = findViewById(R.id.logo_animation);
-        imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
-        AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) imageView.getBackground();
-        animationDrawable.start();
-        this.playAnimation();
+        });
+
+
+
     }
 
     @Override
@@ -288,11 +295,6 @@ public class MainActivity extends BaseActivity {
 
                 }
             });
-
-
-
-
-
         }
     }
 

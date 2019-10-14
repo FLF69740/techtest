@@ -86,7 +86,7 @@ public class ClassroomsEditionActivity extends BaseActivity {
 
     @Override
     public Boolean isAChildActivity() {
-        return true;
+        return false;
     }
 
     //creation classrooms logo animation and action

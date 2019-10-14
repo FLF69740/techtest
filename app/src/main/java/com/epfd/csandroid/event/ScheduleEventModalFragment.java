@@ -41,7 +41,6 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
     private String mMailDev;
     private int mAdminPosition; // after dialog fragment callback define planning position
     private boolean mAdminAddAction; // after dialog fragment callback define if it'a add process or delete process
-    private static boolean sSchedulAdmin = true;
 
     private static final String KEY_SCHEDULE_ID = "KEY_SCHEDULE_ID";
     private static final String KEY_EVENT_ID = "KEY_EVENT_ID";
@@ -97,16 +96,10 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
                 updatePeopleIntoPlanning(mPlanning, mRegistration);
             }
 
-            if (!mMailDev.equals(Utils.DEV)) {
-                EventBusiness.compareTimeTableAndStagePlanning(mPlanning, mTimeTable, false);
-            }else {
-                EventBusiness.compareTimeTableAndStagePlanning(mPlanning, mTimeTable, true);
-            }
-
+            EventBusiness.compareTimeTableAndStagePlanning(mPlanning, mTimeTable);
         }
 
         mAdapter = new BottomSheetSchedulesAdapter(mPlanning, this);
-        mAdapter.setSchedulesAdmin(sSchedulAdmin);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

@@ -6,6 +6,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/general_drawer_first_page"
+            android:icon="@drawable/ic_news_navigation_drawer_pink_24dp"
+            android:title="@string/navigation_drawer_first_page"/>
+        <item
             android:id="@+id/general_drawer_formulary"
             android:icon="@drawable/ic_folder_shared_black_24dp"
             android:title="@string/formulary_formulary"/>

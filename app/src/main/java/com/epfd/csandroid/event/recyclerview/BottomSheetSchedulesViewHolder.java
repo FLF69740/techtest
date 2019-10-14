@@ -35,7 +35,7 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, mItemView);
     }
 
-    void setSchedulesTable(SingleScheduleBottomSheet scheduleDatas, BottomSheetSchedulesAdapter.ListenerBottomSheet callback, int position, boolean schedulAdmin){
+    void setSchedulesTable(SingleScheduleBottomSheet scheduleDatas, BottomSheetSchedulesAdapter.ListenerBottomSheet callback, int position){
         this.mPosition = position;
         this.mWeakReference = new WeakReference<>(callback);
         mSchedule.setText(scheduleDatas.getSchedule());
@@ -49,19 +49,12 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
         }
         mPeople.setText(Html.fromHtml(peopleListString.toString()));
 
-        if (!schedulAdmin) {
-            if ((!scheduleDatas.isActifReservation() || !peopleListString.toString().contains(Utils.EMPTY)) && scheduleDatas.isNotRegistered()) {
-                mModalAddBtn.setVisibility(View.GONE);
-                mModalDeleteBtn.setVisibility(View.GONE);
-            } else if (!scheduleDatas.isNotRegistered()) {
-                mModalAddBtn.setVisibility(View.GONE);
-                mModalDeleteBtn.setVisibility(View.VISIBLE);
-            }
-        }else {
-            if (!peopleListString.toString().contains(Utils.EMPTY) || !scheduleDatas.isNotRegistered()){
-                mModalAddBtn.setVisibility(View.GONE);
-                mModalDeleteBtn.setVisibility(View.VISIBLE);
-            }
+        if ((!scheduleDatas.isActifReservation() || !peopleListString.toString().contains(Utils.EMPTY)) && scheduleDatas.isNotRegistered()) {
+            mModalAddBtn.setVisibility(View.GONE);
+            mModalDeleteBtn.setVisibility(View.GONE);
+        } else if (!scheduleDatas.isNotRegistered()) {
+            mModalAddBtn.setVisibility(View.GONE);
+            mModalDeleteBtn.setVisibility(View.VISIBLE);
         }
     }
 

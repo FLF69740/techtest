@@ -7,6 +7,7 @@
     <!-- Used in NavigationDrawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_first_page">News</string>
     <string name="navigation_drawer_administrator">ADMINISTRATEUR</string>
     <string name="navigation_drawer_classrooms">Création classes</string>
     <string name="navigation_drawer_policy">Privacy Policy</string>
