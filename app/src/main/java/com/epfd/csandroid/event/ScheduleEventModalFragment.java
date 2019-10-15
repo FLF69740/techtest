@@ -99,7 +99,13 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
             EventBusiness.compareTimeTableAndStagePlanning(mPlanning, mTimeTable);
         }
 
-        mAdapter = new BottomSheetSchedulesAdapter(mPlanning, this);
+        boolean adminAct = false;
+
+        if (mMailDev.equals(Utils.DEV)){
+            adminAct = true;
+        }
+
+        mAdapter = new BottomSheetSchedulesAdapter(mPlanning, this, adminAct);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -131,31 +137,11 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
 
         EventBusiness.addParticipantIntoPlanning(mPlanning, targetName, position);
 
-        if (adminAct) {
-            mPlanning.get(position).setNotRegistered(true);
-        }
-
         StageRegistrationHelper.updateStageRegistrationParticipant(mRegistration, EventBusiness.listPlanningToString(mPlanning))
                 .addOnSuccessListener(aVoid -> {
                     mAdapter.notifyDataSetChanged();
                     mCallback.callbackModal(mTimeTable);
                 });
-    }
-
-    @Override
-    public void activeParticipation(int position) {
-        if (mMailDev.equals(Utils.DEV)){
-            mAdminPosition = position;
-            mAdminAddAction = true;
-            AdminDialog adminDialog = new AdminDialog();
-            adminDialog.setTargetFragment(this, 1);
-            adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
-            mPlanning.get(position).setNotRegistered(true);
-            mAdapter.notifyDataSetChanged();
-        }else {
-            addProcess(position,false,null);
-        }
-
     }
 
     private void deleteProcess(int position, boolean adminAct, @Nullable String adminName) {
@@ -166,10 +152,6 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
 
         EventBusiness.deleteParticipantIntoPlanning(mPlanning, targetName, position);
 
-        if (adminAct) {
-            mPlanning.get(position).setNotRegistered(false);
-        }
-
         StageRegistrationHelper.updateStageRegistrationParticipant(mRegistration, EventBusiness.listPlanningToString(mPlanning))
                 .addOnSuccessListener(aVoid -> {
                     mAdapter.notifyDataSetChanged();
@@ -178,37 +160,33 @@ public class ScheduleEventModalFragment extends BottomSheetDialogFragment implem
     }
 
     @Override
+    public void activeParticipation(int position) {
+        addProcess(position,false,null);
+    }
+
+    @Override
     public void deleteParticipation(int position) {
-        if (mMailDev.equals(Utils.DEV)){
-            mAdminPosition = position;
-            mAdminAddAction = false;
-            AdminDialog adminDialog = new AdminDialog();
-            adminDialog.setTargetFragment(this, 1);
-            adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
-            mPlanning.get(position).setNotRegistered(false);
-            mAdapter.notifyDataSetChanged();
-        }else {
-            deleteProcess(position, false, null);
-        }
+        deleteProcess(position, false, null);
     }
 
     @Override
     public void getAdminChoiceUsername(String name) {
-        if (mAdminAddAction){
-            if (!name.equals("ADMIN") && !name.equals(Utils.EMPTY) && !name.equals(mUserName)) {
-                addProcess(mAdminPosition, true, name);
-            } else if (name.equals("ADMIN") || name.equals(mUserName)) {
-                addProcess(mAdminPosition, false, null);
-            }
-        }else {
-            if (!name.equals("ADMIN") && !name.equals(Utils.EMPTY) && !name.equals(mUserName)) {
-                deleteProcess(mAdminPosition, true, name);
-            } else if (name.equals("ADMIN") || name.equals(mUserName)) {
-                deleteProcess(mAdminPosition, false, null);
-            }
-        }
+        if (!name.equals(Utils.EMPTY) && !name.equals(mUserName)) addProcess(mAdminPosition, true, name);
     }
 
+    @Override
+    public void deleteAdminChoiceUsername(String name) {
+        if (!name.equals(Utils.EMPTY) && !name.equals(mUserName)) deleteProcess(mAdminPosition, true, name);
+    }
+
+    @Override
+    public void adminParticipation(int position) {
+        mAdminPosition = position;
+        mAdminAddAction = false;
+        AdminDialog adminDialog = new AdminDialog();
+        adminDialog.setTargetFragment(this, 1);
+        adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
+    }
 
     /**
      *  CALLBACK

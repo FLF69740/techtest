@@ -23,10 +23,7 @@ import com.epfd.csandroid.R;
 
 public class AdminDialog extends AppCompatDialogFragment {
 
-    private RadioButton mRadioButtonAdmin;
-    private RadioButton mRadioButtonCustom;
-    private EditText mEditTextCustomName;
-    private String mAnswer = "ADMIN";
+    private String mAnswer = Utils.EMPTY;
     private ListenerAdminDialog mCallback;
 
     @NonNull
@@ -36,41 +33,15 @@ public class AdminDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.admin_event_dialog, null);
 
-        mRadioButtonAdmin = view.findViewById(R.id.radio_admin_dialog_choice_admin);
-        mRadioButtonCustom = view.findViewById(R.id.radio_admin_dialog_choice_random);
-        mEditTextCustomName = view.findViewById(R.id.editText_admin_dialog_random);
+        EditText editTextCustomName = view.findViewById(R.id.editText_admin_dialog_random);
 
         builder.setView(view)
                 .setTitle("CHOIX ADMINISTRATEUR")
-                .setNegativeButton(R.string.RETOUR, (dialog, which) -> {})
+                .setNeutralButton(R.string.RETOUR, (dialog, which) -> {})
+                .setNegativeButton(R.string.SUPPRIMER, (dialog, which) -> mCallback.deleteAdminChoiceUsername(mAnswer))
                 .setPositiveButton(R.string.AJOUTER, (dialog, which) -> mCallback.getAdminChoiceUsername(mAnswer));
-        
-        this.createRadioGroup();
 
-
-        return builder.create();
-    }
-
-    private void createRadioGroup() {
-        mRadioButtonAdmin.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                mAnswer = "ADMIN";
-                mEditTextCustomName.setText("");
-                mRadioButtonAdmin.setChecked(true);
-                mRadioButtonCustom.setChecked(false);
-            }
-        });
-
-        mRadioButtonCustom.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                mAnswer = Utils.EMPTY;
-                mEditTextCustomName.setText("");
-                mRadioButtonCustom.setChecked(true);
-                mRadioButtonAdmin.setChecked(false);
-            }
-        });
-
-        mEditTextCustomName.addTextChangedListener(new TextWatcher() {
+        editTextCustomName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
@@ -84,11 +55,15 @@ public class AdminDialog extends AppCompatDialogFragment {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+
+        return builder.create();
     }
 
     // interface for button clicked
     public interface ListenerAdminDialog{
         void getAdminChoiceUsername(String name);
+        void deleteAdminChoiceUsername(String name);
     }
 
     //callback for button clicked

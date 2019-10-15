@@ -4,6 +4,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +36,7 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, mItemView);
     }
 
-    void setSchedulesTable(SingleScheduleBottomSheet scheduleDatas, BottomSheetSchedulesAdapter.ListenerBottomSheet callback, int position){
+    void setSchedulesTable(SingleScheduleBottomSheet scheduleDatas, BottomSheetSchedulesAdapter.ListenerBottomSheet callback, int position, boolean adminAct){
         this.mPosition = position;
         this.mWeakReference = new WeakReference<>(callback);
         mSchedule.setText(scheduleDatas.getSchedule());
@@ -48,6 +49,10 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
             }
         }
         mPeople.setText(Html.fromHtml(peopleListString.toString()));
+
+        if (!adminAct){
+            mPeople.setClickable(false);
+        }
 
         if ((!scheduleDatas.isActifReservation() || !peopleListString.toString().contains(Utils.EMPTY)) && scheduleDatas.isNotRegistered()) {
             mModalAddBtn.setVisibility(View.GONE);
@@ -68,6 +73,10 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
         mModalAddBtn.setVisibility(View.VISIBLE);
         mModalDeleteBtn.setVisibility(View.GONE);
         if (mWeakReference.get() != null) mWeakReference.get().deleteParticipation(mPosition);
+    }
+
+    @OnClick(R.id.modal_schedule_recycler_item_people) void sendAdminAct(){
+        if (mWeakReference.get() != null) mWeakReference.get().adminParticipation(mPosition);
     }
 
 

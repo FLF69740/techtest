@@ -42,7 +42,6 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
     private BottomSheetSchedulesAdapter mAdapter;
     private String mUserName;
     private Event mEvent;
-    private String mMailDev;
     private ArrayList<SingleScheduleBottomSheet> mPlanning;
     private int mAdminPosition; // after dialog fragment callback define planning position
     private boolean mAdminAddAction; // after dialog fragment callback define if it'a add process or delete process
@@ -79,7 +78,7 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
 
         mEvent = getArguments().getParcelable(KEY_EVENT_ID);
         mUserName = getArguments().getString(KEY_USERNAME);
-        mMailDev = getArguments().getString(KEY_MAIL);
+        String mailDev = getArguments().getString(KEY_MAIL);
 
         mTitle.setText(getContext().getString(R.string.event_file_stage_needs));
 
@@ -99,7 +98,13 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
             }
         }
 
-        mAdapter = new BottomSheetSchedulesAdapter(mPlanning, this);
+        boolean adminAct = false;
+
+        if (mailDev.equals(Utils.DEV)){
+            adminAct = true;
+        }
+
+        mAdapter = new BottomSheetSchedulesAdapter(mPlanning, this, adminAct);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -111,21 +116,6 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
         outState.putParcelableArrayList(SAVE_INSTANCE_STATE_PLANNING, mPlanning);
         outState.putInt(SAVE_INSTANCE_STATE_ADMIN_POS, mAdminPosition);
         outState.putBoolean(SAVE_INSTANCE_STATE_ADMIN_ACTION, mAdminAddAction);
-    }
-
-    @Override
-    public void activeParticipation(int position) {
-        if (mMailDev.equals(Utils.DEV)) {
-            mAdminPosition = position;
-            mAdminAddAction = true;
-            AdminDialog adminDialog = new AdminDialog();
-            adminDialog.setTargetFragment(this, 0);
-            adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
-            mPlanning.get(position).setNotRegistered(true);
-            mAdapter.notifyDataSetChanged();
-        }else{
-            addProcess(position, false, null);
-        }
     }
 
     private void addProcess(int position, boolean adminAct, @Nullable String adminName){
@@ -140,8 +130,11 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
                     + Utils.PARTICIPANT_SEPARATOR + mUserName);
         }
 
-        if (!adminAct) {
-            mPlanning.get(position).setNotRegistered(false);
+        mPlanning.get(position).setNotRegistered(true);
+        for (String participant : mPlanning.get(position).getParticipantList()) {
+            if (participant.equals(mUserName)) {
+                mPlanning.get(position).setNotRegistered(false);
+            }
         }
 
         mEvent.setNeeds(EventBusiness.getEventNeedsString(mPlanning));
@@ -150,22 +143,6 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
             mAdapter.notifyDataSetChanged();
             mCallback.callbackNeeds(mEvent);
         });
-    }
-
-    @Override
-    public void deleteParticipation(int position) {
-        if (mMailDev.equals(Utils.DEV)) {
-            mAdminPosition = position;
-            mAdminAddAction = false;
-            AdminDialog adminDialog = new AdminDialog();
-            adminDialog.setTargetFragment(this, 0);
-            adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
-            mPlanning.get(position).setNotRegistered(false);
-            mAdapter.notifyDataSetChanged();
-        }else{
-            deleteProcess(position, false, null);
-        }
-
     }
 
     private void deleteProcess(int position, boolean adminAct, @Nullable String adminName){
@@ -183,8 +160,12 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
                 i = mPlanning.get(position).getParticipantList().size();
             }
         }
-        if (!adminAct) {
-            mPlanning.get(position).setNotRegistered(true);
+
+        mPlanning.get(position).setNotRegistered(true);
+        for (String participant : mPlanning.get(position).getParticipantList()) {
+            if (participant.equals(mUserName)) {
+                mPlanning.get(position).setNotRegistered(false);
+            }
         }
 
         mEvent.setNeeds(EventBusiness.getEventNeedsString(mPlanning));
@@ -196,20 +177,32 @@ public class NeedsEventModalFragment extends BottomSheetDialogFragment implement
     }
 
     @Override
+    public void activeParticipation(int position) {
+        addProcess(position, false, null);
+    }
+
+    @Override
+    public void deleteParticipation(int position) {
+        deleteProcess(position, false, null);
+    }
+
+    @Override
     public void getAdminChoiceUsername(String name) {
-        if (mAdminAddAction){
-            if (!name.equals("ADMIN") && !name.equals(Utils.EMPTY) && !name.equals(mUserName)) {
-                addProcess(mAdminPosition, true, name);
-            } else if (name.equals("ADMIN") || name.equals(mUserName)) {
-                addProcess(mAdminPosition, false, null);
-            }
-        }else {
-            if (!name.equals("ADMIN") && !name.equals(Utils.EMPTY) && !name.equals(mUserName)) {
-                deleteProcess(mAdminPosition, true, name);
-            } else if (name.equals("ADMIN") || name.equals(mUserName)) {
-                deleteProcess(mAdminPosition, false, null);
-            }
-        }
+        if (!name.equals(Utils.EMPTY) && !name.equals(mUserName)) addProcess(mAdminPosition, true, name);
+    }
+
+    @Override
+    public void deleteAdminChoiceUsername(String name) {
+        if (!name.equals(Utils.EMPTY) && !name.equals(mUserName)) deleteProcess(mAdminPosition, true, name);
+    }
+
+    @Override
+    public void adminParticipation(int position) {
+        mAdminPosition = position;
+        mAdminAddAction = false;
+        AdminDialog adminDialog = new AdminDialog();
+        adminDialog.setTargetFragment(this, 0);
+        adminDialog.show(getFragmentManager(), Utils.ADMIN_DIALOG_ASK);
     }
 
     /**
