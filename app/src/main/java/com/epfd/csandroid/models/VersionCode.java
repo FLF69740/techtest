@@ -2,24 +2,20 @@ package com.epfd.csandroid.models;
 
 public class VersionCode {
 
-   private String mVersionNumber;
-   private boolean mVersionPublished;
+   private String mVersion;
 
     public VersionCode() {}
 
+    public VersionCode(String version) {
+        mVersion = version;
+    }
+
     public String getVersionNumber() {
-        return mVersionNumber;
+        return mVersion;
     }
 
-    public void setVersionNumber(String versionNumber) {
-        mVersionNumber = versionNumber;
+    public void setVersionNumber(String version) {
+        mVersion = version;
     }
 
-    public boolean isVersionPublished() {
-        return mVersionPublished;
-    }
-
-    public void setVersionPublished(boolean versionPublished) {
-        mVersionPublished = versionPublished;
-    }
 }

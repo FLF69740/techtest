@@ -87,24 +87,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void start(@Nullable Bundle savedInstanceState) {
-        int i = 0;
-        VersionCodeHelper.getVersionCode().addOnSuccessListener(documentSnapshot -> {
-            VersionCode versionCode = documentSnapshot.toObject(VersionCode.class);
-            if (!BuildConfig.VERSION_NAME.equals(versionCode.getVersionNumber()) && versionCode.isVersionPublished()){
-                Toast.makeText(getApplicationContext(), "PAS LA BONNE VERSION", Toast.LENGTH_SHORT).show();
-            }else {
-                mProgressBar.setVisibility(View.INVISIBLE);
-                mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
-                ImageView imageView = findViewById(R.id.logo_animation);
-                imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
-                AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) imageView.getBackground();
-                animationDrawable.start();
-                playAnimation();
-            }
-        });
-
-
-
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mInternalCodeRegistration = getSharedPreferences(Utils.SHARED_INTERNAL_CODE, MODE_PRIVATE).getString(Utils.BUNDLE_KEY_ACTIVE_USER, Utils.EMPTY_PREFERENCES_LOG_CODE);
+        ImageView imageView = findViewById(R.id.logo_animation);
+        imageView.setBackgroundResource(R.drawable.avd_anim_epfd);
+        AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) imageView.getBackground();
+        animationDrawable.start();
+        playAnimation();
     }
 
     @Override
@@ -199,7 +188,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.main_connexion_btn) public void onClickLogin(){
         if (this.isCurrentUserLogged()){
-            codeVerification();
+            versionVerification();
         }else {
             this.startSignIn();
         }
@@ -232,10 +221,8 @@ public class MainActivity extends BaseActivity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) { // SUCCESS
                 this.mProgressBar.setVisibility(View.VISIBLE);
-
                 FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> Log.i(Utils.INFORMATION_LOG, "Code : " + task.getResult().getToken()));
-
-                this.codeVerification();
+                this.versionVerification();
             } else { // ERRORS
                 if (response == null) {
                     showSnackBar(this.mCoordinatorLayout, getString(R.string.error_authentication_canceled));
@@ -245,7 +232,25 @@ public class MainActivity extends BaseActivity {
                     showSnackBar(this.mCoordinatorLayout, getString(R.string.error_unknown_error));
                 }
             }
+
         }
+    }
+
+    //version of application verification : after sign in - before photo code
+    private void versionVerification(){
+
+        VersionCodeHelper.getVersionCode().addOnSuccessListener(documentSnapshot -> {
+            VersionCode versionCode = documentSnapshot.toObject(VersionCode.class);
+            if (versionCode.getVersionNumber() == null) {
+                showSnackBar(this.mCoordinatorLayout, getString(R.string.error_no_internet));
+            } else if (!BuildConfig.VERSION_NAME.equals(versionCode.getVersionNumber())) {
+                codeVerification();
+            } else {
+                codeVerification();
+            }
+        });
+
+    //    VersionCodeHelper.createVersionCode("1.3.5");
     }
 
     //APEL Code && photo Code  verification : 1/ phot verification -> OK : 2/ Formulary verification -> OK : 3/ User database verification
@@ -253,47 +258,44 @@ public class MainActivity extends BaseActivity {
         if (this.getCurrentUser() != null){
 
             //VERIFICATION OF PHOTOS GALLERY
-            PhotoCodeHelper.getPhotoCode().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    String galleryBackEnd = documentSnapshot.getString("serial");
-                    List<String> controlList = Arrays.asList(galleryBackEnd.split(BitmapStorage.PHOTO_SEPARATOR));
-                    String myGallery = BitmapStorage.getPhotoMemoryCode(getApplicationContext());
-                    boolean imageMissing = false;
-                    for (String imageName : controlList) {
-                        if (!myGallery.contains(imageName))
-                            imageMissing = true;
-                    }
-                    if (imageMissing){
-                        FireBaseStorageUtils fireBaseStorageUtils = new FireBaseStorageUtils();
-                        fireBaseStorageUtils.initialisePhotoGallery(getApplicationContext());
-                    }
-
-                    PasswordHelper.getCode().addOnSuccessListener(documentSnapshot2 -> {
-                        String backEndCode = documentSnapshot2.getString(Utils.NAME_DATA_CODE);
-                        if (backEndCode != null && !mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
-                            Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
-                            intent.putExtra(BUNDLE_USERNAME, getCurrentUser().getDisplayName());
-                            intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
-                            intent.putExtra(BUNDLE_PASSWORD, backEndCode);
-                            startActivity(intent);
-                        } else {
-                            UserHelper.getUser(getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
-                                if (documentSnapshot1.toObject(User.class) != null) {
-                                    User user = documentSnapshot1.toObject(User.class);
-                                    Intent intent = new Intent(getApplicationContext(), FirstPageActivity.class);
-                                    intent.putExtra(MAIN_EXTRA_CLASSROOMLIST, user.getStringClasseNameList());
-                                    startActivity(intent);
-
-                                } else {
-                                    startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
-                                }
-                            });
-                        }
-                        finish();
-                    });
-
+            PhotoCodeHelper.getPhotoCode().addOnSuccessListener(documentSnapshot -> {
+                String galleryBackEnd = documentSnapshot.getString("serial");
+                List<String> controlList = Arrays.asList(galleryBackEnd.split(BitmapStorage.PHOTO_SEPARATOR));
+                String myGallery = BitmapStorage.getPhotoMemoryCode(getApplicationContext());
+                boolean imageMissing = false;
+                for (String imageName : controlList) {
+                    if (!myGallery.contains(imageName))
+                        imageMissing = true;
                 }
+                if (imageMissing){
+                    FireBaseStorageUtils fireBaseStorageUtils = new FireBaseStorageUtils();
+                    fireBaseStorageUtils.initialisePhotoGallery(getApplicationContext());
+                }
+
+                PasswordHelper.getCode().addOnSuccessListener(documentSnapshot2 -> {
+                    String backEndCode = documentSnapshot2.getString(Utils.NAME_DATA_CODE);
+                    if (backEndCode != null && !mInternalCodeRegistration.toUpperCase().equals(backEndCode.toUpperCase())){
+                        Intent intent = new Intent(getApplicationContext(), PasswordActivity.class);
+                        intent.putExtra(BUNDLE_USERNAME, getCurrentUser().getDisplayName());
+                        intent.putExtra(BUNDLE_USERMAIL, getCurrentUser().getEmail());
+                        intent.putExtra(BUNDLE_PASSWORD, backEndCode);
+                        startActivity(intent);
+                    } else {
+                        UserHelper.getUser(getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot1 -> {
+                            if (documentSnapshot1.toObject(User.class) != null) {
+                                User user = documentSnapshot1.toObject(User.class);
+                                Intent intent = new Intent(getApplicationContext(), FirstPageActivity.class);
+                                intent.putExtra(MAIN_EXTRA_CLASSROOMLIST, user.getStringClasseNameList());
+                                startActivity(intent);
+
+                            } else {
+                                startActivity(new Intent(getApplicationContext(), FormularyActivity.class));
+                            }
+                        });
+                    }
+                    finish();
+                });
+
             });
         }
     }
