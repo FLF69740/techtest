@@ -32,8 +32,17 @@ public class StageCreatorAdapter extends RecyclerView.Adapter<StageCreatorViewHo
 
     @Override
     public void onBindViewHolder(@NonNull StageCreatorViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.setStageMenuItem(mStages.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

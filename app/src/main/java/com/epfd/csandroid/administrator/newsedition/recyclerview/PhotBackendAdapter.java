@@ -28,8 +28,17 @@ public class PhotBackendAdapter extends RecyclerView.Adapter<PhotoBackendViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PhotoBackendViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.setPhotoBackEnd(mBitmaps.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

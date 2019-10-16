@@ -31,8 +31,17 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ClassroomHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.updateWithClassroomAdapter(mClassroomsList.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

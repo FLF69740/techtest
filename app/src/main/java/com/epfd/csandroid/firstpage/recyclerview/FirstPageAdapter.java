@@ -32,8 +32,18 @@ public class FirstPageAdapter extends RecyclerView.Adapter<FirstPageViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull FirstPageViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
+    //    holder.setIsRecyclable(false);
         holder.setViewHolder(mNewsList.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

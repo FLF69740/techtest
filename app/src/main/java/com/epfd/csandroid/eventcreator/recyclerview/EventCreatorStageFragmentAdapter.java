@@ -30,8 +30,18 @@ public class EventCreatorStageFragmentAdapter extends RecyclerView.Adapter<Event
 
     @Override
     public void onBindViewHolder(@NonNull EventCreatorStageFragmentViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
+      //  holder.setIsRecyclable(false);
         holder.SetStageFragmentHolder(mStageList.get(position), mCallback);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

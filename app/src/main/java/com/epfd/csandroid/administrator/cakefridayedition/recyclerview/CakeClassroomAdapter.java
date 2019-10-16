@@ -31,8 +31,17 @@ public class CakeClassroomAdapter extends RecyclerView.Adapter<CakeClassroomHold
 
     @Override
     public void onBindViewHolder(@NonNull CakeClassroomHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.mCakeDate.setText(mDateCake.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

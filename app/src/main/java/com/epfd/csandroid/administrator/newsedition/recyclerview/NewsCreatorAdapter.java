@@ -32,8 +32,17 @@ public class NewsCreatorAdapter extends RecyclerView.Adapter<NewsCreatorViewHold
 
     @Override
     public void onBindViewHolder(@NonNull NewsCreatorViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.setViewHolder(mNewsList.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

@@ -32,8 +32,17 @@ public class EventCreatorMenuAdapter extends RecyclerView.Adapter<EventCreatorMe
 
     @Override
     public void onBindViewHolder(@NonNull EventCreatorMenuViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.setEventCreatorMenu(mEventList.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

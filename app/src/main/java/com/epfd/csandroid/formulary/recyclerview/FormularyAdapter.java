@@ -51,7 +51,6 @@ public class FormularyAdapter extends RecyclerView.Adapter<FormularyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull FormularyViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.mName.setText(this.mKidList.get(position).getNom());
         holder.mForname.setText(this.mKidList.get(position).getPrenom());
         holder.mClasseSpinner.setAdapter(mArrayAdapter);
@@ -68,6 +67,16 @@ public class FormularyAdapter extends RecyclerView.Adapter<FormularyViewHolder> 
             holder.mImageViewDelete.setVisibility(View.INVISIBLE);
         }
         holder.updateWithAdapterInformation(this.mKidList.get(position), position, mCallback);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

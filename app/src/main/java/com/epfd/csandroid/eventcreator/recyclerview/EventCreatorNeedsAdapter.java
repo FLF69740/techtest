@@ -38,8 +38,17 @@ public class EventCreatorNeedsAdapter extends RecyclerView.Adapter<EventCreatorN
 
     @Override
     public void onBindViewHolder(@NonNull EventCreatorNeedsViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.setNewNeed(mNeedsString.get(position), position, mCallback);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

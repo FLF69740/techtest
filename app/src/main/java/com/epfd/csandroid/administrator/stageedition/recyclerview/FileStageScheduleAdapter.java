@@ -28,8 +28,17 @@ public class FileStageScheduleAdapter extends RecyclerView.Adapter<FileStageSche
 
     @Override
     public void onBindViewHolder(@NonNull FileStageScheduleViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         holder.setStageFileSchedule(mSchedulesList.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
