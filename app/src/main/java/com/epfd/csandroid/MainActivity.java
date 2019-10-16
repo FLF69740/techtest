@@ -268,6 +268,10 @@ public class MainActivity extends BaseActivity {
                         imageMissing = true;
                 }
                 if (imageMissing){
+                    List<String> myGalleryList = Arrays.asList(myGallery.split(BitmapStorage.PHOTO_SEPARATOR));
+                    for (String maPhoto : myGalleryList){
+                        BitmapStorage.deleteImage(getApplicationContext(), maPhoto);
+                    }
                     FireBaseStorageUtils fireBaseStorageUtils = new FireBaseStorageUtils();
                     fireBaseStorageUtils.initialisePhotoGallery(getApplicationContext());
                 }
