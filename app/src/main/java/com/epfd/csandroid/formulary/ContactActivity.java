@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.epfd.csandroid.utils.Utils.APEL;
-import static com.epfd.csandroid.utils.Utils.DEV;
+import static com.epfd.csandroid.utils.Utils.OGEC;
 import static com.epfd.csandroid.utils.Utils.SCHOOL;
 
 public class ContactActivity extends BaseActivity implements View.OnClickListener {
@@ -90,7 +90,7 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
                 mContactDevBtn.setBackground(getDrawable(R.drawable.orange_full_btn));
                 mMailTitle.setBackground(getDrawable(R.drawable.orange_empty_btn));
                 mMessageBody.setBackground(getDrawable(R.drawable.orange_empty_btn));
-                mRecipient[0] = DEV;
+                mRecipient[0] = OGEC;
                 break;
         }
     }

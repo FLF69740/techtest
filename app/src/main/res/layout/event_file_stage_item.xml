@@ -78,26 +78,17 @@
             app:layout_constraintStart_toStartOf="@+id/event_file_stage_item_orange_background"
             app:layout_constraintTop_toTopOf="@+id/event_file_stage_item_orange_background" />
 
-        <TextView
-            android:id="@+id/event_file_stage_item_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/event_menu_recycler_guide_one"
-            app:layout_constraintEnd_toEndOf="@+id/event_file_stage_item_orange_background"
-            app:layout_constraintStart_toStartOf="@+id/event_file_stage_item_orange_background"
-            app:layout_constraintTop_toBottomOf="@+id/event_file_stage_item_place_title" />
-
-        <Button
+        <ImageView
             android:id="@+id/event_file_stage_item_btn"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/event_file_stage_text_btn"
-            android:theme="@style/EPFD_Button"
-            android:textSize="7sp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_event_participation_black_24dp"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="@+id/event_file_stage_item_orange_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/event_file_stage_item_orange_background" />
+            app:layout_constraintStart_toStartOf="@+id/event_file_stage_item_orange_background"
+            app:layout_constraintTop_toBottomOf="@+id/event_file_stage_item_place_title" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

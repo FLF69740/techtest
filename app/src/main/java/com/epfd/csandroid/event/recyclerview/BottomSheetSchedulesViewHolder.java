@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.epfd.csandroid.R;
@@ -29,6 +30,7 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.modal_schedule_recycler_item_people) TextView mPeople;
     @BindView(R.id.modal_schedule_recycler_item_add_participation) ImageView mModalAddBtn;
     @BindView(R.id.modal_schedule_recycler_item_delete_participation) ImageView mModalDeleteBtn;
+    @BindView(R.id.modal_schedule_recycler_item_other_participation) ImageView mModalOtherBtn;
 
     BottomSheetSchedulesViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -54,17 +56,24 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
             mPeople.setClickable(false);
         }
 
-        if ((!scheduleDatas.isActifReservation() || !peopleListString.toString().contains(Utils.EMPTY)) && scheduleDatas.isNotRegistered()) {
+        if (!scheduleDatas.isActifReservation() && scheduleDatas.isNotRegistered()) {
+            mModalOtherBtn.setVisibility(View.VISIBLE);
             mModalAddBtn.setVisibility(View.GONE);
             mModalDeleteBtn.setVisibility(View.GONE);
-        } else if (!scheduleDatas.isNotRegistered()) {
+        }else if (!peopleListString.toString().contains(Utils.EMPTY) && scheduleDatas.isNotRegistered()){
+            mModalAddBtn.setVisibility(View.GONE);
+            mModalDeleteBtn.setVisibility(View.GONE);
+            mModalOtherBtn.setVisibility(View.GONE);
+        }else if (!scheduleDatas.isNotRegistered()) {
             mModalAddBtn.setVisibility(View.GONE);
             mModalDeleteBtn.setVisibility(View.VISIBLE);
+            mModalOtherBtn.setVisibility(View.GONE);
         }
     }
 
     @OnClick(R.id.modal_schedule_recycler_item_add_participation) void addAModalParticipant(){
         mModalAddBtn.setVisibility(View.GONE);
+        mModalOtherBtn.setVisibility(View.GONE);
         mModalDeleteBtn.setVisibility(View.VISIBLE);
         if (mWeakReference.get() != null) mWeakReference.get().activeParticipation(mPosition);
     }
@@ -72,6 +81,7 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.modal_schedule_recycler_item_delete_participation) void deleteAModalParticipant(){
         mModalAddBtn.setVisibility(View.VISIBLE);
         mModalDeleteBtn.setVisibility(View.GONE);
+        mModalOtherBtn.setVisibility(View.GONE);
         if (mWeakReference.get() != null) mWeakReference.get().deleteParticipation(mPosition);
     }
 
@@ -79,6 +89,8 @@ class BottomSheetSchedulesViewHolder extends RecyclerView.ViewHolder {
         if (mWeakReference.get() != null) mWeakReference.get().adminParticipation(mPosition);
     }
 
-
+    @OnClick(R.id.modal_schedule_recycler_item_other_participation) void otherPlanningReservedInfo(){
+        Toast.makeText(mItemView.getContext(), R.string.event_file_other_participation, Toast.LENGTH_LONG).show();
+    }
 
 }

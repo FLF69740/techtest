@@ -25,6 +25,7 @@
     <string name="event_file_stage_needs">TABLEAU DES BESOINS</string>
     <string name="event_file_email_subject">Planning</string>
     <string name="event_file_email_message">Envoie du planning de l\'événement : </string>
+    <string name="event_file_other_participation">Vous participez déjà à un autre atelier pendant cette plage horaire</string>
 
     <!-- EVENTS CREATOR -->
     <string name="event_creator_event_menu">MENU EVENEMENTS</string>
@@ -119,6 +120,7 @@
     <string name="contact_APEL">APEL</string>
     <string name="contact_ECOLE">ECOLE</string>
     <string name="contact_DEVELOPPEUR">DEVELOPPEUR (version test)</string>
+    <string name="contact_OGEC">OGEC</string>
 
     <!-- PRESENTATION SECTION -->
     <string name="presentation_line_empty">LINE EMPTY</string>

@@ -110,7 +110,7 @@
         android:gravity="center"
         android:padding="5dp"
         android:tag="30"
-        android:text="@string/contact_DEVELOPPEUR"
+        android:text="@string/contact_OGEC"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contact_ecole_btn" />

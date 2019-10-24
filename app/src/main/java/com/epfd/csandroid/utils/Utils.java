@@ -13,12 +13,11 @@ public class Utils {
     public static final String APEL = "apel.dolto.sqf@gmail.com";
     public static final String SCHOOL = "ecole.dolto.sqf@gmail.com";
     public static final String DEV = "slayer171.flf@gmail.com";
+    public static final String OGEC = "ogec.f.dolto@gmail.com";
     public static final String INFORMATION_LOG = "INFORMATION_LOG";
     public static final String EMPTY_PREFERENCES_LOG_CODE = "EMPTY_PREFERENCES_LOG_CODE";
     public static final String EMPTY = "EMPTY";
     public static final String NAME_DATA_CODE = "code";
-    public static final String CONSOLE_NOTIF_TITLE = "TITRE";
-    public static final String CONSOLE_NOTIF_BODY = "MESSAGE";
     public static final String NAME_DATA_CAKE_DATE = "dateListString";
     public static final String NAME_DATA_CAKE_CLASSROOMS = "classroomsListString";
     public static final String NAME_DATA_CLASSROOMS = "name";
