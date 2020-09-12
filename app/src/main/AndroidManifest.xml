@@ -1,99 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.epfd.csandroid">
+    package="com.epfd.dolto">
 
     <application
-        android:name=".App"
+        android:name="com.epfd.dolto.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_logo_pos2"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_logo_pos2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".event.EventFileActivity"
+        <activity android:name="com.epfd.dolto.event.EventFileActivity"
             android:label="@string/event_event_single"
-            android:parentActivityName=".event.EventMainActivity">
+            android:parentActivityName="com.epfd.dolto.event.EventMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".event.EventMainActivity" />
+                android:value="com.epfd.dolto.event.EventMainActivity" />
         </activity>
-        <activity android:name=".eventcreator.EventCreatorStageListingActivity" />
+        <activity android:name="com.epfd.dolto.eventcreator.EventCreatorStageListingActivity" />
         <activity
-            android:name=".administrator.stageedition.FileStageCreatorActivity"
+            android:name="com.epfd.dolto.administrator.stageedition.FileStageCreatorActivity"
             android:label="@string/stage_creator_stage"
-            android:parentActivityName=".administrator.stageedition.StageCreatorActivity">
+            android:parentActivityName="com.epfd.dolto.administrator.stageedition.StageCreatorActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".administrator.stageedition.StageCreatorActivity" />
+                android:value="com.epfd.dolto.administrator.stageedition.StageCreatorActivity" />
         </activity>
         <activity
-            android:name=".administrator.stageedition.StageCreatorActivity"
+            android:name="com.epfd.dolto.administrator.stageedition.StageCreatorActivity"
             android:label="@string/stage_creator_stage_menu"/>
         <activity
-            android:name=".eventcreator.EventCreatorMenuActivity"
+            android:name="com.epfd.dolto.eventcreator.EventCreatorMenuActivity"
             android:label="@string/event_creator_event_menu"/>
         <activity
-            android:name=".eventcreator.EventPanelActivity"
+            android:name="com.epfd.dolto.eventcreator.EventPanelActivity"
             android:label="@string/event_creator_event"
-            android:parentActivityName=".eventcreator.EventCreatorMenuActivity"
+            android:parentActivityName="com.epfd.dolto.eventcreator.EventCreatorMenuActivity"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".eventcreator.EventCreatorMenuActivity" />
+                android:value="com.epfd.dolto.eventcreator.EventCreatorMenuActivity" />
         </activity>
         <activity
-            android:name=".event.EventMainActivity"
+            android:name="com.epfd.dolto.event.EventMainActivity"
             android:label="@string/event_event" />
         <activity
-            android:name=".administrator.newsedition.FileNewsPhotoBackEndActivity"
+            android:name="com.epfd.dolto.administrator.newsedition.FileNewsPhotoBackEndActivity"
             android:label="@string/news_creator_photo_backend"
-            android:parentActivityName=".administrator.newsedition.NewsCreatorActivity">
+            android:parentActivityName="com.epfd.dolto.administrator.newsedition.NewsCreatorActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".administrator.newsedition.NewsCreatorActivity" />
+                android:value="com.epfd.dolto.administrator.newsedition.NewsCreatorActivity" />
         </activity>
         <activity
-            android:name=".administrator.newsedition.FileNewsCreatorActivity"
+            android:name="com.epfd.dolto.administrator.newsedition.FileNewsCreatorActivity"
             android:label="@string/news_creator_news_file"
-            android:parentActivityName=".administrator.newsedition.NewsCreatorActivity">
+            android:parentActivityName="com.epfd.dolto.administrator.newsedition.NewsCreatorActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".administrator.newsedition.NewsCreatorActivity" />
+                android:value="com.epfd.dolto.administrator.newsedition.NewsCreatorActivity" />
         </activity>
         <activity
-            android:name=".administrator.newsedition.NewsCreatorActivity"
+            android:name="com.epfd.dolto.administrator.newsedition.NewsCreatorActivity"
             android:label="@string/news_creator_label"/>
         <activity
-            android:name=".administrator.cakefridayedition.CakeFridayActivity"
+            android:name="com.epfd.dolto.administrator.cakefridayedition.CakeFridayActivity"
             android:label="@string/cake_edition_label"/>
         <activity
-            android:name=".administrator.classroomsedition.ClassroomsEditionActivity"
+            android:name="com.epfd.dolto.administrator.classroomsedition.ClassroomsEditionActivity"
             android:label="@string/classrooms_edition_label"/>
         <activity
-            android:name=".formulary.ContactActivity"
+            android:name="com.epfd.dolto.formulary.ContactActivity"
             android:label="@string/connexion_contact_btn"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.epfd.dolto.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.epfd.dolto.MainActivity" />
         </activity>
         <activity
-            android:name=".presentation.PresentationActivity"
+            android:name="com.epfd.dolto.presentation.PresentationActivity"
             android:label="@string/connexion_presentation_btn"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.epfd.dolto.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.epfd.dolto.MainActivity" />
         </activity>
         <activity
-            android:name=".formulary.PrivacyPolicyActivity"
+            android:name="com.epfd.dolto.formulary.PrivacyPolicyActivity"
             android:label="@string/navigation_drawer_policy"/>
-        <activity android:name=".firstpage.FirstPageActivity" />
-        <activity android:name=".formulary.PasswordActivity" />
-        <activity android:name=".formulary.FormularyActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.epfd.dolto.firstpage.FirstPageActivity" />
+        <activity android:name="com.epfd.dolto.formulary.PasswordActivity" />
+        <activity android:name="com.epfd.dolto.formulary.FormularyActivity" />
+        <activity android:name="com.epfd.dolto.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -102,10 +102,10 @@
             </intent-filter>
         </activity> <!-- NOTIFICATION SERVICE -->
         <receiver
-            android:name=".utils.MyAlarmReceiver"
+            android:name="com.epfd.dolto.utils.MyAlarmReceiver"
             android:exported="true" />
 
-        <service android:name=".notifications.NotificationsService">
+        <service android:name="com.epfd.dolto.notifications.NotificationsService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -113,7 +113,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.epfd.csandroid"
+            android:authorities="com.epfd.dolto"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
