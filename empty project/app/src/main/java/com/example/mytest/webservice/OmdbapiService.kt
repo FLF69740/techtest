@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface OmdbapiService {
 
     @GET("?plot=full")
-    suspend fun getListMovies(@Query("apikey") apiKey: String?, @Query("s") wordKey: String?, @Query("page") pageNumber: Int?): MoviesResponse
+    suspend fun getListMovies(@Query("apikey") apiKey: String?, @Query("s") wordKey: String?, @Query("page") pageNumber: Int?): MoviesResponse?
 
 
 }

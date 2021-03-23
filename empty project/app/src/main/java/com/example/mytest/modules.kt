@@ -1,5 +1,7 @@
 package com.example.mytest
 
+import com.example.mytest.model.Movie
+import com.example.mytest.model.MoviesListing
 import com.example.mytest.utils.BASE_URL
 import com.example.mytest.viewmodel.MainViewModel
 import com.example.mytest.webservice.OmdbapiServiceAPI
@@ -10,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
+
     single { OmdbapiServiceAPI(get()) }
     single {
         Retrofit.Builder()
