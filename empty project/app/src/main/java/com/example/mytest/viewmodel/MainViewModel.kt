@@ -14,15 +14,9 @@ class MainViewModel(serviceAPI: OmdbapiServiceAPI) : ViewModel() {
     val moviesResponse = MediatorLiveData<List<MoviesResponse>>()
     private val service = serviceAPI
 
-    val total = MediatorLiveData<MoviesResponse>()
-    val mp = MutableLiveData<MoviesResponse>()
-
     fun response(apiKey: String?, wordKey: String?, pageNumber: Int?){
         viewModelScope.launch(Dispatchers.IO) {
             try {
-            //    moviesResponse.postValue(MoviesRepository(serviceAPI = service).askOmdbapi(apiKey, wordKey, pageNumber))
-
-                val response = MoviesResponse(emptyList(), "0", "true", null)
 
                 coroutineScope{
                     launch {

@@ -1,13 +1,16 @@
 package com.example.mytest.business
 
 import android.view.View
+import android.widget.Adapter
 import android.widget.TextView
 import com.example.mytest.R
 import com.example.mytest.model.Movie
+import com.example.mytest.view.adapter.moviesListingAdapter
 
-fun listingInjection(view: View, moviesListing: List<Movie>){
-    if (moviesListing.isNotEmpty()) {
-        val movieTitle = view.findViewById<TextView>(R.id.temp_first_movie)
-        movieTitle.text = "${moviesListing.size}"
+fun listingInjection(moviesListingToInject: List<Movie>, adapter: moviesListingAdapter, moviesListing: MutableList<Movie>){
+    if (moviesListingToInject.isNotEmpty()) {
+        moviesListing.clear()
+        moviesListing.addAll(moviesListingToInject)
+        adapter.notifyDataSetChanged()
     }
 }
